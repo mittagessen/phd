@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99d (TeX Live 2020/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: seg.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: seg.bib
+Warning--entry type for "toselli_a_h_2018_1164045" isn't style-file defined
+--line 49 of file seg.bib
+Warning--entry type for "diem_markus_2019_3568023" isn't style-file defined
+--line 82 of file seg.bib
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 42 entries,
+            4087 wiz_defined-function locations,
+            1048 strings with 16235 characters,
+and the built_in function-call counts, 35496 in all, are:
+= -- 2771
+> -- 892
+< -- 315
++ -- 486
+- -- 149
+* -- 1710
+:= -- 5060
+add.period$ -- 106
+call.type$ -- 42
+change.case$ -- 42
+chr.to.int$ -- 771
+cite$ -- 42
+duplicate$ -- 2484
+empty$ -- 2979
+format.name$ -- 189
+if$ -- 8388
+int.to.chr$ -- 0
+int.to.str$ -- 42
+missing$ -- 428
+newline$ -- 159
+num.names$ -- 42
+pop$ -- 1048
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 2704
+stack$ -- 0
+substring$ -- 1841
+swap$ -- 2047
+text.length$ -- 58
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 42
+warning$ -- 0
+while$ -- 178
+width$ -- 44
+write$ -- 429
+(There were 2 warnings)

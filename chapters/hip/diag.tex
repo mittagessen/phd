@@ -1,0 +1,343 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{import}
+\subimport{layers/}{init}
+\usetikzlibrary{positioning}
+\usetikzlibrary{3d} %for including external image 
+
+
+\def\ConvColor{rgb:yellow,5;red,2.5;white,5}
+\def\ConvReluColor{rgb:yellow,5;red,5;white,5}
+\def\PoolColor{rgb:red,1;black,0.3}
+\def\UnpoolColor{rgb:blue,2;green,1;black,0.3}
+\def\FcColor{rgb:blue,5;red,2.5;white,5}
+\def\FcReluColor{rgb:blue,5;red,5;white,4}
+\def\SoftmaxColor{rgb:magenta,5;black,7}   
+
+\newcommand{\copymidarrow}{\tikz \draw[-Stealth,line width=0.8mm,draw={rgb:blue,4;red,1;green,1;black,3}] (-0.3,0) -- ++(0.3,0);}
+
+\begin{document}
+\begin{tikzpicture}
+\tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
+\tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
+
+\node[canvas is zy plane at x=0] (temp) at (-3,0,0) {\includegraphics[width=8cm,height=8cm]{w750.png}};
+
+\pic[shift={(0,0,0)}] at (0,0,0) 
+    {Box={
+        name=c_b1,
+        caption= ,
+        xlabel={{64, }},
+        zlabel=i/2,
+        fill=\ConvColor,
+        height=50,
+        width=3,
+        depth=50
+        }
+    };
+
+\pic[shift={ (0,0,0) }] at (c_b1-east) 
+    {Box={
+        name=pool_b1,
+        caption= ,
+        fill=\PoolColor,
+        opacity=0.5,
+        height=40,
+        width=1,
+        depth=40
+        }
+    };
+
+\pic[shift={ (2,0,0) }] at (pool_b1-east) 
+    {RightBandedBox={
+        name=c_b2,
+        caption= ,
+        xlabel={{ 64, }},
+        zlabel=,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=32,
+        width=3,
+        depth=32
+        }
+    };
+
+\draw [connection]  (pool_b1-east)    -- node {\midarrow} (c_b2-west);
+
+\pic[shift={ (0,0,0) }] at (c_b2-east) 
+    {RightBandedBox={
+        name=c_b3,
+        caption= ,
+        xlabel={{ , }},
+        zlabel=,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=32,
+        width=3,
+        depth=32
+        }
+    };
+
+\pic[shift={ (0,0,0) }] at (c_b3-east) 
+    {RightBandedBox={
+        name=c_b4,
+        caption= ,
+        xlabel={{ , }},
+        zlabel=i/4,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=32,
+        width=3,
+        depth=32
+        }
+    };
+
+\pic[shift={ (2,0,0) }] at (c_b4-east) 
+    {RightBandedBox={
+        name=c_b5,
+        caption= ,
+        xlabel={{ 128, }},
+        zlabel=,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=16,
+        width=4,
+        depth=16
+        }
+    };
+
+\draw [connection]  (c_b4-east)    -- node {\midarrow} (c_b5-west);
+
+\pic[shift={ (0,0,0) }] at (c_b5-east) 
+    {RightBandedBox={
+        name=c_b6,
+        caption= ,
+        xlabel={{ , }},
+        zlabel=,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=16,
+        width=4,
+        depth=16
+        }
+    };
+
+\pic[shift={ (0,0,0) }] at (c_b6-east) 
+    {RightBandedBox={
+        name=c_b7,
+        caption= ,
+        xlabel={{ , }},
+        zlabel=i/8,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=16,
+        width=4,
+        depth=16
+        }
+    };
+
+\pic[shift={ (2,0,0) }] at (c_b7-east) 
+    {RightBandedBox={
+        name=c_b8,
+        caption= ,
+        xlabel={{ 256, }},
+        zlabel=,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=8,
+        width=5,
+        depth=8
+        }
+    };
+
+\draw [connection]  (c_b7-east)    -- node {\midarrow} (c_b8-west);
+
+\pic[shift={ (0,0,0) }] at (c_b8-east) 
+    {RightBandedBox={
+        name=c_b9,
+        caption= ,
+        xlabel={{ , }},
+        zlabel=,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=8,
+        width=5,
+        depth=8
+        }
+    };
+
+\pic[shift={ (0,0,0) }] at (c_b9-east) 
+    {RightBandedBox={
+        name=c_b10,
+        caption= ,
+        xlabel={{ , }},
+        zlabel=i/16,
+        fill={rgb:white,1;black,3},
+        bandfill={rgb:white,1;black,2},
+        opacity=0.2,
+        height=8,
+        width=5,
+        depth=8
+        }
+    };
+
+\pic[shift={(2,0,0)}] at (c_b10-east) 
+    {Box={
+        name=upc_1,
+        caption= ,
+        xlabel={{256, }},
+        zlabel=,
+        fill=\ConvColor,
+        height=8,
+        width=5,
+        depth=8
+        }
+    };
+
+\draw [connection]  (c_b10-east)    -- node {\midarrow} (upc_1-west);
+
+\pic[shift={ (0,0,0) }] at (upc_1-east) 
+    {Box={
+        name=upu_1,
+        caption= ,
+        fill=\UnpoolColor,
+        opacity=0.5,
+        height=8,
+        width=4,
+        depth=8,
+        xlabel={{ 128, }},
+        zlabel=i/8,
+        }
+    };
+
+\pic[shift={(2,0,0)}] at (upu_1-east) 
+    {Box={
+        name=upc_2,
+        caption= ,
+        xlabel={{128, }},
+        zlabel=,
+        fill=\ConvColor,
+        height=16,
+        width=4,
+        depth=16
+        }
+    };
+
+\path (c_b7-southeast) -- (c_b7-northeast) coordinate[pos=1.25] (c_b7-top) ;
+\path (upc_2-south)  -- (upc_2-north)  coordinate[pos=1.25] (upc_2-top) ;
+\draw [copyconnection]  (c_b7-northeast)  
+-- node {\copymidarrow}(c_b7-top)
+-- node {\copymidarrow}(upc_2-top)
+-- node {\copymidarrow} (upc_2-north);
+
+\draw [connection]  (upu_1-east)    -- node {\midarrow} (upc_2-west);
+
+\pic[shift={ (0,0,0) }] at (upc_2-east) 
+    {Box={
+        name=upu_2,
+        caption= ,
+        fill=\UnpoolColor,
+        opacity=0.5,
+        height=16,
+        width=3,
+        depth=16,
+        xlabel={{ 64, }},
+        zlabel=i/4,
+        }
+    };
+
+\pic[shift={(2,0,0)}] at (upu_2-east) 
+    {Box={
+        name=upc_3,
+        caption= ,
+        xlabel={{64, }},
+        zlabel=,
+        fill=\ConvColor,
+        height=32,
+        width=3,
+        depth=32
+        }
+    };
+
+\path (c_b4-southeast) -- (c_b4-northeast) coordinate[pos=1.25] (c_b4-top) ;
+\path (upc_3-south)  -- (upc_3-north)  coordinate[pos=1.25] (upc_3-top) ;
+\draw [copyconnection]  (c_b4-northeast)  
+-- node {\copymidarrow}(c_b4-top)
+-- node {\copymidarrow}(upc_3-top)
+-- node {\copymidarrow} (upc_3-north);
+
+\draw [connection]  (upu_2-east)    -- node {\midarrow} (upc_3-west);
+
+\pic[shift={ (0,0,0) }] at (upc_3-east) 
+    {Box={
+        name=upu_3,
+        caption= ,
+        fill=\UnpoolColor,
+        opacity=0.5,
+        height=32,
+        width=3,
+        depth=32,
+        xlabel={{ 64, }},
+        zlabel=i/2,
+        }
+    };
+
+\pic[shift={(2,0,0)}] at (upu_3-east) 
+    {Box={
+        name=upc_4,
+        caption= ,
+        xlabel={{64, }},
+        zlabel=,
+        fill=\ConvColor,
+        height=40,
+        width=3,
+        depth=40
+        }
+    };
+
+\path (pool_b1-southeast) -- (pool_b1-northeast) coordinate[pos=1.25] (pool_b1-top) ;
+\path (upc_4-south)  -- (upc_4-north)  coordinate[pos=1.25] (upc_4-top) ;
+\draw [copyconnection]  (pool_b1-northeast)  
+-- node {\copymidarrow}(pool_b1-top)
+-- node {\copymidarrow}(upc_4-top)
+-- node {\copymidarrow} (upc_4-north);
+
+\draw [connection]  (upu_3-east)    -- node {\midarrow} (upc_4-west);
+
+\pic[shift={ (0,0,0) }] at (upc_4-east) 
+    {Box={
+        name=upu_4,
+        caption= ,
+        fill=\UnpoolColor,
+        opacity=0.5,
+        height=40,
+        width=3,
+        depth=40,
+        xlabel={{ 64, }},
+        zlabel=i,
+        }
+    };
+
+\pic[shift={(1,0,0)}] at (upu_4-east) 
+    {Box={
+        name=cs_1,
+        zlabel=i,
+        fill=\SoftmaxColor,
+        height=50,
+        width=3,
+        depth=50
+        }
+    };
+
+\draw [connection]  (upu_4-east)    -- node {\midarrow} (cs_1-west);
+
+\end{tikzpicture}
+\end{document}

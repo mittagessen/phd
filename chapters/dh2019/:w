@@ -1,0 +1,231 @@
+\documentclass[a4paper, conference]{IEEEtran}
+%\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage[style=ieee,backend=biber]{biblatex}
+\addbibresource{dh.bib}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage[svgnames]{xcolor} % Specify colors by their 'svgnames', for a full list of all colors available see here: http://www.latextemplates.com/svgnames-colors
+
+\usepackage{times} % Use the times font
+%\usepackage{palatino} % Uncomment to use the Palatino font
+\usepackage{subfigure}
+\usepackage{graphicx} % Required for including images
+\usepackage{pgfplots}
+\usepgfplotslibrary{colorbrewer}
+\usepackage{booktabs} % Top and bottom rules for table
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
+\usepackage{wrapfig} % Allows wrapping text around tables and figures
+\usepackage{tikz}
+\usetikzlibrary{pgfplots.colorbrewer}
+\usepackage[justification=centering]{caption}
+\usetikzlibrary{matrix, calc}
+
+\usepackage{flushend}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Kraken - an Universal Text Recognizer for the Humanities}
+
+\author{
+\IEEEauthorblockN{Benjamin Kiessling}
+\IEEEauthorblockA{\textit{Université PSL} \\
+\textit{École Pratique des Hautes Études}\\
+Paris, France \\
+benjamin.kiessling@psl.eu}
+}
+\maketitle
+\section{Introduction}
+
+Retrodigitization of both printed and handwritten material is a common
+prerequisite for a diverse range of research questions in the humanities. While
+optical character recognition on printed texts is widely considered to be
+fundamentally solved in academia, with the most most commonly used paradigm
+going back to 2006, this hasn't translated into increased availability of
+adaptable, libre-licensed OCR engines to the technically inclined humanities
+scholar. 
+
+The nature of the material of interest commands a platform that can be altered
+to achieve optimal recognition accuracy; uncommon scripts, historical
+languages, complex or archaic page layout, and non-paper writing surfaces are
+rarily satisfactorily addressed by off-the-shelf commercial solutions. In
+addition, an open system ameliorates the severe resource constraints of
+humanities research by enabling sharing of artifacts inaccessible in proprietary system
+
+\section{Kraken}
+
+The Kraken text recognition engine is an extensively rewritten fork of the
+OCRopus system. It can be used both for handwriting and printed text
+recognition, is easily (re-)trainable, and great care has been taken to
+eliminate implicit assumptions on content and layout that complicate the 
+
+
+Kraken includes support for features frequently needed in the humanities, among
+them full Unicode right-to-left, bidirectional, and top-to-bottom script
+support, script detection and multiscript recognition, fine-grained bounding
+boxes down to the character level, and the serialization into ALTO, hOCR, TEI,
+and abbyyXML.
+
+While including implementations of all the subprocesses needed in a text
+recognition pipeline, most functional blocks can be accessed separately on the
+command line. A stable programming interface allows total customization and
+integration into other software packages.
+
+\subsection{Recognition}
+
+The recognition engine operates as a segmentation-less sequence classifier
+using an artificial neural network to map an image of a single line of text,
+the input sequence, into a sequence of characters, the output sequence. The
+artificial neural network employed is a combination convolutional and recurrent
+neural network trained with the CTC loss
+function \cite{graves2006connectionist} that reduces training data requirements
+to line-level transcriptions (figure \ref{fig:transcription}). The network is
+optimized using Adam \cite{kingma2014adam} with $\alpha = 0.002, \beta_1 = 0.9,
+\beta_2 = 0.999, \epsilon=1e-08$ and a weight decay of $1e-5$.  Regularization
+is mainly provided by dropout \cite{hinton2012improving} after both
+convolutional and recurrent layers. User intervention in determining training
+duration and model selection is largely eliminated through early stopping.
+
+\begin{wrapfigure}{r}{4.5cm}
+        \center
+        \vspace{1cm}
+        \begin{tikzpicture}[node distance = 1cm]
+        \tikzset{
+          base/.style={draw, align=center, minimum height=4ex, rectangle, text centered},
+          proc/.style={base, draw=white, rectangle, text width=8em},
+          conv/.style={proc, draw=red!50, fill=red!30},
+          maxp/.style={proc, draw=blue!50, fill=blue!30},
+          drop/.style={proc, draw=black!50, fill=black!30},
+          lstm/.style={proc, draw=yellow!50, fill=yellow!30},
+          soft/.style={proc, draw=orange!50, fill=orange!30},
+          line/.style={draw, shorten <= 2pt, shorten >= 2pt, ->}
+        }
+        \node [proc] (input) {input (1xHxW)};
+        \node [proc, conv, below of=input] (conv1) {3x3 conv, 32, relu};
+        \node [proc, drop, below of=conv1] (drop1) {dropout, 1d, 0.1};
+        \node [proc, maxp, below of=drop1] (maxp1) {maxpool, 2};
+        \node [proc, conv, below of=maxp1] (conv2) {3x3 conv, 64, relu};
+        \node [proc, drop, below of=conv2] (drop2) {dropout, 1d, 0.1};
+        \node [proc, maxp, below of=drop2] (maxp2) {maxpool, 2};
+        \node [proc, lstm, below of=maxp2] (lstm1) {BiLSTM, 100};
+        \node [proc, drop, below of=lstm1] (drop3) {dropout, 1d, 0.5};
+        \node [proc, soft, below of=drop3] (softm) {FC layer, softmax};
+        \node [proc, below of=softm] (output) {output (CxW)};
+
+        \path [line] (input) -- (conv1);
+        \path [line] (conv1) -- (drop1);
+        \path [line] (drop1) -- (maxp1);
+        \path [line] (maxp1) -- (conv2);
+        \path [line] (conv2) -- (drop2);
+        \path [line] (drop2) -- (maxp2);
+        \path [line] (maxp2) -- (lstm1);
+        \path [line] (lstm1) -- (drop3);
+        \path [line] (drop3) -- (softm);
+        \path [line] (softm) -- (output);
+
+        \end{tikzpicture}
+        \captionof{figure}{Network architecture ($H$: sequence height, $W$: sequence length, $C$: alphabet size)}
+        \label{fig:arch}
+\end{wrapfigure}
+
+Specialized networks, e.g. for particularly complex scripts, can be assembled
+from building blocks with a simple network specification language although the
+default architecture shown in figure \ref{fig:arch} is suitable for the vast
+majority of applications.
+
+Both training and recognition can be accelerated significantly through GPU
+acceleration with sub-10 minute model training possible for average sized
+training data sets.
+
+Processing of dictionaries and library catalogues with extensive semantic
+markup such as italic, underlining, and bolding, is also possible through
+specially prepared training data.
+
+\subsection{Layout Analysis and Script Detection}
+
+Kraken's layout analysis extracts text lines from an input image for later
+processing by the recognition engine. OCRopus's original line extractor is
+currently included with an experimental fully trainable segmenter being
+added in the near future.
+
+The new layout analysis method currently under development is a two-step
+instance segmentation method: an initial seed-labelling network operating on
+the whole page labelling the area between baseline and mean line of each line.
+These easily separable line seeds are fed with the surrounding region of
+interest into a second smaller network that expands seeds to whole line masks.
+In contrast to the semantic segmentation methods common in neural layout
+analysis this approach does not require postprocessing to extract lines from
+pixel labellings. It is therefore intrinsically capable of finding arbitrarily
+oriented or distorted lines which is generally not true for other layout
+analysis tools.
+
+The seed-labelling network is a modified U-net \cite{ronneberger2015u} on the
+basis of a 34-layer residual network \cite{he2016deep} pretrained on ImageNet.
+Second-stage expansion is through a three layer CNN. Both are trained with Adam
+($\alpha = 0.03, \beta_1 = 0.9, \beta_2 = 0.999, \epsilon = 1e-8$) on a
+training data set of labelled line segmentations.
+
+Preliminary results on a semi-automatically generated data set of late-20th
+century English text can be seen in.
+
+Script detection, the basis for multi-script support in the recognizer, is
+implemented as a segmentation-less sequence classification problem, similar to
+text recognition. Instead of assigning a unique label to each code point or
+grapheme cluster we assign all code points of a particular script the same
+label. The network is then trained to output the correct sequence of script
+labels (figure \ref{fig:transcription}). It should be noted that CTC is on the
+face unsuitable for this task, as it includes no mechanism to ensure temporal
+alignment between graphemes in the input sequence and output activations;
+fortunately the LSTM network's activation are fairly close to their
+corresponding location in the input sequence. The output sequence is then used
+to split the line into single-script runs that can be classified with
+monolingual recognition models.
+
+\begin{wrapfigure}{l}{6cm}
+        \includegraphics[width=\linewidth]{transcription.png}
+        \centering
+        \captionof{figure}{Modified ground truth (top: original line, middle: transcription,\\ bottom: assigned script classes)}
+        \label{fig:transcription}
+\end{wrapfigure}
+
+Script classes are ISO 15924 codes determined through each code point's Unicode
+script property. As there are graphemes that occur in multiple scripts, chiefly
+numerals and punctuation, we retain both the common and inherited properties.
+Merging these during post-processing based on their surrounding script
+increases robustness when classifying non-body text such as page numbers and
+tables, compared to fusing them beforehand.
+
+\section{Results}
+
+\subsection{Prints}
+
+kraken has been used on a wide variety of scripts, achieving uniformly high
+character accuracy. The accuracies reported in \cite{kiessling2017important}
+have been exceeded across the board with accuracies between $x$ and $y$. On a
+Serṭā Syriac corpus from the late 19th century  an average accuracy of 99.5\%
+over 10 training runs ($\sigma=$) has been achieved. Early modern Latin:, Persian:, ....
+
+Recognition of text and emphasis in a mixed English and romanized Arabic
+catalog on a dataset of 350 lines in the training set (50 lines in the
+validation set) resulted in an averaged character accuracy of 99.3\%
+($\sigma=0.16$) over 10 runs with 95.38\% on cursive and text with increased
+spacing ($\sigma=1.46$). When using only emphasized text accuracy as the
+stopping criterium mean accuracy rises to 99.03\% ($\sigma=0.28$).
+
+\subsection{Manuscripts}
+
+Josephus and preliminary Hebrew results.
+
+\begin{figure}
+	\includegraphics[width=\columnwidth]{high.png}
+	\caption{Script recognition on French-Arabic sample page}
+	\label{fig:high}
+\end{figure}
+
+\printbibliography
+\end{document}

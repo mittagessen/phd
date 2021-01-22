@@ -1,0 +1,15 @@
+[0] Config.pm:302> INFO - This is Biber 2.11
+[0] Config.pm:305> INFO - Logfile is 'read.blg'
+[30] biber:313> INFO - === Fri Sep 28, 2018, 15:40:58
+[49] Biber.pm:371> INFO - Reading 'read.bcf'
+[106] Biber.pm:857> INFO - Found 7 citekeys in bib section 0
+[119] Biber.pm:3976> INFO - Processing section 0
+[129] Biber.pm:4136> INFO - Looking for bibtex format file 'read.bib' for section 0
+[130] bibtex.pm:1489> INFO - LaTeX decoding ...
+[141] bibtex.pm:1305> INFO - Found BibTeX data source 'read.bib'
+[209] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[210] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[210] Biber.pm:3804> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[210] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[217] bbl.pm:617> INFO - Writing 'read.bbl' with encoding 'UTF-8'
+[220] bbl.pm:720> INFO - Output to read.bbl

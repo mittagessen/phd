@@ -1,0 +1,15 @@
+[0] Config.pm:302> INFO - This is Biber 2.11
+[0] Config.pm:305> INFO - Logfile is 'dh.blg'
+[23] biber:313> INFO - === Tue Nov 27, 2018, 17:36:15
+[43] Biber.pm:371> INFO - Reading 'dh.bcf'
+[96] Biber.pm:857> INFO - Found 4 citekeys in bib section 0
+[107] Biber.pm:3976> INFO - Processing section 0
+[116] Biber.pm:4136> INFO - Looking for bibtex format file 'dh.bib' for section 0
+[117] bibtex.pm:1489> INFO - LaTeX decoding ...
+[133] bibtex.pm:1305> INFO - Found BibTeX data source 'dh.bib'
+[170] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[170] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[170] Biber.pm:3804> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[170] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[173] bbl.pm:617> INFO - Writing 'dh.bbl' with encoding 'UTF-8'
+[175] bbl.pm:720> INFO - Output to dh.bbl

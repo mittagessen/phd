@@ -1,0 +1,171 @@
+\chapter{Script and Emphasis Detection using Recurrent Neural Networks}
+
+\section{Introduction}
+
+In Digital Humanities research documents containing multiple scripts and
+extensive text emphasis for semantic purposes are common, ranging from
+relatively simple parallel texts, to mixed Fraktur-Antiqua printing,
+dictionaries, and library catalogs. With the increased availability of Optical
+Character Recognition software at least in part accessible to the determined DH
+scholar robust script and text emphasis detection methods are of special
+importance for effective digitization of these works.
+
+State of the art neural sequence-to-sequence models have largely supplanted
+older character-based methods for Optical Character Recognition. While neural
+methods have generally higher accuracy and decreased requirements on training
+data annotation depth, some earlier approaches, most notably the tesseract OCR
+engine \cite{smith2009adapting}, featured seamless classifier combination and
+common text emphasis detection. Neither are available in any freely licensed
+OCR package utilizing the advances of machine learning in the last decade.
+
+\subsection{Related work}
+
+Past approaches to segmentation-less multilingual OCR have focused on building
+combined models capable of recognizing multiple scripts~\cite{ul2013can}.
+Combined models are undesirable for multiple reasons. The irregularity of early
+modern printing and large number of typefaces result in character accuracy
+below 95\% for mixed-font models even on mono-script texts
+\cite{springmann2016automatic} necessitating time consuming training data
+acquisition and retraining of these large models. In addition, reusing training
+data is regularly prevented by being embedded in other non-target scripts or
+typefaces and legal restrictions imposed by digitization agents..
+
+A second direction labels OCR input images, most often lines, to be able to
+select appropriate monolingual recognition models. 
+
+The method described in \cite{fujii2017sequence} labeling whole lines using a
+recurrent neural network is inappropriate for many humanities texts because of
+extensive intra-line script switching. A recurrent neural script classifier
+based on overlapping sliding window profile feature sequences is shown
+in~\cite{singh2015can}. \cite{ul2015sequence} published a conceptually
+simpler approach without feature extraction directly classifying character
+script using an LSTM network. A refined version of the latter method is the
+basis of our script detection system.
+
+\section{RNNs for Script and Emphasis Detection}
+
+\subsection{Script Detection}
+
+The system treats script detection as a segmentation-less sequence
+classification problem, similar to text recognition. Instead of assigning a
+unique label to each code point or grapheme cluster we assign all code points
+of a particular script the same label, the network is trained to output the
+correct sequence of script labels using the CTC loss
+function~\cite{graves2006connectionist}. It should be noted that CTC is on the
+face unsuitable for this task, as it includes no mechanism to ensure temporal
+alignment between graphemes in the input sequence and output activations;
+fortunately the LSTM network's activations are fairly close to their
+corresponding location in the input sequence. The output sequence is then used
+to split the line into single-script runs that can be classified with
+monolingual recognition models.
+
+Script classes are ISO 15924 codes determined through each code point's Unicode
+script property\footnote{ISO 15924 includes separate identifiers for Antiqua
+and Fraktur texts and similarly visually distinct calligraphic hands for Syriac
+which are subsumed as Latin and Syriac in the Unicode database.} As there are
+graphemes that occur in multiple scripts, chiefly numerals and punctuation, we
+retain both the common and inherited properties. Merging these during
+post-processing based on their surrounding script increases robustness when
+classifying non-body text such as page numbers and tables, compared to fusing
+them beforehand. Bidirectional text is dealt with by rearranging the target
+sequence into display order using the Unicode BiDi algorithm before script
+assignment.
+
+Apart from the mentioned merging step, two additional post-processing steps are
+performed. The first substitutes all individual runs of a line with the whole
+line if only a single script remains after common/inherited merging. The second
+stems from the observation that often only a subset of scripts the detection
+network is trained on occur in any document. A whitelist is added, merging
+runs of non-included scripts into the surrounding context after filtering for
+common confusions (Arabic-Syriac and Latin-Fraktur).
+
+\subsection{Emphasis Recognition}
+\label{sec:emph}
+
+We evaluated two methods of encoding two common text emphasis methods for
+recognition by a RNN. Initially, italicized and text components with increased
+letter spacing were marked up with special start and stop markers and the model
+was trained to produce these markers. While the results of the training were
+promising, obtaining the amount of training data needed to reliably place both
+markers was infeasible for our target documents. Creating separate labels for
+italicized/spaced graphemes and training for these, remedied the marker
+placement issue with a sufficiently small amount of training data.
+
+Separate alphabets for emphasized text components increase model size and
+execution time, tripling the size of the final fully connected layer. This
+large increase in possible output labels also seems to preclude fine-tuning
+base models by resizing the final linear projection of the network.
+
+\subsection{Architecture}
+
+Both the script detection and emphasis recognition share a common network
+architecture of bidirectional Long short-term memory RNN blocks trained with
+Connectionist Temporal Classification loss and single-sample stochastic
+gradient descent with momentum (learning rate:, momentum: 0.9). Early stopping
+is used to terminate training. The system is implemented as part of the kraken
+OCR engine.
+
+The networks operate on binarized whole lines. Baselines and line height are
+normalized using a slightly modified version of the centerline normalizer
+implemented in the OCRopus system.
+
+\section{Preliminary Results}
+
+The script detection and emphasis recognition were evaluated as part of
+Bibliotheca Arabica which aims to gain new insights into Arabic literature from
+1150 to 1850 CE by analysing the ways of production, transmission, and
+reception of texts. The basis of this research are \textasciitilde 500 library
+manuscript catalogs which are usually multilingual and employ structured text
+emphasis as semantic markup.
+
+\subsection{Dataset}
+
+We repurposed publicly available non-synthetic training data for recognition
+models to build a corpus of 76000 script-annotated line images containing
+Arabic, Cyrillic, polytonic Greek, Hebrew, Latin, Fraktur, and (western) Syriac
+text. The majority of text lines contain only a single non-common script
+although there are mixed lines for all scripts in the corpus. The exact
+distribution of code points is shown in table \ref{table:points}. 760 randomly
+selected lines are separated from the corpus as a test set.
+
+Emphasis recognition was evaluated on an English and romanized Arabic catalog
+using emphasis described in \ref{sec:emph} with 350 transcribed lines. An
+additional 50 line transcriptions were used as a test set. Overall 220 lines
+contain some kind of text emphasis. It is representative of a large number of
+catalogs in purview of Bibliotheca Arabica.
+
+\begin{table}
+	\centering
+	\caption{Script distribution in corpus}
+	\label{table:points}
+\begin{tabular}{lll} \toprule
+	Script & Code Points & Lines\\\midrule
+	Arabic & 916368 & 19757\\ 
+	Cyrillic & 65524 & 1904\\
+	Greek & 198324 & 5262\\
+	Hebrew & 102575 & 2117\\
+	Fraktur & 137332 & 3618\\
+	Latin & 1570618 & 40809\\
+	Syriac & 54092 & 1752\\
+	Inherited & 30588 & 14236\\
+	Common & 837931 & 75146\\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Script Detection}
+
+The fully trained network yielded a character accuracy of 94.62\% on the
+test set. Output for a French-Arabic bilingual sample page can be seen in
+\ref{fig:high}. The misclassification of Eastern Arabic numerals as Latin text
+is caused by the transcription as Latin Arabic numerals in the ground truth.
+
+\begin{figure}
+	\includegraphics[width=\columnwidth]{high.png}
+	\caption{Script recognition on French-Arabic sample page}
+	\label{fig:high}
+\end{figure}
+
+\subsection{Emphasis Recognition}
+
+The overall character accuracy of the network on the test set is 96.10\%, with
+96.38\% on cursive and text with increased spacing.

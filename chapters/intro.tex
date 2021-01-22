@@ -1,0 +1,1227 @@
+\chapter{Introduction}
+
+This dissertation consists of a collection of publications that proposes
+several methods to solve a number of tasks that aid in the retrodigitization of
+historical Arabic-script material, but are designed to be applicable to writing
+and inscriptions in a variety of other writing systems. 
+
+\section{Document Image Analysis and Optical Character Recognition}
+
+Document Image Analysis (DIA) is a subfield of Computer Vision (CV) which aims
+to understand document contents through processing of its digital images.
+Documents are defined loosely by the field, including not only handwritten and
+printed text on paper, but also writing on other supple supports such as
+papyrus or palm leafs and even inscriptions.
+
+The difference to general computer vision lies not so much in the methods
+employed but the nature of the input images. These images are usually obtained
+through cameras or scanners, often in a professional setting, resulting in
+source material with minimal noise from non-pertinent elements which are often
+encountered in the natural scene images treated by other branches of CV.
+Notwithstanding the cleaner input data, the structured representations desired
+as output tend to be of higher complexity and quantity in DIA than other
+applications, requiring detection, classification, and relation of dozens to
+hundreds of document elements such as lines, characters, illustrations, and
+tables. 
+
+Like other fields in computer science, DIA research can be partitioned into
+specific tasks, one or more of which are solved by a particular proposed
+method. The most prominent task of DIA is optical character recognition
+(OCR)\footnote{While in most contexts optical character recognition and
+handwritten text recognition are treated as distinct, both are subsumed under
+the term OCR here. A detailled justification is given in \ref{s:soa}}, but
+others, either based on OCR or entirely novel, such as document classification
+and dating or keyword spotting exist.
+
+OCR, the conversion of printed, written, or inscribed writing into
+machine-encoded text, is a long-established process, both as a task in computer
+vision research and its practical use in applications ranging from address
+parsing to aids for the blind. The latter is in fact the origin of all document
+image analysis systems with an 1809 CE US patent for a non-tactile reading
+instrument. These early methods were primitive and required significant human
+interpretation of their output such as with Fournier D'Albe's 1914 CE optophone
+which converted strokes into tones the reader is required to mentally interpret
+as character information. At the time they were little more than curiosa and
+none achieved widespread use. 
+
+These first approaches, decades earlier than the earliest computers, have now
+evolved to the routine application of DIA techniques for tasks such as address
+parsing for mail routing, cheque verification, and book retrodigitization.
+Indeed, there is now the widespread claim in the field that OCR is
+fundamentally solved, at least for modern, machine-printed documents in English
+with a reasonable low level of noise where modern commercial retrodigitization
+software routinely achieves character accuracy rates above 99\%. Nevertheless,
+there exist almost 4000 written languages and several hundred writing systems
+or scripts, for the vast majority of which practical OCR systems are not
+available. Even accounting for the use of purely alphabetic scripts such as
+Latin and Cyrillic, which present less of a challenge to state of the art OCR
+when employed accordant with modern western typographic practices, it is clear
+that a substantial proportion of human literary output is not yet accessible
+through retrodigitization.
+
+Extending our view backwards in time, this assessment becomes even more
+muddled. Large scale digital scanning projects in rich countries have resulted
+in the creation of substantial digital libraries that are de facto inaccessible
+to both the public and scholars even for material as recent as the late
+nineteenth century CE as typographical and orthographical variation degrade the
+quality of digitized text by software geared towards modern documents
+substantially. This is most likely a temporary state of affairs for the most
+numerous material in the archives of the Global North where projects such as
+OCR-D\footnote{\texttt{http://ocr-d.de}} are paving the way to translate
+advances in pure DIA research to library practice. Along these projects and in
+more specific efforts such as \cite{smith2018research} we have seen the
+crystallization of a collective research program for the digitization of
+historical and \emph{minority script} material that is shared by both
+humanities scholars engaged in digital methods and computer vision experts.
+Nevertheless, these communities remain fractured along geographical,
+linguistic, and professional boundaries.
+
+On the other hand, the lack of funding combined with the deterioration of
+collections elsewhere through conflict and environmental influences increases
+the risk of permanent loss of cultural heritage of interest to only a small
+number of scholars and minority populations. Even famed collections such as the
+manuscripts of Timbuktu, have barely escaped destruction through conflict in
+recent years and are in acute danger of being destroyed by humidity. 
+
+For many of these writings the fundamental technological basis for working with
+them is lacking; the Berkeley Script Encoding Initiative lists over hundred
+writing systems that remain to be encoded in Unicode, with circa two-thirds
+being historical and a substantial remainder being used liturgically. Without a
+standardized way to represent them digitally, retrodigitization and
+dissemination of material becomes infinitely more difficult. These writing
+systems include some with substantial scholarly communities such as Egyptian
+Hieroglyphs and Demotic, Cuneiform, and various variations of Chinese scripts.
+Even scripts already encoded in Unicode often lack code points for certain
+surface forms required for palaeographic or epigraphic practice. While this is
+not always an oversight but the result of the Unicode consortium's encoding
+guidelines which largely proscribe the inclusion of new allographs and
+ligatures in the standard, and supplementary standards like the code tables
+defined by the Medieval Unicode Font Initiative\footnote{http://mufi.info}
+exist, this state of affairs gives rise to ad-hoc standards limiting
+interchangeability and machine-readability of text considerably.
+
+\subsection{Tasks}
+
+As one of the core application of document image analysis, OCR has devolved
+into a large number of subproblems, some of which have been largely deprecated
+with increasing capability of new algorithms while new ones are created to deal
+with ever more challenging material. Not all of them are strictly necessary for
+a functional OCR system and in fact many of them can only be implemented in
+material-specific fashion and are therefore relegated to specialized
+applications. A closer analysis of the design requirements of a largely
+script-independent OCR system capable of processing Arabic-script text based on
+a survey of its calligraphic and typographic features will follow in
+\ref{ch:arabic}.
+
+Generally accepted tasks are listed below, although the compilation is far from
+complete:
+
+\begin{description}
+\item [Binarization] Classifying the pixels of an image into two classes:
+foreground, i.e. text, and background, i.e. everything else.
+\item [Denoising] Increasing the page image quality for subsequent problems.
+Denoising includes processes such as background normalization, color space
+adjustments, deblurring, or stain removal.
+\item [Deskewing and Dewarping] Correcting both the perspective distortion
+inherent in camera capture and other degradations introduced commonly in
+scanning setups such as rotation, warping along the binding, \dots
+\item [Region Segmentation] Subdividing a page image into components such as text, decoration, notes, \dots
+\item [Text Line Segmentation] Extracting the text lines from a page image.
+Text line segmentation is notable for being a task where not only a large
+variety of techniques exist but the modellisation of the line itself has been
+subject to considerable research.
+\item [Character Segmentation] Segmenting text on a page image down to the
+glyph or even lower level. While a common operation in traditional OCR systems
+it is mostly unnecessary with state of the art methods. A related task that is
+of interest to the humanities, especially paleo- and epigraphers, is character
+alignment, i.e. the locating individual characters on a document page given the
+full page text.
+\item [Script and Font Recognition] Classifying the language, writing system,
+style, or typeface of the text. This classification can be performed at
+different levels, such as document-wide or individually for whole or parts of a
+line.
+\item [Table Recognition] Inferring the logical structure of table images.
+\item [Scene Text Recognition] Recognition of text in images taken in the
+\emph{wild} that contain substantial non-text content.
+\end{description}
+
+The typical optical character recognition pipeline utilizes methods solving
+these problems in 3 distinct steps:
+
+\begin{description}
+\item [Preprocessing] Denoising, deskewing and dewarping, and binarization
+\item [Layout Analysis] Extracting structural information from document page
+images and enriching it with additional semantic information.
+\item [Transcription] Extracting textual information from all or a subset of
+objects identified by in the layout analysis step.
+\end{description}
+
+While this characterization holds for all but the most esoteric pipelines the
+exact functional blocks depend heavily on the type and structure of the
+documents to be processed. For example, binarization is traditionally used as a
+simple process to enable the use of fast binary morphology in the layout
+analysis step, reduce the dimensionality of data for classifiers, or in general
+as a kind of basic feature extractor. The relative ease with which accurate
+binarization for high quality scans of machine-printed text on paper can be
+computed, contrasts with the difficulty of treating documents on other writing
+surfaces, faded writing, fragmentation, etc. Methods for the latter kind of
+document therefore often attempt to reduce the reliance on binarization or skip
+it entirely. In general, there is a trend of eliminating binarization, such as
+most other preprocessing steps, for all material as more advanced techniques
+have become available, although the topic is the subject of perennial debate in
+the research community.
+
+\section{Motivation}
+
+Arabic-script material represents one of the largest literary traditions in
+human history, both in terms of volume and geographical spread. Examples range
+from religious texts, most prominently the Quran, the holy book of Islam, over
+poetry, to scientific and legal texts in addition to a large corpus of
+administrative records. The sheer number of these texts across a multitude of
+domains make them a prime target for new paradigms in the humanities employing
+computational methodology such as \emph{distant reading} and quantitative
+palaeography. These methods require either large text corpora or accurate DIA
+methods based on one or more of the abovementioned component tasks of an OCR
+system. As the vast majority of Arabic texts have never existed in digital
+form, high quality retrodigitization through OCR forms the foundation for a
+substantial number of Arabic Digital Humanities research projects.
+
+When I started working on this thesis, OCR of machine-printed Arabic text was
+largely dismissed by humanities scholars working on these documents, even ones
+already deeply involved in the digital humanities, and funding agencies as
+impractical, even more so for historical or multilingual material. Accurate
+Arabic handwriting recognition seemed completely out of reach. While a long
+trail of publications on OCR of simple Arabic datasets such as KHATT
+\cite{mahmoud2014khatt} existed and a number of open and proprietary OCR
+software such as Tesseract, Abbyy FineReader, and Sakhr offered nominal support
+for the recognition of Arabic-script text, these solutions never materialised
+in actual scholarly or large-scale library practice. There are a multitude of
+reasons for this: high error rates for classifiers ang segmenters ill-suited to
+the cursive nature of the writing system, a lack of readily available software
+and technical expertise, and substantial cost and effort required to adapt
+existing solutions to the material of interest.
+
+It was quickly clear that the challenges keeping practical OCR out of the hands
+of scholars working on Arabic-script printed and handwritten texts, mirror
+those of many other researchers engaged in retrodigitization of historical and
+non-Latin script material. Imitating the prevailing opinion on Arabic OCR,
+\cite{widner2017toward} claimed medieval (Latin-script) manuscripts to be
+practically impervious to contemporary OCR. Similar statements can likely be
+found for other domains. This meant an overall lack of established best
+practices, data formats, and requirements on software capability and interfaces
+suited to the workflows of digital humanists. Existing projects like
+Lace\footnote{\texttt{http://heml.mta.ca/lace/index.html}} and
+\cite{alpert2016machine} used OCR technology in an ad-hoc manner, often
+resorting to extensive \emph{data carpentry}\cite{carpentry} incorporating
+significant domain knowledge to boost accuracy to an acceptable level.
+
+Therefore, we are presented with a twofold potential: with some awareness of
+the functioning of the Arabic writing system and its associated calligraphic
+practices a largely script- and language-independent \emph{universal} OCR
+system, that is useful beyond the immediate community of Arabic-script
+scholars, could be conceived, while also allowing methods in some cases to be
+evaluated against non-Arabic datasets when Arabic ones are not available. Apart
+from the script-specific analysis of the deficiencies and requirements of
+Arabic-script OCR, the aim has always been to create universally applicable
+algorithms that are particularly suitable to Arabic material.
+
+\section{Scientific Contributions}
+
+The majority of this work should be seen in its relation to the field of the
+Digital Humanities. The research presented in the next chapters is not a
+unconnected collection of methods solving single tasks in DIA that are of
+utility for humanities scholars engaged in retrodigitization but part of a
+coherent ecosystem consisting of two principal elements: the Kraken OCR engine
+and the eScriptorium virtual research environment (VRE). As such the aspiration
+has been to not only advance methods for particular tasks but enabling
+scholarly workflows that were previously arduous, impractical, or even
+impossible.
+
+The first element of this aspiration, the Kraken software, is a
+feature-complete, freely-licensed, modular OCR system. It differs from other
+open and proprietary solutions in multiple important ways: its target audience,
+software design, and generalizability. The foundations of these differences can
+be largely traced back to its origins as a wideranging refactorization of the
+OCRopus source code for integration into a digitization pipeline for scholarly
+use at the Chair of Digital Humanities at the University of Leipzig. As such it
+has a stable application programming interface and is highly modular to allow
+the creation of own workflows or the substitution of functional blocks with
+minimal effort. Cognizant of the fact that humanities scholars have wildly
+differing requirements on the desired output of an OCR system, a concerted
+effort has been made to reduce implicit assumptions on the functioning of text
+to accomodate as varied material and transcription guidelines as possible.
+Thus, Kraken performs only minimal normalization, is fully compatible
+with Unicode private use area (PUA) utilization, and supports both horizontal
+and vertical text directions. 
+
+As part of the adaptation work for making Kraken a more capable tool for Arabic
+text work, a number of case studies were performed which produced the first
+detailled analysis on the weaknesses and strengths of state of state of the art
+OCR methods on machine-printed Arabic text. A first preliminary study on a
+small number of printed classical Arabic-language books was followed by a
+large-scale retrodigitization feasibility study on a leading Arabic-language
+journal published by the American University of Beirut.
+
+Partly as a result of these studies, the engine has been extended in multiple
+ways. This thesis contributes two trainable line segmentation systems, a basic
+one capable of only detecting baselines, and a more advanced one allowing
+region and line segmentation in addition to classification. The latter is
+included in Kraken. Initially, a trainable line segmentation method constructed
+on top of a U-Net for semantic segmentation was developed. In a second step the
+training procedure was adapted to allow joint region and line detection and
+inference of line orientation. This second method has also been optimized for
+memory usage by employing a ReNet-like stack of separable recurrent layers,
+reducing memory consumption by circa fifty per cent in comparison to similarly
+performing fully convolutional semantic segmentation networks.
+
+In addition, a basic script and emphasis detection system build on Kraken's
+text transcription module was devised. 
+
+The segmenter in Kraken is currently the only openly available layout analysis
+module in a complete OCR engine which is able to accurately segment complex
+curved lines in Arabic manuscripts. In addition, it is the first method
+following the baseline paradigm for line modellisation incorporating line
+orientation detection. 
+
+A flexible abstraction layer on top of the pytorch neural networking library
+has been added which allows the flexible reconfiguration of the artificial
+neural networks (ANN) employed for both layout analysis and text transcription 
+through a lightweight ANN definition language which is able to express many
+features of common architectures employed in computer vision tasks (see Annex
+XX). This layer allows the relatively simple addition of new layer types and
+thus quick prototyping and efficient hyperparameter optimization even for
+endusers without in-depth machine learning knowledge as has been demonstrated
+by \cite{strobel2020much}. 
+
+In contrast to older open engines such as Tesseract and OCRopus which use
+custom neural networking backends, a standard library in widespread use in both
+industry and the machine learning research community offers a multitude of
+benefits such as easier transfer of development skills and automatic or
+low-effort inclusion of performance improvements and additional features like
+GPU acceleration, distributed training, or model quantization.
+
+\cite[pg. 19]{smith2018research} note that one of the principal hurdles in
+advancing OCR for historical and non-Latin OCR is the lack of training and
+evaluation datasets. During the initial case studies several thousand lines of
+training data for text transcription were annotated and made available as public
+datasets. I was involved in the technical conceptualization and the
+transcription guidelines for these datasets. Another openly licensed dataset of
+four hundred Arabic-script manuscript pages in a variety of languages, styles,
+and domains was annotated with baselines and line orientation to enable
+evaluation of layout analysis methods on historical Arabic-script material.
+This highly-challenging dataset remains the only handwritten non-Latin dataset
+for the baseline paradigm for layout analysis.
+
+The second component of this OCR ecosystem is the eScriptorium VRE in
+development at the eScripta project at Université Paris Sciences et Lettres.
+While Kraken is designed for maximum flexibility by offering well-defined
+interfaces at different levels, eScriptorium takes another approach. Conceived
+as a full-blown palaeographic research and publication environment for
+scholarly use, OCR functionality is only a small part of its planned features.
+Thus, much emphasis has been placed on exposing the different steps in the OCR
+workflow in a user-friendly way while still retaining sufficient flexibility
+for a large number of different scripts and languages. While the
+above-mentioned advances in the Kraken OCR engine make it a versatile tool
+suitable for a multitude of scholarly purposes, eScriptorium cannot possibly
+expose its full functionality without devolving into a highly specialized tool
+for OCR only. The design of eScriptorium therefore allows manual and
+semi-automatic intervention at each step of the process either through manual
+manipulation in the interface or graphical and programmatic data exchange
+interfaces. 
+
+As eScriptorium aims to offer additional scholarly functions beyond pure
+retrodigitization the platform is also an ideal test case for computer
+vision-assisted research in the humanities. Functions like text reuse
+detection, automatic sampling of graphemes for palaeographic analysis, document
+classification, \dots are imaginable. In some cases, this advanced
+functionality ties into text transcription. Two methods for deriving grapheme
+locations from the implicit alignment produced by a line-based text recognition
+ANN trained with Connectionist Temporal Classification loss and their
+performance on fragmentary Hebrew and Greek material are presented. Depending
+on the transcription guidelines chosen by the user these methods can be used
+for a number of different palaeographic sampling purposes, ranging from
+semi-automatic allograph inventories to decoration extraction.
+
+\section{Outline}
+
+The remainder of this chapter will be dedicated to a review of computer vision
+techniques in general and as they pertain to optical character recognition.
+This includes a summary of the state of the art in research and practical
+available software packages, in joint with an analysis of general challenges
+faced by both in a variety of settings.
+
+All subsequent chapters in this dissertation, besides the conclusion and
+presentation of the Arabic script, are articles that have been published or
+accepted for publication. As all work is closely linked to the Kraken OCR
+engine and the eScriptorium project, differences in the current implementations
+are described in introductory notes before some chapters. These articles are
+organized into four parts: an introduction to the Arabic script, segmentation
+and script recognition, character recognition and alignment, and virtual research
+environments.
+
+Part I is on the Arabic script itself, organized into three chapters of a basic
+introduction to the writing system and the ensuing requirements of an
+Arabic-script OCR system, a preliminary study performed on classical Arabic
+machine-printed books, and an in-depth case study performed on a printed Arabic
+language journal.
+
+Part II contains three chapters on layout analysis and segmentation of
+Arabic-script documents. We present a first of its kind, freely-licensed,
+Arabic-script historical manuscript dataset and a competitive method to perform
+basic layout analysis on it. In the second chapter a novel, modular method for
+region and text line segmentation is presented. Lastly, a method to perform
+sub-line script classification on printed multi-scriptal text for multi-lingual
+OCR is shown.
+
+Part III is made up of three articles: an overall description of the Kraken OCR
+engine design and its features, and two methods to perform character alignment
+on highly fragmentary Hebrew and Greek manuscripts.
+
+The final part IV presents the virtual research environment (VRE) context in
+which a modern OCR engine like Kraken can be embedded through a series of three
+articles, two of which contain a conceptual description of the eScriptorium
+VRE, followed by a chapter investigating the friction between automatic
+processing, standardization, user-friendliness, and methodological pluralism in
+the humanities. 
+
+\section{Literature Review}
+
+We commence with a general review of the techniques employed in Machine
+Learning or Artificial Intelligence (ML/AI), Computer Vision, and Document
+Image Analysis and current trends in the research community to better
+contextualize the state of the art for the specific task of OCR. This brief
+survey includes not only the state of OCR research but also that of libre and
+proprietary OCR engines and workflow engines. As these software packages are
+more commonly used for large-scale digitization in an institutional context
+while one part of this work is to advance the practical application of OCR for
+humanities research this section concludes with a summary of the state of
+virtual research environments targeted at retrodigitization of historical
+material.
+
+\subsection{Computer Vision Techniques}
+\label{ss:techniques}
+
+While commercial DIA, even computerized, had existed for a number of years
+before the invention of either of the more general fields of computer vision
+and artificial intelligence \cite[pg. 11-14]{herbert1982history}, DIA research
+became soon subsumed under the larger umbrella of CV and AI. As the techniques
+in use before the \emph{fusion} of these fields have not found entry in the
+research canon and are of largely historical interest, this review is limited
+to methods established after the late nineteen-sixties.
+
+Computer vision processes can generally be divided into the following steps: 
+
+\begin{description}
+	\item[Image acquisition] refers to the capture of an digital image
+		through one or multiple image sensors. Limitations of a
+		particular image acquisition system, such as noise levels and
+		distortion, are often integral in the design of subsequent
+		steps. The most common acquisition systems in DIA are visible
+		light cameras and flatbed scanners, although in some cases
+		multispectral and radiographic sensors are employed.
+	\item[Preprocessing] aims to boost the performance of subsequent steps
+		through normalizing input data. It is frequently targeted at
+		eliminating degradations introduced during image acquisition.
+	\item[Feature extraction] reduces the dimensionality of input data
+		through combination and selection of its characteristics that
+		are deemed pertinent for the desired analysis. 
+	\item[Analysis] transforms extracted features into an output
+		representation specific to a particular task, e.g. class
+		probabilities for an image classification task, text for OCR,
+		object locations and labels for object detection, \dots
+\end{description}
+
+These steps have developed over time and their relative importance has changed
+with each paradigm shift in CV and adjacent fields such as machine learning and
+increasing computational capabilities. While research has often advanced in
+parallel in all steps, the current state of the art and the relationship
+between different methods is best understood by following the development of
+computer vision in a roughly chronological order.
+
+Early computerized DIA or rather basic OCR systems differed barely from the
+primitive opto-mechanical systems up to the first half of the twentieth century
+CE with their severe limitations steming from the use of rudimentary template
+matching with various attempts at preprocessing to increase accuracy as
+generalization was generally poor. While at the time of the infamous 1966 CE
+summer project on pattern recognition \cite{papert1966summer}, the currently
+most popular machine learning paradigm, artificial neural networks, had existed
+for more than twenty years they did not seem to be popular in the field. Minsky
+and Papert's 1969 CE book on perceptrons \cite{minsky1969perceptron} relegated
+research on ANNs to at best secondary role and caused a decade-long stagnation
+in the field in favor of alternative approaches.
+
+Advances in the nineteen-seventies included rule-based expert systems, the
+popularization of various low-level filters and operators such as gradient
+approximators, median and gaussian filter smoothing, and morphological
+operators, in addition to first attempts at feature representations such as
+edges, corners and binarization\cite{otsu1979threshold} of images that were
+suitable to the limited modelling capability of the classification methods of
+the time. By the early nineteen-nineties a bewildering array of hand-crafted
+feature representations had been devised with an ever growing collection of
+edge and corner detectors, contour and shape descriptors, unsupervised
+segmentation methods, and other transforms. Assemblies of these carefully
+selected features were usually coupled with relatively simple unsupervised or
+supervised classifiers such as k-nearest neighbor, multilayer perceptrons, or
+decision trees. \cite{wilkinson1992first} is a comparative study among early
+large-scale digitization methods on US census records, showing this trend of
+complex feature descriptors and relatively simple neural and non-neural
+classifiers. At the same time, constructing completely hand-crafted heuristic
+methods based on the combination of low-level instructions to perform
+high-level CV, i.e. true analysis and interpretation of image data, became a
+staple in both research and industry.
+
+Methods constructed after this schema work reasonably well on narrow document
+domains but do not generalize to larger classes of documents, as the features
+selected are often at least somewhat specific to the source material, and
+require labor-intensive adaptation. 
+
+In parallel with the proliferation of feature descriptors, classifiers and
+training methods became more powerful during the nineteen-seventies and
+-eighties. Learned feature maps and weight sharing in ANNs, what would later be
+termed convolutional neural networks, started to appear, such as Fukushima's
+1980 \emph{neocognitron}\cite{fukushima1982neocognitron} and LeCun's 1989
+CNN\cite{lecun1989backpropagation}, both of which were designed for character
+recognition purposes. Backpropagation\cite{rumelhart1986learning}, an algorithm
+allowing for the efficient supervised training of functions through gradient
+descent which remains the standard for supervised learning, enabled, in theory,
+the supervised training of deep neural networks for the first time. In practice
+the vanishing/exploding gradient problem, the tendency of the cumulative error
+signals backpropagated through the network to either shrink or grow rapidly
+with each antedecent layer, first identified in
+\cite{hochreiter1991untersuchungen} limited ANNs to shallow problems which
+still required extensive feature engineering for most computer vision
+applications. Multiple ways have largely alleviated the problem by the
+mid-twothousands: in the case of recurrent neural networks (RNNs) alternative
+architectures like Long Short-Term Memory (LSTM) units have more stable
+gradients while for most other ANN architectures increased computational power
+and large datasets circumvent the issue by allowing training with small
+gradients without overfitting in reasonable time. A plethora of alternate
+solutions and circumventions can be found in the literature of the time  from
+unsupervised pretraining, to hessian-free optimization, gradient-less training,
+and ensemble methods\cite[sec. 5.9]{schmidhuber2014deep}. None of these are
+currently in widespread use.
+
+In the gap left between the maturation of feature descriptors and the current
+predominance of deep ANNs fell the establishment of multiple alternative
+classification methods for computer vision. Hidden Markov Models (HMMs) which
+were already successful in the speech recognition field started to be used for
+modellisation of sequences in computer vision, notably cursive handwriting
+recognition \cite{kaltenmeier1993sophisticated}. The soft-margin formulation
+for Support Vector Machines (SVM) and the kernel trick extended the use of
+linear classifiers to data that is not linearly separable. While either of
+these methods have largely been surplanted by ANNs in CV, they remain popular
+in certain parts of the DIA community, most notably in the use of HMMs for
+Arabic text recognition research.
+
+The major resurgence of ANNs for computer vision can be traced to significant
+improvement to the overall state of the art shown by deep convolutional neural
+networks trained with straightforward backpropagation on a number of image
+classification contests in 2011 and 2012, often halving the error rate in
+comparison to previous years and in some cases achieving superhuman performance
+on constrained domains. While the contests in question, foremost on the
+\emph{ImageNet} dataset, were limited to image classification, deep
+convolutional networks disposing completely of hand-crafted features were
+rapidly adapted to other tasks such as object detection, semantic segmentation,
+optical flow, image captioning, \dots.
+
+Advances in neural network design in the following years were, disregarding
+brief periods of popularity of alternative network architectures and training
+schemes, mostly driven by attempts to increase the feasibly trainable depth of
+deep CNNs for image classification. The initial 2011 eight layer AlexNet
+\cite{krizhevsky2017imagenet} already contained staples like ReLU activation
+functions which diminish gradient vanishing in layers, dropout regularization,
+and data augmentation to inhibit overfitting. The 2014
+VGG-Net\cite{simonyan2014very} with up to nineteen layers introduced an
+architecture made up solely of small 3$\times$3 convolutional filters, increasing
+the effective receptive field through additional layers. The 2015 Resnet
+\cite{he2016deep} preserves the error signal by introducing shortcut
+connections skipping one mor more layers effectively training the network as an
+ensemble of shallower sub-networks \cite{veit2016residual}. SkipNets
+\cite{wang2018skipnet} and Highway Networks \cite{srivastava2015training}
+follow the same idea but parametrize the data flow between layers, comparable
+to the gating mechanism in LSTM RNNs. DenseNets \cite{huang2017densely} go even
+further and input the concatenated feature maps of all previous layers directly
+into the next layer. With ever-increasing model complexity, techniques to
+reduce both the number of model parameters and operations required were
+devised: SqueezeNets \cite{iandola2016squeezenet} introduced 1$\times$1
+bottleneck filters for dimensionality reduction, neural architecture search was
+used to find the more efficient AmoebaNet architecture
+\cite{real2019regularized}, and \cite{tan2019efficientnet} investigated
+principled hyperparameter choices to increase computational efficiency.
+
+The deep learning paradigm fundamentally relies on large datasets,
+\emph{ImageNet} contains fourteen million images organized in more than
+twenty-thousand classes, which are often not available in fields working with a
+more constrained data basis such as DIA. This constraint, in addition to
+computational efficiency, have resulted in the popularization of using all or a
+part of the convolutional layers in deep networks trained on large image
+classification datasets as good general purpose features even for vastly
+different target domains, i.e. performing \emph{transfer learning} for the
+desired task. Depending on how these layers, the so-called \emph{backbone
+architecture}, are incorporated, this technique can be seen either as
+supervised pre-training or as a fixed feature extractor.  In the latter case, a
+shallow ANN is trained on top of the features maps computed by the deep CNN,
+leaving the convolutional layers untouched. In the pre-training configuration,
+the last layers trained to produce the representation for the task at hand are
+trained jointly with the convolutional feature extracting layers in a process
+called \emph{fine-tuning}. As the weights in the pre-trained layers are already
+expected to be relatively good, the training hyperparameters are often chosen
+separately for layers trained from scratch and ones to be fine-tuned. Hybrid
+schemes exist as well which keep some layers fixed and fine-tune others,
+usually under the assumption that the first layers compute generalized features
+such as edges, corners, \dots while later layers compute more task-specific
+features that require adaptation.
+
+While pre-training in this vein is seen as one of the great successes,
+significantly broadening the applicability of deep learning in CV
+tasks\cite{huh2016makes}, its actual necessity has been questioned recently
+\cite{he2019rethinking,zoph2020rethinking} with some indication that deep CNNs
+performing better on the image classification task do not necessarily translate
+into better features for other tasks \cite{kornblith2019better}. 
+
+Despite the preponderance of methods derived in one way or another from
+discriminative convolutional image classification networks for the majority of
+tasks, other approaches exist. Recurrent neural networks, ANNs with connections
+between layers along a temporal sequence, had been popular for sequence
+modelling since training on arbitrary length sequences became possible after
+the invention of LSTM units. RNNs have been used in the processing of
+sequential visual information from video recognition, natural language
+description of images, connected writing recognition, robotics, \dots but have
+also been adapted to tasks that are not conventionally sequential such as image
+classification \cite{visin2015renet} and \cite{stollenga2015parallel}
+segmentation. Nevertheless, RNNs do not rule out the use of convolutional
+feature extractors. Common constructions such as \cite{shi2016end} combine
+either fixed convolutional feature extractors or train smaller convolutional
+stacks from scratch. In some cases an additional attention mechanism is
+inserted which allows the \emph{decoding} recurrent layers to weigh certain
+areas of the input feature maps dynamically \cite{xu2015show}.
+
+While LSTMs are a powerful and versatile sequence modelling method, a major
+problem was the lack of of a differentiable loss that could allow the
+supervised training of RNNs without an explicitly given alignment between
+inputs and output sequences. Traditional losses such as cross-entropy require
+an explicit output-target pair for each time step, requiring, in the case of the
+network output sequence being of different length than the input sequence, the
+spreading of target labels across multiple time steps through some mechanism,
+usually manual annotation. The 2006 Connectionist Temporal Classification (CTC)
+loss \cite{graves2006connectionist} permits alignment-free training solving the
+issue for many computer vision applications through an efficient dynamic
+programming based algorithm that sums the probability of possible alignments of
+network output and target. It has some limitations: chiefly a requirement for
+the target sequence to be of shorter length than the network output, an
+assumption of conditional independence between target labels, and the
+complexity of fast and numerically stable implementations but these are rarely
+important in the applications of non-linguistic sequence modelling in CV. 
+
+Other approaches to solve the alignment problem in sequence modelling exist,
+although none are as popular as CTC in the DIA domain. Attentional models,
+already widespread in natural language processing because of the limitations of
+CTC, wich decouple input and output sequences completely and can thus be
+trained with standard losses, have had a brief period of popularity with
+applications in image \cite{xu2015show} and video \cite{song2017hierarchical}
+captioning, a sequential object recognition \cite{ba2014multiple}, and whole
+paragraph handwritten text recognition \cite{8270105, bluche2016joint}.
+Transformer networks, advanced self-attentive networks which have significantly
+advanced the state of the art in NLP, dispensing with both convolutions and
+recurrent layers have also recently made inroads in both OCR \cite{transcribr}
+and non-sequential CV tasks such as semantic segmentation and image
+classification \cite{wu2020visual}.
+
+All methods described above are trained in a discriminative manner, i.e. models
+learn the conditional probability $P(Y|X)$ of a target $Y$ given an observation
+$X$. Generative models, in contrast learn the joint probability $P(X, Y)$ which
+can be used for classification using Bayes' rule but has other applications
+notably allowing the generation of realistic synthetic data by sampling the
+model's latent space. A particular construction to train generative neural
+models in an unsupervised or semi-supervised manner that became popular after
+2014 are generative adversarial networks (GANs)
+\cite{goodfellow2014generative}. These consist of two adversarial ANNs: a
+generative model that captures the data distribution and a discriminative model
+that is tasked with distinguishing real data sourced from the training dataset
+from synthetic samples created by the generator. Both are trained
+simultaneously, usually until the discriminator fails to distinguish
+generator-produced output. Deep GANs were used to establish a number of CV
+tasks such as image synthesis from text\cite{reed2016generative} and conversion
+from one image domain into another\cite{CycleGAN2017}. Their impact on DIA
+research has been more modest, although the literature contains various image
+reconstruction and enhancement methods \cite{nguyen2019character,suh2020two}
+and at least one layout analysis system \cite{quiros2018multi} built upon GANs.
+
+Other deep neural generative models exist but have generally fallen out of
+favor. Autoencoders, networks consisting of a contracting encoding and
+expanding decoding path trained on reconstruction loss, were widely used for
+unsupervised pretraining\cite{vincent2008extracting,erhan2010does} before the
+advent of supervised ImageNet features. Some newer methods in DIA still use
+them in tasks such as binarization \cite{calvo2019selectional} or page
+segmentation \cite{chen2015page,wei2015selecting}. 
+
+\subsection{State of the Art in OCR}
+\label{s:soa}
+
+As a subfield of CV, DIA and OCR use similar techniques and for the more
+popular tasks in the research community the methods employed generally resemble
+those of the wider CV and machine learning community. On the other hand, less
+well-researched upon tasks, such as reading order determination, remain the
+domain of algorithms and techniques that are considered to be obsolete and
+ineffective in comparison to modern alternatives.
+
+Traditionally, the DIA research community and commercial applications
+distinguished between methods designed to process machine-printed (OCR) and
+hand-written text (HTR) with the latter's recognition further sub-divided into
+\emph{offline} and \emph{online} text recognition, i.e. the processing of
+already completed handwritten text vs the recognition of text with the aid of
+information on the production process such as stroke orders and paths. As our
+interest is largely limited to historical material, we will ignore online text
+recognition.
+
+The distinction between OCR and HTR can be attributed to multiple reasons.
+Handwritten material is naturally less uniform and regular than machine-printed
+texts so it is generally considered to be more challenging. Many printed OCR
+methods until a few years ago were also designed around character classifiers
+which processed isolated character and required commensurate layout analysis
+methods extracting single characters from the page. This paradigm is
+fundamentally unsuited for connected or cursive text, a fact recognized as far
+back as 1973 \cite{sayre1973machine} and coined as Sayre's paradox: To be able
+to recognize a (cursive) handwritten word it is necessary to segment it into
+characters but segmentation is not possible without recognizing it first. As
+the writing system of primary interest for OCR research, the Latin script, is
+machine-printed in a disconnected form and until recently almost exclusively
+handwritten in a cursive form, the two terms can be more aptly seen as
+short-hands for \emph{block letter} and \emph{cursive} text recognition for the
+purposes of describing the fundamental capabilities of a text recognition
+system.
+
+As modern text transcription methods are generally able to process both block
+and cursive text with identical error rates, the two terms have become
+near-synonymous when only taking the conception of the text transcription
+method into account. While there are certainly differences in capability
+between text recognition systems optimised for handwritten and machine-printed
+material, the terms do not convey enough information about the operating
+principles of the overall recognition system, \emph{hard} segmentation and
+character classification in OCR \emph{vs} implicit or probabilistic
+segmentation and sequence modelling in HTR, anymore and are used
+interchangeably from here on.
+
+Following the above-mentioned three step model of OCR pipelines, we will now
+look at the state of the art in both the research community and practically
+available OCR systems.
+
+\subsubsection{Preprocessing}
+
+The first step afer digitization of the source material in an OCR pipeline is
+preprocessing. Preprocessing includes a wide variety of tasks aimed at
+improving the document quality and in the case of binarization preliminary
+classification to aid in the subsequent layout analysis and text transcription
+steps. While for modern machine-printed material the inventory of commonly
+employed preprocessing methods is fairly static and often rely on hand-crafted
+algorithms for denoising, deskewing, binarization with a general trend of a
+reduction in preprocessing over time as later steps in the pipeline have become
+more powerful, the capabilities of new deep learning techniques have resulted
+in a renewed interest in image enhancement and reconstruction for historical
+and degraded material. Two main operations are performed for preprocessing:
+document image enhancement/normalization and document binarization.
+
+Image enhancement and normalization encompasses a multitude of specific tasks.
+Owing to their age the three task with the most extensive history of research
+are denoising, deskewing, and dewarping. Image denoising is a classic task in
+low level vision which aims to recover a noise-free image from a noisy
+observation caused by environmental factors such as low light, acquisition
+method, and transmission channels. Classical denoising methods utilize spatial
+filters, such as gaussian or median filters, image transforms, or morphological
+operations to remove this noise while preserving salient image features. Their
+accuracy is often conditioned on an accurate model of the kind of noise
+encountered in the digitized material. Nevertheless, elementary denoising
+algorithms are implemented in OCR engines such as
+OCRopus\footnote{breuel2008ocropus} and OCR4All\cite{reul2019ocr4all},
+digitization workflow engines\cite{neudecker2019ocr}, and dedicated
+preprocessing utilities \cite{scantailor}. A short review on the range of
+manually constructed denoising algorithms can be found in \cite{fan2019brief}.
+Some newer methods employing deep learning also exist
+\cite{cha2019fully,laine2019high,soltanayev2018training,chen2018image} although
+they do not specifically target document images.
+
+Deskewing and dewarping refer to the correction of deformations introduced
+during the digitization process with the former being limited to the correction
+of simple rotation and the latter including correction of perspective and lens
+distortion, non-planar surfaces, \dots. Both are primarily intended to aid in
+layout analysis by ensuring that individual lines are horizontal and can thus
+be modelled accurately by algorithms that assume lines are straight and written
+or printed in a single orientation. Conventional skew detection methods
+\cite{bloomberg1995measuring,amin2000document,papandreou2011novel} mostly
+exploit this assumption by searching for a skew angle that produces a
+characteristic pattern between dark and light areas in the projection profile.
+Likewise, dewarping techniques such as
+\cite{zhang2003correcting,ulges2005document,masalovitch2007usage} assume
+straight lines or that the writing surface is rectangular
+\cite{stamatopoulos2008two} in the unwarped state. As such these systems are
+generally only useful for modern machine-printed text of decent quality and
+they are frequently included in OCR pipelines optimized for print processing
+such as Tesseract, OCRopy, and Abbyy FineReader. A few neural dewarping
+\cite{das2019dewarpnet,ma2018docunet} and skew detection \cite{ocropus3} have
+been proposed but the fact that a large corpus of document images that contain
+lines in multiple orientations and the advent of LA modules capable of
+accurately detecting rotated and warped lines, throw doubt on their utility in
+a state of the art OCR engine.
+
+More advanced enhancement has also been studied albeit with much less frequency
+and methods described in the literature have not found application in openly
+available OCR systems. \cite{dong2015boosting,lat2018enhancing,fu2019cascaded}
+propose neural super-resolution methods for document images that result in a
+circa fifty per cent error rate reductions on the resulting high resolution
+output in comparison to the original low resolution images when recognized with
+a character segmenting OCR engine. Wholesale reconstruction of illisible
+writing in fragmentary historical handwritten documents using a modified
+PixelCNN is described in \cite{uzan2017qumran}. 
+
+The other major area of interest in the domain of preprocessing is document
+binarization, the transformation of a color- or gray-level image into a black
+and white one. Binarization methods perform this transformation through the
+classification of each pixel in a page image as belonging to either a
+foreground or background class which serves multiple purposes such as noise
+suppression and restricting the data domain in subsequent steps. In the past
+binarization was considered an integral part of any OCR system which is evident
+by the long history of publications on the topic, with the earliest method
+still in common use dating from the 1979 Otsu
+thresholding\cite{otsu1979threshold}. A plethora of hand-crafted methods have
+been devised over the years. These are commonly categorized as either global
+(\cite{otsu1979threshold}) or local
+(\cite{sauvola2000adaptive,niblack1986introduction,kim2002document,gatos2004adaptive})
+thresholding algorithms, depending on if they compute a single threshold for
+the whole image or individual thresholds for smaller patches. A special case
+are algorithms that perform normalization in the grayscale domain and then
+apply a global threshold such as \cite{shafait2008efficient} which is part of
+the OCRopus engine. Global thresholding often suffers from significant output
+degradation if the input image varies across, e.g. in the case of uneven
+illumination or partial fading of the ink, so local methods are usually
+preferred although they are comparatively slower than global thresholding.
+Global thresholding using Otsu's method is implemented in Tesseract, while more
+accurate local algorithms are part of the OCR-D workflow engine
+\cite{neudecker2019ocr} and the proprietary Transkribus HTR engine
+\cite{ntirogiannis2014combined}. A number of binarization methods based on
+ANNs, usually variants of semantic segmentation methods, exist but suffer from
+the high cost of producing accurate ground truth. \cite{tensmeyer2017document}
+is exemplary for these systems, using a Fully Convolutional Network
+\cite{long2015fully} trained in a supervised fashion and fusing lower-level
+features in the decoding path to improve reconstruction of fine-grained
+structures in the output image.  Another popular choice of architecture for
+similar methods are U-Nets\cite{ronneberger2015u}.
+
+As binarization is a complex operation that often fails to achieve acceptable
+results on historical documents with faded or differently colored ink, degraded
+or structured writing supports, or inscriptions, there is some controversy
+around its inclusion in OCR systems intended for such material, especially as
+many recent LA methods do not require binary input data anymore. Nevertheless,
+all current OCR systems include, to my knowledge, a binarization algorithm,
+although Kraken is one of the few engines where its use is optional and
+disabled per default.
+
+\subsubsection{Layout Analysis}
+\label{s:la}
+
+Layout analysis aims to identify and recognize the physical and logical
+organization of document pages. The exact requirements on an LA system vary
+widely on the particular use case and the capabilities of the subsequent text
+transcription method. An LA module is of critical importance in any OCR system
+as any mis-identified characters or lines cannot be recognized by the
+transcription method. In fact, LA methods are often the limiting factor in
+determining which documents an OCR engine is capable of processing and
+frequently contribute a substantial proportion to the overall error rate of the
+system.
+
+The traditional way an LA system operates is as an character segmenter as the
+first text transcription methods were only capable of recognizing one character
+at a time. These can operate as single-stage methods extracting characters
+directly from the page image but are usually designed as a multi-stage process
+that iteratively identifies smaller entities, e.g. first text blocks, then
+lines, words, and finally characters. Unfortunately, even segmenting machine-printed
+block text is fairly error-prone as the most common approaches to dissection,
+projection analysis and connected components, are susceptible to over- and
+undersegmentation due to broken or merged characters\cite[sec.
+2]{casey1996survey}. More so, the segmentation of cursive machine-printed or
+hand-written text requires considerable prior knowledge on the structure of the
+writing system to be segmented with commonly unsatisfying results. A survey on
+Arabic-script character recognition \cite{alginahi2013survey} list segmentation
+accuracies for a number of methods between seventy-six and ninety-nine per cent
+with the best-performing algorithms being optimized for particular typefaces.
+Advanced character segmenters such as the one in the Tesseract engine
+\cite{smith2007overview} perform oversegmentation and use the confidences
+returned by text transcription algorithm to determine the correct segmentation
+by testing multiple hypotheses. With the significant drawbacks of character
+segmentation, not many actively developed OCR engines use this paradigm anymore
+with two major exceptions: the proprietary Abbyy FineReader and Sakhr engines
+are most likely classifying single characters.
+
+The prevalent paradigm since the development of segmentation-free text
+transcription that is able to recognize a sequence of characters at once has
+been text line segmentation. While the \emph{what} is evident, the
+representation of the text lines is of more interest. The three principal
+representations with spread in both research and practical applications are
+paths, bounding boxes, and baselines (see fig. XX). Axis-aligned bounding
+boxes, i.e. a bounding box whose edges are parallel to the image boundary,
+which contains all the textual content of a particular line and have an, often
+implicit, orientation are the most basic practical way to encode a text line.
+One of the benefits of this representation is that rectangular boxes are a
+natural fit to the rectangular line strips ingested by text line transcription
+methods, and therefore require only minimal processing in the transcription
+method. There is a wide array of methods which fit machine-printed and
+handwritten text to bounding boxes such as those described in
+\cite{marti2001influence,papavassiliou2010handwritten} or the LA module in the
+OCRopus system\cite{Breuel03highperformance}. These text line segmenters
+generally struggle with slanted or curved texts, either natural or as a result
+of the digitization process, and require the aforementioned preprocessing to
+eliminate skew and warping but are inherently unable to accurately segment
+multi-oriented and highly curved text. A minor extension implemented in the
+Tesseract LA module which increases the versatility of the text line model is
+to allow rotation of the text bounding box in combination with an explicit
+orientation detection algorithm \cite{smith2007overview}.
+
+Paths are a flexible alternative that allows segmentation of slanted and curved
+lines with relative ease. They encode a block of lines in roughly the same
+orientation through a series of separating linear or non-linear path. The
+drawback of this representation is that segmenting a page document into
+these blocks can already be challenging. Early methods utilized projection
+profiles\cite{antonacopoulos2004document}, sometimes piecewise to improve
+segmentatation of curvature \cite{zahour2001arabic}, while later approaches
+usually treat the path finding as a an optimization problem using the Viterbi
+algorithm\cite{tseng1999recognition} or seam carving
+\cite{arvanitopoulos2014seam,zhang2014text}. While this approach is superior to
+bounding boxes in ensuring tight bounds around curved and/or slanted lines the
+block segmentation requirement has meant it was never implemented in any OCR
+engine that found widespread use, although the Aletheia\cite{6065274} document
+analysis system implements human-triggered path-based line segmentation.
+
+Baselines are currently the state of the art for text line segmentation in
+highly challenging historical documents. The baseline is an imaginary line on
+which the letters of a line rest, although the are frequently letter parts,
+called descenders, dipping below it. It is a fairly common concept, existing in
+a large number of alphabetic writing systems, although some scripts such as
+Hebrew, Tibetan, or Bengali are written with a hanging base- or topline
+instead, and most logographic scripts such as Chinese do not have any in the
+strict typographic sense. Nevertheless, approximations can often be
+systematized sufficiently well enough to allow the processing of most scripts
+by a baseline LA method.
+
+The major advantage of representing text lines by their baseline is that the
+model can accomodate arbitrary curvature by defining the baseline as a simple
+polyline, i.e. a sequence of straight line segments. Apart from being able to
+express any text written in linear writing systems compactly, baseline
+representation has the added benefit of allowing rectification through
+projection of the individual polyline segments onto a straight line. One
+drawback is that the baseline alone is not sufficient to extract a complete
+text line as it is not known which points around it belong to the line in
+question or adjacent content, so baselines are usually accompanied with an
+additional bounding polygon. While the baseline representation has been
+described in the literature as early as 1989 \cite{srihari1989analysis}, it
+largely languished unnoticed until recently, although some segmentation
+systems\cite{Breuel03highperformance,smith2007overview} use baselines
+internally for clustering line blobs. Two factors have popularized them in
+the research community: \cite{romero2015influence} have shown that the bounding
+polygon has only a small impact on transcription error rates although the
+result likely does not hold for all historical documents, \cite{diem2017cbad}
+published a large dataset annotated with (poly-)baseline called cBAD and an
+evaluation metric for a contest at ICDAR followed by a more complex and larger
+dataset in 2019 \cite{diem_markus_2019_3568023}. A number of methods
+\cite{xu2018multi,quiros2018multi,mechi2019text,oliveira2018dhsegment,romain2019semi,gruning2019two,melnikov2020fast}
+have sprung up in the literature. These usually combine a deep neural semantic
+segmentation method, common choices are U-Nets and FCNs, with a postprocessing
+heuristic of varying complexity. While the advances in accuracy on the contest
+dataset have been impressive some practical hurdles remain. As bounding
+polygons are not part of the standard evaluation metric, these systems do not
+define an algorithm for computing one. Likewise, the metric does not take line
+orientation into account and the cBAD dataset contains almost exclusively
+upright lines so there is neither academic incentive nor datasets available to
+develop baseline LA methods that are able to effectively determine line
+orientation. Two OCR system include trainable baseline LA systems currently:
+Transkribus and Kraken (see chapter XX), in addition to support in the
+eScriptorium VRE and the OCR-D workflow engine through the Kraken module.
+
+Other text line representation exist but are rarely used in practice. Pixel
+labelings and bounding polygons are relatively easy to produce with deep
+convolutional ANNs for semantic \cite{pastor2016complete,alberti2019labeling}
+or instance segmentation \cite{prusty2019indiscapes} but require tedious
+training data acquisition and in the case of semantic segmentation-based
+methods separation between close lines can be problematic. Further, without
+some additional way to determine line orientation or estimate line curvature,
+text recognition on rotated and highly curved purely polygon-bounded lines
+incur a penalty on recognition accuracy as these lines cannot be effectively
+normalized to the rectangular line image strips processed by text transcription
+methods. 
+
+Some ancillary tasks are associated with layout analysis. Region segmentation,
+also known as page segmentation or zoning, divides a document image into
+semantic regions such as main text, decoration, illustration, \dots. Its output
+can be utilized in multifold ways: to improve the final textual output of the
+OCR engine through semantic annotation, to restrict the range of valid output
+in other tasks, such as only providing regions of interest to the text line
+detector or limiting the text transcription method to numerals in a postal code
+field, or to augment the information available to algorithms for reading order
+determination. A long-established task, there are hundreds of hand-crafted
+region segmentation algorithms, often optimized for particular use cases,
+employing various filtering\cite{PAVLIDIS1992484},
+cutting\cite{ha1995recursive,kruatrachue2005fast}, and
+clustering\cite{drivas1995page,kise1998segmentation} techniques. As for text
+line segmentation the capabilities of deep convolutional ANNs have made them a
+popular choice for this task with a number of publications since 2018
+\cite{wick2018fully,oliveira2018dhsegment,xu2018multi,quiros2018multi,he2017multi,chen2017convolutional,monnier2020docextractor}.
+An attractive proposition implemented by multiple systems such as
+\cite{oliveira2018dhsegment} (U-Net), \cite{xu2018multi} (FCN), and
+\cite{quiros2018multi} (GAN with custom CNN), is the possibility to perform
+both baseline detection and region segmentation with the same network
+architecture, in the case of \cite{quiros2018multi,xu2018multi} even in the
+same model. Neural region segmentation has started to be incorporated into some
+OCR engines such as anyOCR\cite{bukhari2017anyocr}, Transkribus, and Kraken
+while other systems such as Tesseract and OCR4all retain heuristics for this
+purpose.
+
+A task integral to layout analyis that is often overlooked is reading order
+determination (ROD). While the systems described above detect the layout
+structure, they do not give any information on how these layout elements are
+related logically. One of the most important of logical structures for
+understanding a document is the reading order, i.e. the order that textual and
+non-textual components should be read in by a human reader. While this sounds
+simple at first, most modern documents are simply read from top to bottom,
+there is a large proportion of documents were order determination presents a
+non-trivial problem. Newspapers contain articles spanning multiple columns and
+pages, scholarly editions have critical apparatus outside the normal reading
+order, and historical manuscripts often have extensive marginal notes,
+interlinear additions, and parallel texts.  Some literature on the topic exists
+but it is notably sparser than for many other DIA tasks and the current state
+of the art has not evolved substantially since the early two-thousands.
+\cite{nagy1984hierarchical,ishitani2003document,meunier2005optimized} generate
+a region tree with X-Y cuts which is subsequently ordered using simple
+heuristic rules (top-to-bottom, left-to-right). \cite{Gao} incorporate language
+modelling to determine likely text block sequences in newspapers.
+\cite{Breuel03highperformance} uses topological sorting to sort individual text
+lines on a page. \cite{AielloIJDAR2002} utilize decision trees incorporating
+both spatial and linguistic features to fit to a complex document understanding
+model. A partially trainable system using linear programming to reconcile
+user-defined constraints is proposed in \cite{malerba2008machine}. Despite being at
+times intended for highly complex documents, all of the above methods make
+assumptions on the spatial ordering of lines that are inappropriate for many
+historical documents. However, graph neural networks have shown promise in
+logical document structure analysis\cite{dejean2019versatile} and might be
+adapted in the future for ROD.
+
+The state of ROD in research is mirrored by the implementations in OCR engines.
+OCRopus and Kraken use \cite{Breuel03highperformance}. Tesseract employs a
+simple rule-based algorithm described in \cite{5277715}. The OCR-D workflow
+engine does not treat ROD as a separate task and relies on the implicit order
+provided through the respective LA modules.
+
+\subsection{Transcription}
+
+As described in section \ref{s:la} conventional OCR systems were constructed
+around character classifiers which require accurate character segmentations
+that are frequently difficult to obtain for historical, degraded, and cursive
+text. In order to solve this problem segmentation-free methods that recognize a
+sequence of characters, e.g. a word or a line, at a time have been proposed. It
+should be noted that while these methods are generally called segmentation-free
+this applies only to the input data and training process, as it is often
+possible to extract an segmentation or estimates of character locations from
+their output as an implicit segmentation is performed internally.
+
+The earliest approaches that performed both sequential classification and
+produced an hypothesis for a possible segmentation were adapted from HMM-based
+methods utilized in speech
+recognition\cite{kaltenmeier1993sophisticated,rigoll1996comparison}. While
+these are easily trained using Expectation Maximization and allow
+straightforward incorporation of domain knowledge such as language models to be
+better able to model long term dependencies, almost all HMM OCR methods operate
+on feature representations calculated on a sliding window over the text line.
+These are necessary to reduce the number of model parameters which would
+otherwise result in severe overfitting. One of the largest differences between
+different HMM-based methods is the choice of these features with a large number
+of general-purpose and heuristic features described in the literature. An
+outline of different feature extractors, modelling granularity, and language
+models employed in HMM-based OCR methods is contained in a 2009 survey
+\cite{plotz2009markov}.
+
+In 2009 the inferiority of HMM-based methods to RNNs trained with CTC loss
+became starkly aparent when a CTC trained multidimensional LSTM (MDLSTM)
+\cite{graves2008offline} won three contests on French, Arabic, and Persian
+handwriting transcriptionwithout any language-specific adaptation of the method.
+Because of the computational requirements of MDLSTMs for both inference and
+training made them undesirable for large scale application and doubts on their
+superiority over 1D-LSTMs\cite{puigcerver2017multidimensional}, simpler
+bidirectional LSTMs (BiLSTM) \cite{graves2008novel} became the basis for a
+large number of derivations of the general schema BiLSTM+CTC. The first hybrid
+convolutional and recurrent neural network (CRNN) was proposed in
+\cite{shi2016end} for natural scene text recognition. \cite{dutta2018improving}
+augment a basic CRNN with a spatial transformer network block that learns to
+dewarp input text line images. \cite{stuner2016cohort} incorporate lexicon
+verification to control a cascade of text transcription RNNs.
+\cite{bluche2017gated} combines novel gated convolutional layers with an a
+multilayer BiLSTM and CTC loss. More complex training procedures are sometimes
+constructed around these methods, such as incorporating auxiliary language
+model losses to adapt a transcription model to an unseen language
+\cite{tensmeyer2018language} or domain adaptation from synthetic
+machine-printed to handwritten text with virtual adversarial training
+\cite{keret2019transductive}.
+
+Various attempts to find alternatives for RNNs or CTC for text transcription
+have been made in recent years. Apart from the everlasting search for better
+accuracy and generalization, RNNs and especially LSTMs are slow and cannot be
+easily parallelized. CTC has the limitations mentioned above, is complex, and
+fast implementations suffer from restrictions like maximum target sequence
+lengths. Attentional models, such as
+\cite{sueiras2018offline,michael2019evaluating,kang2018convolve}, replace CTC
+with conventional losses. They generally consist of an encoder and decoder,
+where the encoder produces a feature map.  Through an attention mechanism,
+several different kinds exist such as content- and location-aware attention,
+the decoder can weigh the importance of different parts of the feature map at
+each decoding step. The decoder can run an arbitrary number of time steps and
+characters are output from the weighted feature map so these methods generally
+do not allow the alignment of the character sequence with the input image in
+contrast to HMMs and CTC-trained ANNs. \cite{coquenet2020recurrence} describe a
+recurrence-free, CTC-trained, gated convolutional ANN that achieves similar
+albeit slighty lower character error rates to CRNNs. \cite{gan2020air} propose
+a system for the recognition of in-air handwritten Chinese text that uses
+increasingly strided 1D convolutional layers similar to non-causal temporal
+convolutional networks (TCNs) to achieve large receptive fields in the feature
+extractor. While the complete ANN architecture includes some final LSTM layers,
+an ablation study shows that the TCN by itself achieves similar error rates to
+a simple two layer LSTM on this challenging task.
+
+As the current state of the art of hybrid CRNNs trained with CTC loss has been
+in existence for some years and the significant benefits posed in comparison to
+older HMM-based systems, (C)RNN+CTC transcription modules are found in many OCR
+engines. The OCRopus system uses a one layer bidirectional LSTM trained with a
+particular variant of CTC loss implemented completely in Python. The latest
+version 4 of Tesseract includes a dynamically configurable neural networking
+library which is highly optimized for inference on CPU; the default network
+configurations include unconventional summarizing LSTM layers that output
+feature slices as the last time step output of an LSTM layer ingesting a one
+pixel wide vertical slices of the line at a time. The OCR4All system uses the
+Calamari text classifier, which implements an ensemble method of
+confidence-weighted voting of cross-fold-trained CRNNs \cite{wick2018calamari}.
+Kraken implements a configurable neural networking backend with a model
+specification language\ref{annex:vgsl} 4 but with additional layer types.
+anyOCR\cite{bukhari2017anyocr} uses BiLSTMs trained in a conventional
+supervised fashion with CTC but includes a procedure to harvest imprecise
+training data through manually character clusters which aims to reduce training
+data requirements substantially.
+
+\subsubsection{Specialty tasks}
+
+A range of specialty tasks exist that are not part of general-purpose OCR
+systems, either because the material they are designed for is too uncommon, too
+dissimilar to writing systems for natural language, or the state of the art is
+not sufficiently accurate to warrant implementation in practical OCR engines.
+
+Table analysis is a task in DIA whose goal is to detect and recognize both the
+contents of a table and its logical structure. Despite of a long history of
+table processing methods extending to the early nineteen-nineties
+\cite{zanibbi2004survey} the task is still considered to be unsolved even for
+modern printed tables \cite{gao2019icdar}. There is limited research on the
+processing of historical tabular material and even hand-crafted methods
+optimized for a particular style of table have high error rates
+\cite{lehenmeier2020layout}. Some proprietary OCR engines such as Abbyy
+FineReader include table detection and structure recognition as the
+retrodigitization of tables is an area of commercial interest in the data entry
+industry.
+
+Optical Music Recognition (OMR) aims to transcribe sheet music into a
+machine-readable representation. While the process is in many ways analogous to
+OCR, the term OMR itself is rather ill-defined and encompasses output
+representations that one would not naturally associate with OCR such as MIDI.
+In addition, musical notation behaves quite differently from most scripts used
+for natural language by being a featural writing system whose information is
+contained both in the ordered sequences of symbols and their spatial
+relationships. Some researchers such as \cite{calvo2020understanding} reject
+the categorization of OMR as a sub-type of OCR or \emph{OCR for music} and the
+field has developed a number of OMR-specific tasks such as staff processing and
+musical information reconstruction that have no equivalent in the domain of OCR
+(see \cite{shatri2020optical} for a recent survey on OMR tasks and methods).
+For practical purposes the OCR and OMR research fields are distinct and OCR
+engines are not capable of processing musical notation and vice-versa.
+
+Likewise, digital map processing is usually treated separately, even if only
+extraction of textual content is desired, as non-text element make up a larger
+proportion of the writing surface than in most other documents which increases
+the difficulty of text finding for most LA methods. In contrast text
+transcription in maps can more easily exploit domain knowledge than other DIA
+applications, as the nature of the geographical data expressed naturally allows
+alignment with other maps and incorporation of toponym
+dictionaries\cite{weinman2013toponym,weinman17geographic,sun2020aligning}.
+Complete map understanding requires not only a text line detection and region
+segmentation layout analysis but also the extraction of cartographic features
+such as map symbols and contour lines which most text LA systems are ill-suited
+to compute and are therefore generally performed with dedicated segmentation
+methods such as \cite{uhl2018spatialising,liu2020superpixel}.
+
+\subsection{Virtual Research Environments for DIA, OCR, and Digital Humanities}
+
+Virtual Research Environments encompass a wide array of research support
+systems that share some common characteristics: they offer a web-based working
+environment, they are tailored to serve the needs of a \emph{community of
+practice}\footnote{Communities of practice as defined in
+\cite{wenger1999communities} are individuals that are united in action and in
+the meaning that an activity has for themselves and the overall collective,
+i.e. they are made up of active practitioners who create a community through
+self-identification with and exchange on a particular, in our case scholarly,
+activity.}, a comprehensive inventory of tools to allow this community to
+accomplish it goals, they are open and flexible with respect to service
+offering and lifetime, and promote controlled sharing of both intermediate and
+final research results by guaranteeing ownership, provenance and
+attribution\cite{candela2013virtual}. As such they are neither specific to OCR
+nor the humanities and can be designed around all kinds of research activity.
+
+While a number of web-based platforms offering manual or computer-assisted
+segmentation, transcription, and recognition for material of interest to some
+subset of humanities scholars exist, the extent to which they fulfill the
+criteria for a true VRE can be questioned. In fact, the primary mode of
+development for many platforms as project-specific tools originating out of an
+institutional framework without active buy-in from other practitioners outside
+well-defined collaborations, offers a ready explanation for the lack of
+platforms satisfying all criteria for VREs. Therefore it is expedient to relax
+the criteria in multiple ways and limit the review to tools having some overlap
+with eScriptorium's functionality.
+
+The largest class of platforms implements specific methods to address the needs of
+a scientific project. As most researchs projects are of relatively short
+duration and aim to solve specific research questions these platforms typically
+do not implement the full range of methods to completely perform an activity
+and do not tend to create a scholarly community around them, albeit they are
+often regarded as a part of a fabric of losely coupled tools that can be made
+to interoperate through common data interchange formats. The most successful
+type of these platforms are the various crowdsourcing applications for
+transcription of historical documents. Tools like the Bentham Transcription
+Desk\cite{moyle2011manuscript} discard any automatic processing in exchange for
+simplicity of implementation. These platforms are also typically not openly
+accessible in that the data that users can perform activities on is
+predetermined by the operators of the platform and imports into the tool are
+often already extensively processed through external means. Exemplary of these
+is the TypeWright OCR correction and digital edition creation
+tool\cite{typewright} which only makes raw OCR data available that was created
+by the eMOP project's interal pipeline. On the other hand a fairly large number
+of platforms that can be used with arbitrary data but have very limited
+capability exist. \cite{webaletheia} is a platform for creating segmentation
+ground truth data with some low-level computer vision assistance. The
+HInDoLA\cite{trivedi2019hindola} platform is solely intended for the aiding in
+the layout analysis of palm leafs. LAREX \cite{reul2017larex} is a
+semi-automatic tool for layout analysis on early printed books that can be
+interfaced to external OCR tools through data exports in PageXML format. PoCoTo
+\cite{vobl2014pocoto} is a web service for the postcorrection of OCR output
+with language modelling assistance.
+
+The platform coming closest to the above definition of a VRE for a community of
+OCR practitioners in the humanities is Transkribus\cite{kahle2017transkribus}.
+Intended as a comprehensive platform for computer-aided layout analysis,
+transcription and information retrieval it offers all basic tools necessary to
+the average interested scholar for retrodigitization of historical handwritten
+and printed material. Unfortunately, the closed nature of the platform makes it
+a less than ideal research tool for scholars interested in both sharing their
+work and guaranteeing ownership of products of work. While data can be freely
+imported and exported in standard formats of the field, the artifacts trained
+with user-created data in the specific OCR tasks, namely layout analysis and
+transcription models, are locked inside the platform. In combination with the
+recently adopted pricing model, this presents not only a significant deficit of
+ownership but also a barrier to reproducibility of results.
+
+While eScriptorium is not yet feature complete and access to the platform of
+the public is currently limited, albeit the source code of all components is
+publicly available and a number of instances are set up at different research
+groups and institution, it already fulfills the VRE definition. It supports the
+full gamut of OCR functions needed for the processing of historical material,
+permits users to selectively share the product of their work, and provides
+interfaces to import and export all data and workflow-produced artifacts.

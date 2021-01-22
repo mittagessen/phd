@@ -1,0 +1,113 @@
+\documentclass[a4paper, 12pt]{book}
+
+\input{preamble}
+\usepackage{import}
+
+\title{Improvements in Optical Character Recognition for Historical Arabic Manuscripts}
+
+\author{Benjamin KIESSLING}
+
+\institute{École Pratique des autes Études}
+\doctoralschool{École doctorale de l'École Pratique des Hautes Études}{472}
+\specialty{Voir spécialités ED}
+\date{01 fevrier 2021}
+
+%% cotutelle
+%\entitle{Improvements in Optical Character Recognition for Historical Arabic Manuscripts}
+%\otherinstitute{University of Leipzig}
+%\logootherinstitute{logo-institute}
+
+\jurymember{1}{Prénom NOM}{Titre, établissement}{Président}
+\jurymember{2}{Prénom NOM}{Titre, établissement}{Rapporteur}
+\jurymember{3}{Prénom NOM}{Titre, établissement}{Rapporteur}
+\jurymember{4}{Prénom NOM}{Titre, établissement}{Examinateur}
+\jurymember{5}{Prénom NOM}{Titre, établissement}{Examinateur}
+\jurymember{6}{Prénom NOM}{Titre, établissement}{Examinateur}
+\jurymember{7}{Prénom NOM}{Titre, établissement}{Examinateur}
+\jurymember{8}{Marc BUI}{Directeur d'études, École Pratique des Hautes Études}{Directeur de thèse}
+% \jurymember{9}{Prénom NOM}{Titre, établissement}{Invité}
+% \jurymember{10}{Prénom NOM}{Titre, établissement}{Invité}
+
+\frabstract{
+	french abstract here
+}
+
+\enabstract{
+	english abstract here
+}
+
+\frkeywords{ Caesar licentia post honoratis haec adhibens urbium
+  honoratis nullum Caesar.}
+\enkeywords{ Delatus delatus nominatus
+  onere aut trahebatur quod tenus et bonorum.}
+
+\begin{document}
+
+\maketitle{}
+
+\frontmatter
+\input{layout/dedication.tex}
+\cleardoublepage
+\input{layout/acknowledgements.tex}
+\cleardoublepage
+\input{layout/resume.tex}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+\begin{refsection}
+\include{chapters/intro}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\cleardoublepage
+\part{The Arabic Writing System}
+\begin{refsection}
+\include{chapters/arabic.tex}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\begin{refsection}
+\import{./chapters/champs}{advances.tex}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\part{Layout Analysis and Segmentation}
+\begin{refsection}
+\import{./chapters/hip}{icdar}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\begin{refsection}
+\import{./chapters/icfhr2020}{seg}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\cleardoublepage
+%\begin{refsection}
+%\import{./chapters/read}{read}
+%\printbibliography[heading=subbibliography]
+%\end{refsection}
+
+\part{Transcription and Character Alignment}
+\cleardoublepage
+\begin{refsection}
+\import{./chapters/dh2019}{dh}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\begin{refsection}
+\import{./chapters/icfhr2020algn}{Transcribe}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\part{The Escriptorium VRE}
+\cleardoublepage
+\begin{refsection}
+\import{./chapters/manuvre}{vre}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\appendix
+
+\include{appendices/vgsl.tex}
+
+\printbibliography
+
+\end{document}

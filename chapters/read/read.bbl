@@ -1,0 +1,295 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{smith2009adapting}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=b66d7a9f50f24f3226509c9a584355a2}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Ray},
+           giveni={R\bibinitperiod}}}%
+        {{hash=586606c10f86ede658ebe4af09a0d78f}{%
+           family={Antonova},
+           familyi={A\bibinitperiod},
+           given={Daria},
+           giveni={D\bibinitperiod}}}%
+        {{hash=f1ca7adec89687a0f3162f988c8adde4}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Dar-Shyang},
+           giveni={D\bibinithyphendelim S\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{8340383a368624fe372817f0cd50c502}
+      \strng{fullhash}{8340383a368624fe372817f0cd50c502}
+      \strng{bibnamehash}{8340383a368624fe372817f0cd50c502}
+      \strng{authorbibnamehash}{8340383a368624fe372817f0cd50c502}
+      \strng{authornamehash}{8340383a368624fe372817f0cd50c502}
+      \strng{authorfullhash}{8340383a368624fe372817f0cd50c502}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the International Workshop on Multilingual OCR}
+      \field{title}{Adapting the Tesseract open source OCR engine for multilingual OCR}
+      \field{year}{2009}
+      \field{pages}{1}
+      \range{pages}{1}
+    \endentry
+    \entry{ul2013can}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=da7dd4f1f024ef3a06e8eb1ea5ac0faf}{%
+           family={Ul-Hasan},
+           familyi={U\bibinithyphendelim H\bibinitperiod},
+           given={Adnan},
+           giveni={A\bibinitperiod}}}%
+        {{hash=098a4eb43f3fa167ea58c5af2516dc13}{%
+           family={Breuel},
+           familyi={B\bibinitperiod},
+           given={Thomas\bibnamedelima M},
+           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{7fc0e32b78636d9c4ca09f3f051a7e1a}
+      \strng{fullhash}{7fc0e32b78636d9c4ca09f3f051a7e1a}
+      \strng{bibnamehash}{7fc0e32b78636d9c4ca09f3f051a7e1a}
+      \strng{authorbibnamehash}{7fc0e32b78636d9c4ca09f3f051a7e1a}
+      \strng{authornamehash}{7fc0e32b78636d9c4ca09f3f051a7e1a}
+      \strng{authorfullhash}{7fc0e32b78636d9c4ca09f3f051a7e1a}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 4th International Workshop on Multilingual OCR}
+      \field{title}{Can we build language-independent OCR using LSTM networks?}
+      \field{year}{2013}
+      \field{pages}{9}
+      \range{pages}{1}
+    \endentry
+    \entry{springmann2016automatic}{article}{}
+      \name{author}{3}{}{%
+        {{hash=b94734a6423460205c19e04bf8e98e2e}{%
+           family={Springmann},
+           familyi={S\bibinitperiod},
+           given={Uwe},
+           giveni={U\bibinitperiod}}}%
+        {{hash=94523242c610b2dd43676d8c90531fcd}{%
+           family={Fink},
+           familyi={F\bibinitperiod},
+           given={Florian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=c30798e643b7a61aa8c388b924b9b083}{%
+           family={Schulz},
+           familyi={S\bibinitperiod},
+           given={Klaus\bibnamedelima U},
+           giveni={K\bibinitperiod\bibinitdelim U\bibinitperiod}}}%
+      }
+      \strng{namehash}{13fd6f533802757a5d533d94f090420e}
+      \strng{fullhash}{13fd6f533802757a5d533d94f090420e}
+      \strng{bibnamehash}{13fd6f533802757a5d533d94f090420e}
+      \strng{authorbibnamehash}{13fd6f533802757a5d533d94f090420e}
+      \strng{authornamehash}{13fd6f533802757a5d533d94f090420e}
+      \strng{authorfullhash}{13fd6f533802757a5d533d94f090420e}
+      \field{sortinit}{3}
+      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{CoRR. URL: https://pdfs. semanticscholar. org/b8b7/c369a01164b289ed7c41ef33ce1b74e0fb1f. pdf}
+      \field{title}{Automatic quality evaluation and (semi-) automatic improvement of mixed models for OCR on historical documents}
+      \field{year}{2016}
+    \endentry
+    \entry{fujii2017sequence}{inproceedings}{}
+      \name{author}{5}{}{%
+        {{hash=80db5778371107849e6ea7bdc1a4d845}{%
+           family={Fujii},
+           familyi={F\bibinitperiod},
+           given={Yasuhisa},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=4c5f3b2ab1dda915158cff768f23d5f5}{%
+           family={Driesen},
+           familyi={D\bibinitperiod},
+           given={Karel},
+           giveni={K\bibinitperiod}}}%
+        {{hash=f2194c2cf3dbf8fb9f0029cfb769e012}{%
+           family={Baccash},
+           familyi={B\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e8d9eef862737cad8e5eabe9c1cd72a4}{%
+           family={Hurst},
+           familyi={H\bibinitperiod},
+           given={Ash},
+           giveni={A\bibinitperiod}}}%
+        {{hash=6d5f2aded338cce66353355e5aa3b356}{%
+           family={Popat},
+           familyi={P\bibinitperiod},
+           given={Ashok\bibnamedelima C},
+           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{7629a51d79ec0d104719760df1a7e44f}
+      \strng{fullhash}{469c3309292fc2273ba2bb3034ff077b}
+      \strng{bibnamehash}{469c3309292fc2273ba2bb3034ff077b}
+      \strng{authorbibnamehash}{469c3309292fc2273ba2bb3034ff077b}
+      \strng{authornamehash}{7629a51d79ec0d104719760df1a7e44f}
+      \strng{authorfullhash}{469c3309292fc2273ba2bb3034ff077b}
+      \field{sortinit}{4}
+      \field{sortinithash}{11cdaee3b18e01d77f3f428b13c1fc76}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Document Analysis and Recognition (ICDAR), 2017 14th IAPR International Conference on}
+      \field{title}{Sequence-to-Label Script Identification for Multilingual OCR}
+      \field{volume}{1}
+      \field{year}{2017}
+      \field{pages}{161\bibrangedash 168}
+      \range{pages}{8}
+    \endentry
+    \entry{singh2015can}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=ef5a917bdadc768a929b390b669c7247}{%
+           family={Singh},
+           familyi={S\bibinitperiod},
+           given={Ajeet\bibnamedelima Kumar},
+           giveni={A\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=c28cbc2901395b4ae713740941e45d6f}{%
+           family={Jawahar},
+           familyi={J\bibinitperiod},
+           given={CV},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{d7ad6e0ce055f0ec5072bce713fa9a01}
+      \strng{fullhash}{d7ad6e0ce055f0ec5072bce713fa9a01}
+      \strng{bibnamehash}{d7ad6e0ce055f0ec5072bce713fa9a01}
+      \strng{authorbibnamehash}{d7ad6e0ce055f0ec5072bce713fa9a01}
+      \strng{authornamehash}{d7ad6e0ce055f0ec5072bce713fa9a01}
+      \strng{authorfullhash}{d7ad6e0ce055f0ec5072bce713fa9a01}
+      \field{sortinit}{5}
+      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Document Analysis and Recognition (ICDAR), 2015 13th International Conference on}
+      \field{title}{Can RNNs reliably separate script and language at word and line level?}
+      \field{year}{2015}
+      \field{pages}{976\bibrangedash 980}
+      \range{pages}{5}
+    \endentry
+    \entry{ul2015sequence}{inproceedings}{}
+      \name{author}{5}{}{%
+        {{hash=da7dd4f1f024ef3a06e8eb1ea5ac0faf}{%
+           family={Ul-Hasan},
+           familyi={U\bibinithyphendelim H\bibinitperiod},
+           given={Adnan},
+           giveni={A\bibinitperiod}}}%
+        {{hash=38888bea54c666af7eacb9c676829d2a}{%
+           family={Afzal},
+           familyi={A\bibinitperiod},
+           given={Muhammad\bibnamedelima Zeshan},
+           giveni={M\bibinitperiod\bibinitdelim Z\bibinitperiod}}}%
+        {{hash=5a88b427ea508cca58fbe1653577da26}{%
+           family={Shafait},
+           familyi={S\bibinitperiod},
+           given={Faisal},
+           giveni={F\bibinitperiod}}}%
+        {{hash=0c68669e21dde05e765f1aed0bb9db58}{%
+           family={Liwicki},
+           familyi={L\bibinitperiod},
+           given={Marcus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=098a4eb43f3fa167ea58c5af2516dc13}{%
+           family={Breuel},
+           familyi={B\bibinitperiod},
+           given={Thomas\bibnamedelima M},
+           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{ff4274ed72f7088851104ab2073c8a6c}
+      \strng{fullhash}{fabe7addbc252c732680a0c2ee89b145}
+      \strng{bibnamehash}{fabe7addbc252c732680a0c2ee89b145}
+      \strng{authorbibnamehash}{fabe7addbc252c732680a0c2ee89b145}
+      \strng{authornamehash}{ff4274ed72f7088851104ab2073c8a6c}
+      \strng{authorfullhash}{fabe7addbc252c732680a0c2ee89b145}
+      \field{sortinit}{6}
+      \field{sortinithash}{57e57fb8451e7fcfa45d1e069f6d3136}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Document Analysis and Recognition (ICDAR), 2015 13th International Conference on}
+      \field{title}{A sequence learning approach for multiple script identification}
+      \field{year}{2015}
+      \field{pages}{1046\bibrangedash 1050}
+      \range{pages}{5}
+    \endentry
+    \entry{graves2006connectionist}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=dfca94b0427da7f9088af596e23b46c0}{%
+           family={Graves},
+           familyi={G\bibinitperiod},
+           given={Alex},
+           giveni={A\bibinitperiod}}}%
+        {{hash=06cb9b7c6d106c9bbaebbb926890730b}{%
+           family={Fern{á}ndez},
+           familyi={F\bibinitperiod},
+           given={Santiago},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6ac505680efa9d3591dd05930a13ccd5}{%
+           family={Gomez},
+           familyi={G\bibinitperiod},
+           given={Faustino},
+           giveni={F\bibinitperiod}}}%
+        {{hash=1bcbd82d7c2dc8000e44f70ed775668f}{%
+           family={Schmidhuber},
+           familyi={S\bibinitperiod},
+           given={J{ü}rgen},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{52c652b4d779c29b106b4e621d88a8e3}
+      \strng{fullhash}{85579d659af01bfed04736114624f34d}
+      \strng{bibnamehash}{85579d659af01bfed04736114624f34d}
+      \strng{authorbibnamehash}{85579d659af01bfed04736114624f34d}
+      \strng{authornamehash}{52c652b4d779c29b106b4e621d88a8e3}
+      \strng{authorfullhash}{85579d659af01bfed04736114624f34d}
+      \field{sortinit}{7}
+      \field{sortinithash}{c818dd9105a2852444fc9f5e145c294e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 23rd international conference on Machine learning}
+      \field{title}{Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks}
+      \field{year}{2006}
+      \field{pages}{369\bibrangedash 376}
+      \range{pages}{8}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
