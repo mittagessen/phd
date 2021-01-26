@@ -1,4 +1,5 @@
-\chapter{Transcription Alignment for Highly Fragmentary Historical Manuscripts: The Dead Sea Scrolls}
+\chapter{Transcription Alignment for Highly Fragmentary Historical Manu\-scripts: The Dead Sea Scrolls}
+\chaptermark{Transcription Alignment}
 
 \section{Abstract}
 Most of the Dead Sea Scrolls have now been digitally transcribed and imaged to
@@ -145,15 +146,13 @@ literature
 
 Different infrastructures allow automatic interaction with historical
 manuscripts (a brief overview is given in \cite{KiesslingEtAl2019eScrip}).
-Most notable are Transkribus
-\cite{Kahle}\footnote{\url{https://transkribus.eu/Transkribus}} and MONK
-\cite{schomaker2019lifelong},\footnote{\url{http://www.ai.rug.nl/~lambert/Monk-collections-english.html}}
-which are however not open source and, at least in the case of Transkribus also
+Most notable are Transkribus \cite{Kahle} and MONK
+\cite{schomaker2019lifelong}, which are however not open source and, at least
+in the case of Transkribus also
 commercial,\footnote{\url{https://readcoop.eu/transkribus-pricing}} and
 therefore much more difficult or even impossible to include in a full treatment
 pipeline.  The only cutting edge and fully open-source infrastructure for
 historical document analysis we know of is eScriptorium \cite{escript19}.%
-\footnote{\url{https://escripta.hypotheses.org}}
 Accordingly, we have made use of its tools and have performed the following
 procedures.
 
@@ -161,12 +160,12 @@ procedures.
 traditional computer vision approaches to perform text line extraction from
 handwritten documents, machine learning based systems have seen wider use
 recently
-\cite{KiesslingEtAl2019Badam,gruning2018read,fink2018baseline,diem2017cbad,KurarBarakat2018}.
+\cite{kiessling2019badam,gruning2018read,fink2018baseline,diem2017cbad,KurarBarakat2018}.
 The majority of these methods utilize combinations of CNNs and LSTMs. Still,
 traditional methods from computer vision can have advantages for certain tasks
 or types of manuscripts \cite{Viral,Seuret,StoeklLapinForthcoming}.  We tested
 several hand-crafted line segmentation algorithms without success, settling on
-a trainable method described in \cite{KiesslingEtAl2019Badam,
+a trainable method described in \cite{kiessling2019badam,
 KiesslingStoekl2019}, as implemented in kraken \cite{Kraken} and eScriptorium.
 Layout analysis is independent of binarization and works very well even on
 highly fragmentary and damaged material (such as the Dead Sea Scrolls and the
@@ -296,16 +295,15 @@ vary widely in register, formality, and period and represent many different
 scribal habits.  The dates the scrolls were written could vary by 300 years in
 a very ``hot" period, that is, a period with massive changes in ductus
 according to local schools after the disintegration of the relatively unified
-Imperial writing system of the Persian Empire. %There may have been just as
-much variation in the Persian Empire (see the 1966 Chicago dissertation of
-DAVID WALTER NASGOWITZ).  We discarded all letters marked as restored or as
-merely possible readings, keeping only the probable and certain instances.  Due
-to the aforementioned complications inherent to the fragments, editions, and
-the database, the ``zipping'' together of the image and the textual data is not
-a trivial process.  Therefore, the rough OCR of the extant text in the next
-step, provided a welcome check, (1) whether the identification of the fragment
-image with the corresponding text was correct, (2) whether the fragment was
-still complete, and/or (3) whether it had been joined with other fragments.
+Imperial writing system of the Persian Empire. We discarded all letters marked
+as restored or as merely possible readings, keeping only the probable and
+certain instances.  Due to the aforementioned complications inherent to the
+fragments, editions, and the database, the ``zipping'' together of the image
+and the textual data is not a trivial process.  Therefore, the rough OCR of the
+extant text in the next step, provided a welcome check, (1) whether the
+identification of the fragment image with the corresponding text was correct,
+(2) whether the fragment was still complete, and/or (3) whether it had been
+joined with other fragments.
 
 \begin{figure}[t]%[width=1\columnwidth]
 	\includegraphics[width=1\columnwidth]{images/40b.PNG}
@@ -476,10 +474,12 @@ laypersons alike will be able to enter search terms and retrieve images
 containing them.  It will also supply additional training data for improved
 character recognition and future paleographical analyses.
 
-\section*{Acknowledgments} This research was supported in part by Grant BE
-5916/1-1 KR 1473/8-1 from the Deutsch-Israelische Projektkooperation (DIP) and
-by Grant Agreement No. 871127 from the European Union’s Horizon 2020 Research
-and Innovation Programme.  It was made possible thanks to images taken by Shay
-Halevi and provided by the Leon Levy Dead Sea Scrolls Digital Library of the
-Israel Antiquities Authority, all rights reserved.  We thank the SQE project
-members, especially Oren Ableman, Adiel Ben-Shalom, and Lior Wolf.
+\section*{Acknowledgments}
+
+This research was supported in part by Grant BE 5916/1-1 KR 1473/8-1 from the
+Deutsch-Israelische Projektkooperation (DIP) and by Grant Agreement No. 871127
+from the European Union’s Horizon 2020 Research and Innovation Programme.  It
+was made possible thanks to images taken by Shay Halevi and provided by the
+Leon Levy Dead Sea Scrolls Digital Library of the Israel Antiquities Authority,
+all rights reserved.  We thank the SQE project members, especially Oren
+Ableman, Adiel Ben-Shalom, and Lior Wolf.

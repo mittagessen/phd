@@ -68,10 +68,15 @@
 \printbibliography[heading=subbibliography]
 \end{refsection}
 \begin{refsection}
+\import{./chapters/alwusta}{soa.tex}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\begin{refsection}
 \import{./chapters/champs}{advances.tex}
 \printbibliography[heading=subbibliography]
 \end{refsection}
 \part{Layout Analysis and Segmentation}
+\label{part:la}
 \begin{refsection}
 \import{./chapters/hip}{icdar}
 \printbibliography[heading=subbibliography]
@@ -81,10 +86,10 @@
 \printbibliography[heading=subbibliography]
 \end{refsection}
 \cleardoublepage
-%\begin{refsection}
-%\import{./chapters/read}{read}
-%\printbibliography[heading=subbibliography]
-%\end{refsection}
+\begin{refsection}
+\import{./chapters/read}{read}
+\printbibliography[heading=subbibliography]
+\end{refsection}
 
 \part{Transcription and Character Alignment}
 \cleardoublepage
@@ -100,13 +105,17 @@
 \part{The Escriptorium VRE}
 \cleardoublepage
 \begin{refsection}
+\import{./chapters/ost}{ost}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\begin{refsection}
 \import{./chapters/manuvre}{vre}
 \printbibliography[heading=subbibliography]
 \end{refsection}
 
-\appendix
-
-\include{appendices/vgsl.tex}
+\begin{appendices}
+\include{appendices/resume.tex}
+\end{appendices}
 
 \printbibliography
 

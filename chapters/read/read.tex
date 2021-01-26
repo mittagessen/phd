@@ -1,4 +1,6 @@
 \chapter{Script and Emphasis Detection using Recurrent Neural Networks}
+\chaptermark{Script detection}
+\label{ch:multi}
 
 \section{Introduction}
 
@@ -101,9 +103,9 @@ base models by resizing the final linear projection of the network.
 Both the script detection and emphasis recognition share a common network
 architecture of bidirectional Long short-term memory RNN blocks trained with
 Connectionist Temporal Classification loss and single-sample stochastic
-gradient descent with momentum (learning rate:, momentum: 0.9). Early stopping
-is used to terminate training. The system is implemented as part of the kraken
-OCR engine.
+gradient descent with momentum (learning rate: 0.0001, momentum: 0.9). Early
+stopping is used to terminate training. The system is implemented as part of
+the kraken OCR engine.
 
 The networks operate on binarized whole lines. Baselines and line height are
 normalized using a slightly modified version of the centerline normalizer

@@ -29,24 +29,24 @@ scripts for other semitic languages it only requires that consonants and long
 vowels to be written, the reader is supposed to supply the appropriate short
 vowels themselves from the context. Short vowels and other marks for features
 such as doubling (gemination) and nunation (adding a final n), can optionally
-be added (\emph{tashkil} or vocalization) but are only systematically used when
+be added (\emph{tashkīl} or vocalization) but are only systematically used when
 transcribing the Quran or elementary texts for language learners. Like Syriac
 and Hebrew it is written from right to left with the exception of numbers which
 are written from left to right.
 
 The original abjad used for writing Classical Arabic with its twenty-eight
 distinctive phonemes contains only eighteen graphemes \emph{rasm}, causing the
-same grapheme to represent up to five different phonemes. Baʼ, taʼ, thaʼ, nun,
-and yaʼ share the same shape and are, depending on their position in the word,
+same grapheme to represent up to five different phonemes. bāʾ, tāʾ, thāʾ, nūn,
+and yāʾ share the same shape and are, depending on their position in the word,
 written the same way. These glyphs are distinguished by dots placed above or
-below them: one below for baʼ, two above for taʼ, three above for thaʼ, one
-abve for nun, and two below for yaʼ. Correspondingly, dots are used to
-differentiate ghayn and ʼayn, sad and dad, and jim, haʼ, and khaʼ. In contrast
+below them: one below for bāʾ, two above for tāʾ, three above for thāʾ, one
+above for nūn, and two below for yāʾ. Correspondingly, dots are used to
+differentiate ghayn and ʼayn, ṣād and ḍād, and jīm, ḥāʾ, and khāʾ. In contrast
 to vocalization dotting is mandatory and is present in all but the earliest
 Arabic texts.
 
 Arabic distinguished itself from other widely used scripts like Latin,
-Cyrillic, or Greek by to lack of a printed form, i.e. a form where letters are
+Cyrillic, or Greek by the lack of a printed form, i.e. a form where letters are
 written separately, and only the cursive form exists, albeit a large number of
 styles exist. Like cursive forms of other scripts, individual letters change
 their shape depending on their position in a word: initial, medial, final, and
@@ -72,10 +72,10 @@ manuscripts after the ninth century CE \cite{awad2015evolution}.
 The script has been adapted for a fairly large number of other languages, most
 prominently Persian and Turkish that do have some additional phonemes. Letter
 forms are usually adapted by adding dots to graphemes representing similar
-phonemes in Arabic, e.g. the Persian \emph{paʼ} is derived from \emph{baʼ} by
+phonemes in Arabic, e.g. the Persian \emph{pe} is derived from \emph{bāʾ} by
 writing two additional dots below. Sometimes graphemes were also modified more
-directly such as the letter \emph{gaf} which is written by adding another bar
-above the letter \emph{kaf}. Similar transformations exist for other languages
+directly such as the letter \emph{gāf} which is written by adding another bar
+above the letter \emph{kāf}. Similar transformations exist for other languages
 with some such as \emph{xiao'erjing}, the writing of sinitic languages in
 Arabic script, changing it into a full alphabet by making the marking of short
 vowels mandatory or creating additional letters for short vowels. The Unicode
@@ -90,10 +90,10 @@ the cursive nature was seen as a major hindrance to older methods based on
 character classifiers which require accurate segmentation to the character
 level, newer segmentation-less methods are largely unaffected by this.
 Nevertheless the variability in spacing, even on machine-printed text, is still
-the primary source of errors (see chapter XX). Unfortunately, the
-bundle of techniques employed to justify text, i.e. measures ensuring that text
-ends flush with the left end of the writing space, require methods aware of
-their function in all parts of the OCR pipeline.
+the primary source of errors (see section~\ref{s:whitespace}). Unfortunately,
+the bundle of techniques employed to justify text, i.e. measures ensuring that
+text ends flush with the left end of the writing space, require methods aware
+of their function in all parts of the OCR pipeline.
 
 These arose from the proscription of hyphenation, the splitting of words to
 facilitate line-wrapping, since the tenth century CE, as justification by
@@ -117,23 +117,24 @@ Instead of heaping the last syllable on top of the previous stroke, it is
 placed in the margin of a text, similarly to a marginal note. These two
 practices add another dimension of complexity to the layout analysis component
 of an OCR pipeline. First, the layout analysis system has to be able to
-accurately detect these fragments, which the methods presented in chapter XX
-are certainly capable of, at least with models specifically trained for the
-purpose. Secondly, these fragments have to be distinguished from bona fide
-marginalia and interlinear notes or translations to be properly inserted in the
-flow of text in the output by a reading order determination algorithm that is
-aware of their existence. A naïve algorithm assuming text is ordered from top
-to bottom will, even if other notes are correctly filtered through previous
-classification by the segmenter, insert the fragment before the text of the
-line it is associated with, i.e. reverse the order. Unfortunately, reading
-order determination is a notoriously under-researched task in DIA, and although
-some tentative approaches, such as \cite{dejean2019versatile} that could serve
-as a basis for versatile reading order determination methods, exist, all
-practically available OCR system operate on simple heuristics.
+accurately detect these fragments, which the methods presented in
+part~\ref{part:la} are certainly capable of, at least with models specifically
+trained for the purpose. Secondly, these fragments have to be distinguished
+from bona fide marginalia and interlinear notes or translations to be properly
+inserted in the flow of text in the output by a reading order determination
+algorithm that is aware of their existence. A naïve algorithm assuming text is
+ordered from top to bottom will, even if other notes are correctly filtered
+through previous classification by the segmenter, insert the fragment before
+the text of the line it is associated with, i.e. reverse the order.
+Unfortunately, reading order determination is a notoriously under-researched
+task in DIA, and although some tentative approaches, such as
+\cite{dejean2019versatile} that could serve as a basis for versatile reading
+order determination methods, exist, all practically available OCR system
+operate on simple heuristics.
 
 Two more practices exist, although their impact on OCR performance should be
 modest in most cases. The stretching of the letter body or the connections
-between individual letters, interchangeably known as either \emph{tatwil} or
+between individual letters, interchangeably known as either \emph{taṭwīl} or
 \emph{kashida}, although the latter term is reserved in some publications on
 typography for the first technique. These are used in most Arabic styles,
 albeit their exact placement differs between scripts, not only for
@@ -148,8 +149,8 @@ these lines, as slanted lines in general, will often cause a degradation of
 results. This can be linked to other lines protruding into the bounding box or
 height normalization resulting in insufficient text size as demonstrated in
 figure XX. Segmenters founded on the baseline paradigm, like the ones presented
-in chapter XX, do not suffer from this problem as they allow projecting
-arbitrarily shaped lines onto a straight line.
+in chapters~\ref{ch:icfhr,ch:hip}, do not suffer from this problem as they
+allow projecting arbitrarily shaped lines onto a straight line.
 
 \section{Supports and Production}
 
@@ -312,7 +313,7 @@ above a differently colored one, allows larger variation in coloration than
 purely ink-based writing. Artists were often skilled in more than one of these
 techniques and they are often employed together. Works such as a collection of
 forty hadith for the Ottoman prince Mehmed in 1540, contain text in both
-\emph{taw'qi} and \emph{nasta'liq} script, pasted in gold, white, or light blue
+\emph{taw'qī} and \emph{nastaʼlīq} script, pasted in gold, white, or light blue
 on deep-rose or olive grounds. The margins on some pages are kept plain, others
 gold-sprinkled, others again marbled \cite[pg. 52-56]{blair2006islamic}. The
 sheer variety of printing even contained in a single manuscript are sure to
@@ -329,7 +330,7 @@ largely a matter of scribal preference\cite[pg. 42]{gacek2009arabic}.
 
 Brushes were primarily used in the process of decoration, such as paintings in
 the margins or gilding. Chinese muslims developed the rounded, flowing
-\emph{sini} script in the fourteenth century CE to adapt Arabic writing to the
+\emph{ṣīnī} script in the fourteenth century CE to adapt Arabic writing to the
 instruments and conventions of Chinese calligraphy, even going so far as to
 change the directionality of the writing to top-to-bottom in some
 cases\cite[pg. 29-30]{ghoname2012sini}.
@@ -394,14 +395,14 @@ classification, the formal styles can be grouped into ones that are recognized
 throughout the Muslim world, such as \emph{naskh}, and ones that are largely
 limited to a certain geographical region or only used to write specific
 languages, such as the North African and Iberian \emph{maghribi} or the Persian
-\emph{nasta'liq}  
+\emph{nastaʼlīq}  
 
 Arabic styles can be defined by elements such as\cite[pg. 242-243]{gacek2009arabic}:
 
 \begin{description}
 	\item[Line of writing] whether all words sit completely on the
 			       baseline, descend onto it as in
-			       \emph{nasta'liq}, curve upwards toward the end,
+			       \emph{nastaʼlīq}, curve upwards toward the end,
 			       or are slanted.
 	\item[Ascender and descenders] vertical, slanted or curved
 	\item[Nib width] especially in relation to script size.
@@ -409,16 +410,16 @@ Arabic styles can be defined by elements such as\cite[pg. 242-243]{gacek2009arab
 	\item[Vocalization] Some scripts require a different pen for vocalization.
 	\item[Ligatures] The presence of unauthorized connections between letters.
 	\item[Contractions] The presence of assimilated (omitted) letter forms.
-	\item[Characteristic letterforms] such as straight, wavy, or slanted \emph{alif}
+	\item[Characteristic letterforms] such as straight, wavy, or slanted \emph{ʾalif}
 \end{description}
 
 The two earliest styles that emerged in the seventh century CE are
-\emph{hijazi} and kufic. Both are somewhat confusingly named after early
+\emph{ḥijāzī} and kufic. Both are somewhat confusingly named after early
 Islamic intellectual centers (Hijaz and the city Kufa in southern Iraq) and a
 variety of alternative terms such as Early Abbasid have been proposed. As
 canonicalization was fairly low the terms do not refer singular hands but to
 families of styles that were used mainly to transcribe copies of the Quran. One
-taxonomy divides them into six and four groups for the kufic and \emph{hijazi}
+taxonomy divides them into six and four groups for the kufic and \emph{ḥijāzī}
 family respectively. Either is notably more angular than later round styles.
 Hijazi being in use from 650 CE it was surplanted by kufic by the beginning of
 the eighth century CE. While elaborate, highly decorated manuscripts in the
@@ -433,7 +434,7 @@ relegated to ornamental purposes such as titles and headings. As with older
 styles, it represents not a single hand but at least two different groups. The
 main characteristics of this style is the marked difference between thick and
 thin strokes \cite[pg. 167-168]{gacek2009arabic}. From this period also dates
-the practice of using long \emph{tatwil} elongation to mark the start of a new
+the practice of using long \emph{taṭwīl} elongation to mark the start of a new
 section of text\cite[pg. 165]{blair2006islamic}.
 
 \subsection{The Six Pens}
@@ -459,9 +460,9 @@ These six styles are usually paired in three sets of one display (majuscule)
 and one text (minuscule) script:
 
 \begin{itemize}
-	\item \emph{thuluth} with \emph{naskh}
-	\item \emph{muhaqqaq} with \emph{rayhan}
-	\item \emph{tawqi} and \emph{riqa}
+	\item \emph{ṯuluṯ} with \emph{naskh}
+	\item \emph{muḥaqqaq} with \emph{rayḥān}
+	\item \emph{tawqīʿ} and \emph{riqāʿ}
 \end{itemize}
 
 \emph{Thuluth} is an ancient chancery script although its exact features are
@@ -479,25 +480,25 @@ ascenders, and short descenders. Some Persian and Ottoman variations of the
 script exist. It is the basis for most modern Arabic typefaces intended for use
 in prose\cite[pg. 162-163]{gacek2009arabic}.
 
-\emph{Muhaqqaq} is one of the ancient scripts originally devised before the
+\emph{Muḥaqqaq} is one of the ancient scripts originally devised before the
 proportioned scripts system. It is rectilinear, i.e. only a small proportion of
 the penstrokes are curved or curvilinear. It is a seriffed script with
 vocalization performed with a different pen, often in a different color. While
-grouped as the display script to \emph{rayhan} it also became a bookhand for
+grouped as the display script to \emph{rayḥān} it also became a bookhand for
 copies of the Quran by the thirteenth century CE\cite[pg. 160-161]{gacek2009arabic}.
 
-\emph{Rayhan} is the smaller counterpart to \emph{muhaqqaq}. The letter forms
+\emph{Rayḥān} is the smaller counterpart to \emph{muḥaqqaq}. The letter forms
 were identical except for their size, the inclusion of serifs, and the
 execution of vocalization with the same pen as the letters\cite[pg.
 308]{EncyclopediaofArabicLanguageandLinguisticsVolume3}.
 
-\emph{Tawqi} is a smaller diplay variant of the \emph{thuluth} chancery script
-being written with even more hairlines. Like \emph{thuluth} it was rarely used
+\emph{Tawqīʿ} is a smaller diplay variant of the \emph{ṯuluṯ} chancery script
+being written with even more hairlines. Like \emph{ṯuluṯ} it was rarely used
 as a bookhand\cite[pg. 264-264]{gacek2009arabic}.
 
-\emph{Riqa} is the smaller version of the \emph{tawqi} script. It is optionally
+\emph{Riqāʿ} is the smaller version of the \emph{tawqīʿ} script. It is optionally
 seriffed with slightly rightward inclined \emph{alif}. In Iran the differences
-between it and \emph{tawqi} were minor with one publication using the terms
+between it and \emph{tawqīʿ} were minor with one publication using the terms
 synonymously\cite[pg. 224]{gacek2009arabic}.
 
 \subsection{Regional Styles}
@@ -513,20 +514,20 @@ surviving Quran copy dated to 1008 CE but little change occured
 afterwards\cite[pg. 566]{blair2006islamic}.
 
 In Iran, at the same time as Yaqut was refining the Six Pens, two new styles of
-hanging script called \emph{ta'liq} and \emph{nasta'liq} emerged. These were
+hanging script called \emph{taʿlīq} and \emph{nastaʼlīq} emerged. These were
 more suitable for writing languages such as Persian and Turkish that differ
 from Arabic in their proportion of straight and curved letters. As such they
-were never popular in the Arabic speaking world but \emph{nasta'liq} ended up
+were never popular in the Arabic speaking world but \emph{nastaʼlīq} ended up
 as the style of choice for a number of other states such as Ottoman Turkey and
-Mughal India. The highly stylized \emph{Ta'liq} script with its curvilinear
+Mughal India. The highly stylized \emph{taʿlīq} script with its curvilinear
 elements, extraneous loops, and connected letter was a typical style for
 official decrees, diplomatic correspondence, sometimes poetry, but almost never
-codices, from the tenth century CE. The stereotypical \emph{ta'liq} document
+codices, from the tenth century CE. The stereotypical \emph{taʿlīq} document
 contains widely spaced lines with dramatic upward curving at the end of the
-line. A variant broken \emph{ta'liq} replaced it from the fourteenth century CE
+line. A variant broken \emph{taʿlīq} replaced it from the fourteenth century CE
 in administrative use\cite[pg. 270-273]{blair2006islamic}.
 
-The second major Persian style, \emph{nasta'liq}, became the epitome of Persian
+The second major Persian style, \emph{nastaʼlīq}, became the epitome of Persian
 literature. At first reserved for poetry, it took over the place of
 \emph{naskh} for prose by the fifteenth century as well. It is characterized by
 individual words descending onto a common baseline, greatly elongated
@@ -534,19 +535,19 @@ horizontal lines, and the aforementioned heaping of the last stroke\cite[pg.
 166-167]{gacek2009arabic}. While the aforementioned styles, depending on the
 preservation of the document, the desired generalization, and accuracy, are not
 inherently troublesome for a modern OCR engine, the sophistication displayed by
-the most decorated \emph{nasta'liq} epics and calligraphic specimens are highly
+the most decorated \emph{nastaʼlīq} epics and calligraphic specimens are highly
 challenging. Calligraphers of the time were interested in variety and visual
 excitement, arranging verses on the diagonal, changing direction between
 successive verses, alternating red, blue, orange, and green inks for headings,
 and adding lavish illumination and scrollwork. The writing was being subsumed
 by decoration\cite[pg. 436]{blair2006islamic}. 
 
-Both round scripts, primarily \emph{naskh} and \emph{thuluth}, and Persian
+Both round scripts, primarily \emph{naskh} and \emph{ṯuluṯ}, and Persian
 hanging scripts were common in the Ottoman Empire with their relative
 proportion in text production varying over the centuries\footnote{\cite[chapter
 XI]{blair2006islamic} elaborates the cycles of popularity between round and
 hanging scripts.} In the fifteenth century imperial scribes began to develop
-the \emph{ta'liq} script into the highly stylized \emph{divani} chancery style
+the \emph{taʿlīq} script into the highly stylized \emph{divanî} chancery style
 with its unauthorized connections between letters and curved baselines.
 
 \section{Printing}
@@ -577,9 +578,9 @@ The only preserved documents with any frequency are amulets and charms
 containing Quranic passages printed on paper in a wide array of styles,
 generally following equivalent calligraphic practices of their handwritten
 counterparts\footnote{A survey of the current state of scholarship is found in
-K.R. Schaefer ...}. As these documents have largely escaped the scholarly
-interest, there are up to now no specific methods developed by the DIA
-community to treat them.
+\cite{schaefer2006enigmatic}}. As these documents have largely escaped the
+scholarly interest, there are up to now no specific methods developed by the
+DIA community to treat them.
 
 Movable type printing arrived in the Islamic world at the end of the fifteenth
 century CE with printing presses being set up in Constantinople and other
@@ -660,7 +661,7 @@ ones are, in order of processing inside a typical pipeline:
 		highly decorated pages make it impossible to devise a general
 		binarization method applicable to most Arabic handwriting.
 		While trainable methods using semantic segmentation approaches
-		exist, their training data requirements are in frequently
+		exist, their training data requirements are frequently
 		insurmountable.
 	\item[Segmentation of curved and slanted lines] The frequent use of
 		baseline curvature and slanted lines for both practical and
@@ -702,10 +703,10 @@ ones are, in order of processing inside a typical pipeline:
 		features of Arabic handwritten text and the subsequent lack of
 		training data sets available for DIA research has stifled the
 		field. Simple transcription tools such as the one utilized for
-		the studies in chapter XX are inadequate for preparing
-		multi-purpose datasets. Fully featured Virtual Research
-		Environments (VREs) for palaeographic scholarly work are one
-		way to attain deeply annotated data in flexible
+		the study in chapter~\ref{ch:champs} are inadequate for
+		preparing multi-purpose datasets. Fully featured Virtual
+		Research Environments (VREs) for palaeographic scholarly work
+		are one way to attain deeply annotated data in flexible
 		non-writing-system-specific data models.
 \end{description}
 

@@ -3,8 +3,8 @@
 \setmonofont{inconsolata}
 \RequirePackage[varqu]{zi4}
 
-\usepackage{lipsum}
 \usepackage{psl-cover}
+\usepackage{lipsum}
 
 \usepackage{subcaption}
 \usepackage{graphicx} % Required for including images
@@ -15,15 +15,25 @@
 \usepackage{arydshln}
 \usepackage{tikz}
 \usepackage{rotating}
+\usepackage{flafter}
 
 \usepackage{booktabs}
-\usepackage{tablefootnote}
 \usepackage{mathtools}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{gensymb}
 \usepackage{epigraph}
 \usepackage{csquotes}
+\usepackage{appendix}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguages{french,arabic}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+
+% nicer looking URLs
+\usepackage{url}
+\urlstyle{same}
 
 \usepackage[style=ieee,backend=biber]{biblatex}
 \addbibresource{phd.bib}

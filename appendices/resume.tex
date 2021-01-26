@@ -1,0 +1,677 @@
+\chapter{Résumé Long}
+
+\begin{french}
+
+\section{Introduction}
+
+Cette thèse consiste en un certain nombre de publications qui étudient les
+difficultés de la rétrodigitalisation de l'écriture arabe historique et propose
+plusieurs méthodes pour faire progresser l'état de l'art en la matière. Bien
+que ces méthodes visent principalement à remédier les problèmes résultant des
+caractéristiques de l'écriture arabe, elles sont conçues pour être applicables
+à l'écriture et aux inscriptions dans une variété d'autres systèmes d'écriture.
+
+\section{Document Image Analysis and Optical Character Recognition}
+
+Document Image Analysis (DIA) is a subfield of Computer Vision (CV) which aims
+to understand document contents through processing of its digital images.
+Documents are defined loosely by the field, including not only handwritten and
+printed text on paper, but also writing on other supple supports such as
+papyrus or palm leafs and even inscriptions.
+
+The difference to general computer vision lies not so much in the methods
+employed but the nature of the input images. These images are usually obtained
+through cameras or scanners, often in a professional setting, resulting in
+source material with minimal noise from non-pertinent elements which are often
+encountered in the natural scene images treated by other branches of CV.
+Notwithstanding the cleaner input data, the structured representations desired
+as output tend to be of higher complexity and quantity in DIA than other
+applications, requiring detection, classification, and relation of dozens to
+hundreds of document elements such as lines, characters, illustrations, and
+tables. 
+
+Like other fields in computer science, DIA research can be partitioned into
+specific tasks, one or more of which are solved by a particular proposed
+method. The most prominent task of DIA is optical character recognition (OCR),
+but others, either based on OCR or entirely novel, such as document
+classification and dating or keyword spotting exist. OCR, the conversion of
+printed, written or inscribed writing into machine-encoded text, is a long
+established process, both as a task in computer vision research and its
+practical use in applications ranging from address parsing to aids for the
+blind. It is arguably the origin of all DIA with a number of patents ranging
+back to the early nineteenth century.
+
+These first approaches, decades earlier than the earliest computers, have now
+evolved to the routine application of DIA techniques for tasks such as address
+parsing for mail routing, cheque verification, and book retrodigitization.
+Indeed, there is now the widespread claim in the field that OCR is
+fundamentally solved, at least for modern, machine-printed documents in English
+with a reasonable low level of noise where modern commercial retrodigitization
+software routinely achieves character accuracy rates above 99\%. Nevertheless,
+there exist almost 4000 written languages and several hundred writing systems,
+for the vast majority of which practical OCR systems are not available. Even
+accounting for the use of purely alphabetic scripts such as Latin and Cyrillic,
+which present less of a challenge to state of the art OCR when employed
+accordant with modern western typographic practices, it is clear that a
+substantial proportion of human literary output is not yet accessible through
+retrodigitization.
+
+This is even more true for historical material. Large scale digital scanning
+projects in rich countries have resulted in the creation of substantial digital
+libraries that are de facto inaccessible to both the public and scholars even
+for material as recent as the late nineteenth century as typographical and
+orthographical variation degrade the quality of digitized text by software
+geared towards modern documents substantially. This is most likely a temporary
+state of affairs for the most numerous material in the archives of the Global
+North where projects such as OCR-D\footnote{\url{http://ocr-d.de}} are paving
+the way to translate advances in pure DIA research to library practice. Along
+these projects and in more specific efforts such as \cite{smith2018research} we
+have seen the crystallization of a collective research program for the
+digitization of historical and \emph{minority script} material that is shared
+by both humanities scholars engaged in digital methods and computer vision
+experts. Nevertheless, these communities remain fractured along geographical,
+linguistic, and professional boundaries.
+
+On the other hand, the lack of funding combined with the deterioration of
+collections elsewhere through conflict and environmental influences increases
+the risk of permanent loss of cultural heritage of interest to only a small
+number of scholars and minority populations. Even famed collections such as the
+manuscripts of Timbuktu, have barely escaped destruction through conflict in
+recent years and are in acute danger of being destroyed by humidity. 
+
+\subsection{Tasks}
+
+As one of the core application of document image analysis, OCR has devolved
+into a large number of subproblems. Not all of them are strictly necessary for
+a functional OCR system and in fact many of them can only be implemented in
+material-specific fashion and are therefore relegated to specialized
+applications. A closer analysis of the requirements on an OCR system capable of
+processng Arabic-script text effectively follows in the next section.
+
+The typical optical character recognition pipeline is built around four basic
+processing steps:
+
+\begin{description}
+\item [Preprocessing] Denoising, deskewing and dewarping, and binarization
+\item [Layout Analysis] Extracting structural information from document page
+images and enriching it with additional semantic information.
+\item [Transcription] Extracting textual information from all or a subset of
+objects identified by in the layout analysis step.
+\end{description}
+
+While this characterization holds for all but the most esoteric pipelines the
+exact functional blocks depend heavily on the type and structure of the
+documents to be processed. Each of these processing steps contains one or more
+methods that solve a particular task, such as:
+
+\begin{description}
+\item [Binarization] Classifying the pixels of an image into two classes:
+foreground, i.e. text, and background, i.e. everything else.
+\item [Denoising] Increasing the page image quality for subsequent problems.
+Denoising includes processes such as background normalization, color space
+adjustments, deblurring, or stain removal.
+\item [Deskewing and Dewarping] Correcting both the perspective distortion
+inherent in camera capture and other degradations introduced commonly in
+scanning setups such as rotation, warping along the binding, \dots
+\item [Region Segmentation] Subdividing a page image into components such as text, decoration, notes, \dots
+\item [Text Line Segmentation] Extracting the text lines from a page image.
+Text line segmentation is notable for being a task where not only a large
+variety of techniques exist but the modellisation of the line itself has been
+subject to considerable research.
+\item [Character Segmentation] Segmenting text on a page image down to the
+glyph or even lower level. While a common operation in traditional OCR systems
+it is mostly unnecessary with state of the art methods. A related task that is
+of interest to the humanities, especially paleo- and epigraphers, is character
+alignment, i.e. the locating individual characters on a document page given the
+full page text.
+\item [Script and Font Recognition] Classifying the language, writing system,
+style, or typeface of the text. This classification can be performed at
+different levels, such as document-wide or individually for whole or parts of a
+line.
+\item [Table Recognition] Inferring the logical structure of table images.
+\end{description}
+
+\section{Motivation and Scientific Contributions}
+
+Arabic-script material represents one of the largest literary traditions in
+human history, both in terms of volume and geographical spread. Examples range
+from religious texts, most prominently the Quran, the holy book of Islam, over
+poetry, to scientific and legal texts in addition to a large corpus of
+administrative records. The sheer number of these texts across a multitude of
+domains make them a prime target for new paradigms in the humanities employing
+computational methodology such as \emph{distant reading} and quantitative
+palaeography. These methods require either large text corpora or accurate DIA
+methods based on one or more of the abovementioned component tasks of an OCR
+system. As the vast majority of Arabic texts have never existed in digital
+form, high quality retrodigitization through OCR forms the foundation for a
+substantial number of Arabic Digital Humanities research projects.
+
+When I started working on this thesis, OCR of machine-printed Arabic text was
+largely dismissed by humanities scholars working on these documents, even ones
+already deeply involved in the digital humanities, and funding agencies as
+impractical, even more so for historical or multigraphic material. Accurate
+Arabic handwriting recognition seemed completely out of reach. While a long
+trail of publications on OCR of simple Arabic datasets such as KHATT
+\cite{mahmoud2014khatt} existed and a number of open and proprietary OCR
+software such as Tesseract, Abbyy FineReader, and Sakhr offered nominal support
+for the recognition of Arabic-script text, these solutions never materialised
+in actual scholarly or large-scale library practice. There are a multitude of
+reasons for this: high error rates for classifiers ang segmenters ill-suited to
+the cursive nature of the writing system, a lack of readily available software
+and technical expertise, and substantial cost and effort required to adapt
+existing solutions to the material of interest.
+
+It was quickly clear that the challenges keeping practical OCR out of the hands
+of scholars working on Arabic-script printed and handwritten texts, mirror
+those of many other researchers engaged in retrodigitization of historical and
+non-Latin script material. Imitating the prevailing opinion on Arabic OCR,
+\cite{widner2017toward} claimed medieval (Latin-script) manuscripts to be
+practically impervious to contemporary OCR. Similar statements can likely be
+found for other domains.
+
+As such this work should be seen on a more general intersection between
+humanities and computer science. The research it entails is not a unconnected
+collection of methods soling single tasks in Arabic DIA but part of a coherent
+ecosystem for \emph{humanities} DIA consisting of two principal elements: the
+Kraken OCR engine and the eScriptorium virtual research environment. 
+
+Kraken is a feature-complete, modular OCR system. It differs from other
+solutions in multiple important ways: digitally inclined scholars as a target
+audience and software design aimed at maximum flexibility. It has also been
+extensively adapted towards better processing of historical documents in
+non-Latin script, especially Arabic.
+
+As part of the adaptation work for making Kraken a more capable tool for Arabic
+text work a retrodigitization feasibility study on a leading Arabic-language
+journal published by the American University of Beirut was performed which
+produced the first detailled analysis on the weaknesses and strengths of state
+of state of the art OCR methods on machine-printed Arabic text.
+
+This thesis contributes two trainable line segmentation systems, a basic
+one capable of only detecting baselines, and a more advanced one allowing
+region and line segmentation in addition to classification. The latter is
+included in Kraken and allows joint region and line detection and inference of
+line orientation. This second method has also been optimized for memory usage,
+reducing memory consumption by circa fifty per cent in comparison to similarly
+performing fully convolutional semantic segmentation networks.
+
+An abstraction layer on top of the pytorch neural networking library has been
+added which allows the flexible reconfiguration of the artificial neural
+networks (RNA) employed for both layout analysis and text transcription through
+a lightweight ANN definition language which is able to express many features of
+common architectures employed in computer vision tasks. This layer allows the
+relatively simple addition of new layer types and thus quick prototyping and
+efficient hyperparameter optimization even for endusers without in-depth
+machine learning knowledge as has been demonstrated by \cite{strobel2020much}. 
+
+During the initial case studies several thousand lines of training data for
+text transcription were annotated and made available as public datasets. I was
+involved in the technical conceptualization and the transcription guidelines
+for these datasets. Another openly licensed dataset of four hundred
+Arabic-script manuscript pages in a variety of languages, styles, and domains
+was annotated with baselines and line orientation to enable evaluation of
+layout analysis methods on historical Arabic-script material.  This
+highly-challenging dataset remains the only handwritten non-Latin dataset for
+the baseline paradigm for layout analysis.
+
+The second component of this retrodigitization ecosystem is the eScriptorium
+VRE.  While Kraken is designed for maximum flexibility, eScriptorium takes
+another approach. Conceived as a full-blown palaeographic research and
+publication environment for scholarly use, OCR functionality is only a small
+part of its planned features. As it is impractical to expose all functionality
+of Kraken on such a platform, the design of eScriptorium allows manual and
+semi-automatic internvention at each step of the process either through manual
+manipulation in the interface or graphical and programmatic data exchange
+interfaces.
+
+As eScriptorium aims to offer additional scholarly functions beyond pure
+retrodigitization the platform is also an ideal test case for computer
+vision-assisted research in the humanities. In some cases, these advanced
+functions tie into text transcription. A method for deriving grapheme locations
+from the implicit alignment produced by a line-based text recognition ANNs and
+an evaluation on fragmentary Hebrew material is presented. 
+
+\section{L'écriture arabe}
+
+The Arabic writing system is one of the geographically and chronologically most
+widely used writing system in human history. It is the primary script for the
+Arabic language, Farsi, Urdu, and multiple others on the Indian subcontinent
+and has been used historically to produce texts in Spanish to Chinese.
+
+While there is still some dispute on its exact origins, the scholarly consensus
+is that the Arabic script evolved either from Nabatean or Syriac script in the
+Middle East over the course of multiple centuries with maturation occuring
+during the seventh century CE.  Linked closely to the spread of Islam, a number
+of alphabetic variants and calligraphic regional styles developed in the
+subsequent centuries. Nevertheless it is far from a purely liturgical script
+with a wealth of administrative records, philosophical and scientific
+treatises, poetry, \dots existing.
+
+It is therefore of a misnomer to speak of a single Arabic script from the
+perspective of DIA research. Each style in combination with the regional
+preferences and the context of their utilization presents particular
+challenges.
+
+\subsection{The Principles of the Arabic script}
+
+The Arabic script is an \emph{abjad}, a consonantal writing system, which means
+it only requires that consonants and long vowels to be written, the reader is
+supposed to supply the appropriate short vowels themselves from the context.
+Short vowels and other marks for features such as doubling (gemination) and
+nunation (adding a final n), can optionally be added (\emph{tashkil} or
+vocalization) but are only systematically used when transcribing the Quran or
+elementary texts for language learners. Like Syriac and Hebrew it is written
+from right to left with the exception of numbers which are written from left to
+right. 
+
+In contrast to other widely used script like Latin, Arabic is written solely in
+a cursive form. Like cursive variants of other scripts individual letters
+change their shape depending on their position in a word: initial, medial,
+final, and independent shapes exist, in addition to style-specific calligraphic
+rules for letter placement. One difference to cursive writing in other scripts
+is that not all letters can be connected to each other. As whitespace does not
+necessarily indicate the beginning of a new word, calligraphers are largely
+free to vary inter-word, inter-syllable, and inter-stroke spacing as desired.
+This spacing variation can throw off optical character recognition systems.
+
+Another distinction is the lack of capitalization and Western-style
+punctuation, the latter having been only introduced in the twentieth century
+CE. Instead particular words and phrases are used to introduce a new sentence
+or question and stokes are placed above titles and headings.
+
+Additional letter forms exist in variants of the Arabic script adapted to other
+languages which feature phonemes that do not occur in Arabic. These are usually
+adapted by adding dots to graphemes representing similar sounds in Arabic, such
+as the Persian \emph{pe} derived from \emph{bāʾ} by adding two additional dots
+below. As there are plenty of languages that are or have been written in the
+script, there is a large number of these variants.
+
+A particular difficulty for OCR systems is the peculiar way Arabic text is
+justified. Hyphenation, the splitting of words to facilitate line-wrapping, is
+absent in all but the earliest text. Instead of whitespace justification common
+in alphabetic scripts, more visually pleasing alternatives were devised.
+Stretching of letter connections, curving the baseline, and stacking or
+displacing fragments of the last word above or next to the line are common
+occurrences with the latter two methods posing a particular challenge even to
+modern layout analyis systems.
+
+\subsection{Styles}
+
+A large number of calligraphc styles have been devised over the centuries.
+While some are recognized throughout the Islamic world, such as \emph{naskh},
+others are specific to certain geographic area, e.g. the North African
+\emph{maghribi} or Persian \emph{nastaʼlīq}. The earliest styles such as
+\emph{ḥijāzī} and kufic are families of different styles, as standardization
+was low. By the thirteenth century CE six canonical styles had emerged. These
+are usually paired, one display (majuscule) and one text (minuscule) script:
+
+\begin{itemize}
+        \item \emph{ṯuluṯ} with \emph{naskh}
+        \item \emph{muḥaqqaq} with \emph{rayḥān}
+        \item \emph{tawqīʿ} and \emph{riqāʿ}
+\end{itemize}
+
+Regional styles were not only linked to geographic areas but also language use.
+In the persian-speaking parts of the Islamic world (Ottoman Empire, Iran,
+India) hanging styles such as \emph{nastaʼlīq} with individual words descending
+onto a common baseline were popular as they were more suited to the different
+letter combinations of Turkish and Persian. Other styles were both
+geographically limited and restricted to certain uses such as the \emph{divanî}
+Ottoman chancery style.
+
+\subsection{Requirements for Arabic OCR system}
+
+In summary the recognition of printed and handwritten Arabic texts requires a
+number of features not commony found in OCR engines. The principal requirements
+ones are, in order of processing inside a typical pipeline:
+
+\begin{description}
+	\item[Freedom of Binarization] The variety of supports, inks, and
+		decorations employed in Arabic text makes the development of a
+		general binarization method unlikely. An Arabic OCR system
+		should therefore be binarization free.
+	\item[Segmentation of curved and slanted lines] The frequent use of
+		slanted and curved lines for both practical and aesthetic
+		purposes necessites a layout analysis method capable of
+		extracting and representing these effectively.
+	\item[Semantic layout analysis] The extensive use of paratext requires
+		an LA system that is capable of separating multiple texts on
+		the same document page.
+	\item[Advanced reading order determination] In addition to classifying
+		the different textual components on a page it is also necessary
+		to bring them in the correct order for proper document
+		understanding.
+	\item[Segmentation-free transcription] As Arabic is written only in
+		cursive form and letter connections can change significantly
+		between styles, an Arabic transcription method should operate
+		on whole lines instead of separating it into characters.
+	\item[Data creation and curation tools] While not directly part of an
+		OCR pipeline, ergonomic tools that can be used to annotate the
+		full range of Arabic text features, are crucial for both
+		concrete digitization projects and for creating datasets for
+		future research.
+\end{description}
+
+\section{Case studies on Arabic-script OCR}
+
+Two accuracy studies on a number of classical Arabic-script texts and the
+leading Arabic language scholarly journal al-Abhath were performed with an
+early version of the Kraken OCR engine to determine the strengths and
+limitations of current OCR engines on these documents. As a result, we have
+determined two key recommendations for substantially improving Arabic-script
+OCR: (1) a more systematic approach to training data production, and (2) the
+development of key technological components, especially multi-language models
+and improved line segmentation and layout analysis.
+
+The preliminary first study showed that despite the low character error rates
+(<3\%) achieved by typeface specific models, the substantial differences
+between typefaces result in markedly higher error rates of these models on
+dissimilar typefaces. While this poor generalization can be traced to some
+extent to the limitations of the transcription network (shallow LSTM trained
+without regularization) in this early Kraken version it showed the need for
+both a more powerful neural networking backend in the system and a careful
+selection of training data to ensure the representability of the training data
+set for the desired target domain.
+
+The second study was constructed from the beginning around a much more rigorous
+analysis of the typefaces in the material and an in-depth manual evaluation of
+the OCR output in comparison to purely computational evaluation. Its subject,
+the al-Abhath journal was determined to entail two groups of typefaces although
+there are slight intra-group variations, especially for the first typeface
+which was used for the majority of the journal's run. To reflect this analysis
+it was decided to produce 5000 lines of training data for the first typeface
+and 2000 for the second typeface. Lines for training were drawn randomly from
+the two typeface clusters and manually transcribed with the CorpusBuilder
+software. Typeface-specific transcription models were trained on the two
+datasets and subsequently evaluated by an outside contractor and OpenITI on a
+separate validation set (see ~\ref{tab_champs:table_1} and
+~\ref{tab_champs:table_2}). As a result of the review it became clear that
+Kraken significantly outperforms Abbyy's OCR software for Arabic text
+recognition. A detailled manual evaluation of the automatic transcription
+identified multiple common error types: misrecognition of uncommon ligatures,
+letter forms, and elongation characters, doubled letters, and multigraphic 
+text. While some of these issue could be resolved with higher quality training
+data, multigraphic text processing support in the OCR engine which was
+subsequently added (chapitre~\ref{ch:multi}). The assessment also identified
+the need for better line segmentation of Arabic texts as the Latin-optimized
+module in Kraken tended to truncate and split text lines with some frequency.
+
+\section{Layout Analysis}
+
+For the processing of both printed and handwritten Arabic-script documents it
+is clear that a flexible, and preferably trainable, layout analysis method is
+necessary, as a failure to extract text lines makes it automatically impossible
+to transcribe these correctly with any text recognition method.
+
+While a large number of training datasets following different text line
+representations exist for modern and historical documents in Latin-script, this
+is not the case for Arabic manuscripts. To aid in the development of we
+prepared a dataset of 400 Arabic and Persian manuscript pages annotated with
+their text lines.
+
+It is important to understand the exact nature of the text line segmentation in
+an OCR pipeline and how it relates to the transcription method. While the
+primary purpose is to identify text lines, a text line segmenter's task is also
+to aid the extraction of lines in a way that optimizes transcription
+performance. As such different representations of text lines can be produced by
+an LA system, e.g. bounding boxes, bounding polygons, pixel clouds, baselines,
+etc. Not all of these are suitable for the calligraphic conventions of the
+Arabic script, e.g. drawing a rectangular bounding box around a curved or
+slanted line will necessarily include parts of adjacent lines inside the box.
+In addition, transcription accuracy is improved when lines are centered inside
+the rectangular image strip fed into the transcription network.
+
+A representation capable of both encoding a line without adjacent noise and
+allowing the normalization of the line onto a straight line is therefore highly
+desirable for documents that contain non-straight lines with some regularity.
+For the dataset the baseline representation was chosen as it is both quick to
+annotate, relatively easy to learn by computer vision methods, and flexible
+enough to allow normalization of arbitrarily shaped lines.
+
+A baseline is just a virtual line upon which most characters rest. While they
+are typically straight in printed documents, they can be defined as polylines
+which allows them to follow the line curvature. By project the curved elements
+onto a straight baseline we can transform a curved line into straight one
+suitable for processing by the transcription model. If the baseline is paired
+with a bounding polygon, it is also possible to suppress elements outside of
+the text line of interest in the process.
+
+We proposed a segmentation method, based on a deep convolutional semantic
+segmentation neural network (U-Net), following this baseline representation and
+evaluated it on both our and the widely used cBAD dataset which achieved
+similar accuracy to other state of the art methods (see table~\ref{tab:foo}).
+While the scores on the Arabic dataset were lower than on Latin writing, our
+dataset is much more diverse which indicates the general suitability of this
+approach to Arabic manuscript text line segmentation.
+
+While effective, this method lacked several features necessary for a practical
+segmenter. First it did not include a way to calculate line orientation, second
+it lacked an algorithm to compute a bounding polygon for non-line content
+suppression, and it was incapable of recognizing lines and regions jointly. By
+changing the output layer of the neural network to perform multi-label pixel
+classification, the new method is able to detect both lines and regions
+simultaneously. The addition of markers classes in the pixel output indicating
+which end of a line is the beginning and which the end allows the determination
+of line orientation. In addition, a new postprocessing method for both
+extracting the baselines from the raw pixel map output of the semantic
+segmentation network and for calculating a bounding polygon was proposed.
+Lastly, the pixel labelling network has been changed to a more memory-efficient
+ReNet-like network which utilizes vertically and horizontally scanning LSTM
+layers instead of deep stacks of convolutional layers to achieve large
+receptive fields.
+
+This new method was evaluated on both the Arabic dataset, a new release of the
+cBAD dataset, and a number of smaller Latin datasets. Results were comparable
+to the state of the art for both region and text line segmentation with some
+improvement over the previous method in scores on the Arabic dataset.
+
+Enfin, nous avons proposé une méthode simple pour la détection du système
+d'écriture et de I'emphase dans le texte lignes. Ce système est utile pour le
+traitement des textes et documents multilingues où l'emphase, c'est-à-dire le
+texte en italique, en gras, etc. est utilisée pour le balisage sémantique, tel
+qu'il se produit fréquemment dans les dictionnaires.
+
+La méthode profite de l'alignement implicite fourni par le réseau de
+transcription de texte formé avec la fonction de coût CTC.  Bien qu'il ne soit
+pas garanti que les activations pour un caractère particulier soient proches de
+son emplacement dans la ligne, les capacités limitées de modélisation à longue
+distance d'un réseau LSTM font qu'il le place presque toujours correctement.
+En entrainant un réseau de transcription de texte à produire une séquence de
+codes d'identification au lieu de caractères réels, nous pouvons diviser une
+ligne en bandes appartenant à un seul système d'écriture. Ces bandes peuvent
+ensuite être traitées par des modèles de reconnaissance spécifiques à
+l'écriture. Une propriété intéressante de notre approche est que le système
+peut être entraîné et que les données de son apprentissage peuvent être
+dérivées automatiquement des données d'apprentissage existantes pour les
+modèles de transcription.
+
+\section{La transcription et l'alignement}
+
+\subsection{Le logiciel ROC Kraken}
+
+Kraken is a modular, open source OCR engine designed to be particular useful
+for retrodigitization in the humanities. Apart of state of the art
+methods for transcription and layout analysis, it includes a number of other
+features which make it of interest to humanities scholars. 
+
+Great care has been taken in its development to reduce implicit assumption on
+the functioning of text and to make limitations explicit. It has been extended
+from its origins as a fork of the OCRopus system with full Unicode
+right-to-left, bidirectional, and vertical writing support, script detection,
+and multiscript recognition. A simple JSON interface allowing the configuration
+of a mapping between numerical model outputs to sequences of Unicode code
+points and vice versa. This mechanism is most useful for large logographic
+scripts such as Chinese writing system as it allows the decomposition of one
+Unicode code point representing a single grapheme cluster into its logical
+components in the output of the neural network.
+
+As Kraken is designed to be easily embedded into other applications it offers
+both a simple API and a flexible serialization systems through templates.
+Default templates for a number of formats such a ALTO, hOCR, and TEI are
+provided per default. Processing modules can be accessed both through the API
+and the command line which allows the flexible substitution of functional
+blocks or the use of subsystems for complementing own methods.
+
+In the case where sane defaults are desirable but can be detrimental in edge
+cases, these can generally be disabled or adapted. Examples range from textual
+processing such as bidirectional text support\footnote{The Unicode BiDi
+algorithm has cases were an explicit markup of directionality can be required.}
+and text normalization to changing the architectures and training parameters of
+the artificial neural networks employed in page segmentation and transcription.
+
+The transcription module operates as a standard segmentation-less sequence
+classifier using an artificial neural network to map an image of a single line
+of text into a sequence of labels which are then mapped to Unicode code points.
+The RNA employed per default is a hybrid CNN-RNN trained with the CTC cost
+function. A simple network specification language allows the adaptation of the
+network to specific tasks. Character accuracies for a number of different
+scripts using this classifier are shown in table~\ref{tab:acc}.
+
+Page segmentation is provided through the region and line segmentation system
+described above. Like other parts of the software it is highly configurable and
+allows the detection of arbitrary regions and text lines with sufficient
+training data.
+
+\subsection{L'alignement des Caractères}
+
+A task of some paleographical interest is the automatic alignment of text
+transcription with the respective glyphs in an image. While this could be
+naively done with a character-segmenting approach similar to older OCR engines
+we evaluated a method that utilizes the implicit alignment of the CTC cost
+function to locate graphemes in an image given a diplomatic transcription and
+compared it to a SIFT-flow system. The method is intended to work on the Dead
+Sea Scrolls, highly fragmentary manuscripts written chiefly in Hebrew.
+
+In a first step fragmentary Hebrew manuscripts are segmented with a page
+segmentation model specifically trained for this material. Linewise diplomatic
+transcriptions from the QWB database are then matched to the segmenter output
+to create training data for a transcription model in a semi-automatic fashion.
+Circa 2500 lines from 440 fragments were then used to transfer-learn a new
+transcription model from an existing medieval Hebrew manuscript transcription
+model. As the training data varies wildly in style, individual characters are
+often severely degraded, and the model is trained to severely overfit the CER
+of is fairly high with ca. 30\% on the validation set.
+
+The activations of this overfitted model are used to determine character
+locations on material in the semi-automatically created training set. When
+evaluated against human-annotated glyph locations, the system places the
+character closest to the actual location 90.3\% of the time with an average IoU
+of 0.81, significantly outperforming SIFT-flow method even when anchoring it
+with the raw OCR character locations.
+
+\section{eScriptorium}
+
+eScriptorium is a open source document analysis and annotation platform. Its
+aim is to combine computational tools with manual digital tools for
+transcription an deep annotation of texts and images on paleographic,
+philological, and linguistic levels. It is targeted at scholars from the
+humanities but also librarians and archivists, students, computer scientists,
+and the general public. Originating from the Scripta project, whose aim is to
+facilitate the study of writing in all its forms across history, its core
+principles are openness, flexibility, and language- and writing system
+independence. 
+
+The latter is especially important as the range of languages and writing
+systems studied inside Scripta is enormous, covering the ancient Near East,
+Iran and Central Asia, India, South-East and East Asia, as well as the
+Classical and Medieval West. Therefore, as with Kraken, a concerted effort has
+been made to reduce assumptions on the functioning of text.
+
+eScriptorium utilizes Kraken for its computer vision needs. As such the OCR
+pipeline construction is mirrored in the interface of eScriptorium, with a
+step-wise approach of data import, (automatic or manual) page segmentation,
+(automatic or manual) transcription, annotation, and export.
+
+The requirement to accomodate a large variety of writing systems, especially
+the need to be able to process rare and historical writing,  imposes some
+design restrictions on eScriptorium that go beyond measures taken for making
+the computational methods in Kraken versatile. By definition rare languages
+lack large pre-existing datasets which can be used to seed the OCR process.
+Therefore manual annotation and verification of segmentation and transcription
+cannot be a simple afterthought but must be seen as a fundamental part of the
+interface, both to allow practical work with the smallest of datasets which
+cannot yet be feasably processed with the automatic methods implemented and to
+assist in the efficient bootstrapping of automatic processing.
+
+It also precludes the use of common techniques to increase the generalization
+and training burden of automatic methods such as statistical language models
+and generalized models for tasks like page segmentation. Powerful language
+models for low resource languages such as Old Vietnamese are equally
+unrealistic as a page segmenter that can accurately extract lines from Chinese
+inscriptions, Arabic manuscripts, Incunabula, and newspapers with a single RNA
+model. Therefore, the platform is designed to allow frequent training and
+re-training through model inventories, intermediate interfaces for data import
+and export, and prospectively fine-grained evaluation reports as already exist
+in Kraken.
+
+A final aspect reinforcing these design constraints in the platform stems not
+from the source material but the kind of work performed on it. Humanities
+scholars perform a wide range of research utilizing a large number of different
+paradigms on textual material. This methodological pluralism results in
+different conventions for transcription even on material in the same language
+depending on a scholar's particular preferences. As such there is a fundamental
+need to accomodate different standards and to make these visible to others,
+especially in the context of artificial intelligence systems which are, after
+all, nothing but powerful tools for statistical inference. Open systems can aid
+in communicating the standards and assumptions of these processes but the fact
+remains that for a mere humanities user unfamiliar with the terminology of
+computer science these are hidden in a magic black box (and vice versa).
+Ontologies can principally bridge this divide but are complex to set up and
+maintain and often clash with the ad-hoc nature of research. Our best option
+remains to follow standards where available, offer interfaces to take and bring
+data and artifacts out of and into eScriptorium, and accept that it is highly
+unlikely for one tool to be both of practical use and universal.
+
+\section{Conclusions et Perspectives}
+
+In conclusion we have presented in this dissertation work that represents a
+step forward towards the practical retrodigitization of Arabic-script documents
+and historical and non-Latin material in general. Page segmentation and
+transcription are now in principle capable of digitizing any Arabic-script
+document but more importantly the inclusion of these methods in both a
+low-level OCR system and a high-level VRE, which are both totally open for
+adaptation, reuse, and sharing, make the use of these tools in digital
+humanities projects both large and small significantly more attractive.
+
+It is clear that substantial work remains ahead. We have studied to general
+requirements of a general purpose Arabic-script OCR system and validated the
+state of the art at the beginning of the thesis in two studies. While the most
+pressing issues, layout analysis, more powerful transcription methods, and
+better tooling for data creation, curation, and dissemination, have been
+resolved to a large extent, not all tasks are currently solvable in a
+satisfactorily manner.
+
+The most immediate concern for Arabic manuscript OCR is reading order
+determination. As described above, research into this topic is scarce and
+existing methods are hand-crafted heuristics incapable of dealing with the
+often complex structure of historical manuscripts. While datasets are
+non-existent or implicitly hidden in datasets for other tasks, the abilities of
+artificial intelligence for spatial reasoning with a large number of objects
+has increased in recent years with the advent of graph neural networks.
+
+Despite current OCRs system being capable of impressive feats even on highly
+degraded and unusual documents with more ergonomic training data requirements
+than ever before, bootstrapping training data is still the most time-consuming
+task of modern computer vision techniques. While we can now effectively use
+transfer learning to adapt existing models to new material with minimal amounts
+of data, more advanced domain adaptation methods offer great promise for making
+more material accessible without human intervention.
+
+Development in eScriptorium will surely continue and incorporate advances in
+automatic methods to the extent it aids in humanities research. Avenues not
+explored in this thesis include non-textual operations, such as  various image
+classification tasks, dating, clustering of similar documents, or text reuse
+detection.
+
+Lastly, even with the availability of powerful, open computer vision tools, the
+landscape of datasets remain fractured. While more than ever scholars recognize
+the importance of sharing data to advance not only humanities but also computer
+science research the favorite way to do so remains the profane github
+repository with a non-descriptive README file. A combination of VREs aware of
+the importance of proper metadata, enlarged input of archival practice in
+scholarly research, and the use of open research data infrastructures as
+already widespread in other scientific disciplines has the potential to improve
+this state of affairs considerably in the next few year.
+
+\end{french}
+

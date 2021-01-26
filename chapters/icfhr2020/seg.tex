@@ -1,4 +1,6 @@
 \chapter{A Modular Region and Text Line Layout Analysis System}
+\chaptermark{Region and Text Line Layout Analysis}
+\label{ch:icfhr}
 
 \section{abstract}
 High quality document layout analysis is fundamental to the accurate processing
@@ -446,6 +448,7 @@ proposed\footnotemark[4] & 0.936 & 0.949 & 0.942\\
 
 \footnotetext[3]{Calculated on random 200 pages of the test set.}
 \footnotetext[4]{Combined region and baseline model}
+
 \begin{table}[h!]
 \begin{center}
 \caption{Metrics for the region detection task of the OHG and Bozen datasets}
@@ -492,11 +495,11 @@ region segmentation the standard metrics mean accuracy, mean
 intersection-over-union, and frequency-weighted intersection over union are
 reported:
 
-%\begin{description}[\settowidth{\labelwidth}{frequency weighted IU}]
-%	\item[mean accuracy] $(1/n_{cl}) \sum_i n_{ii}/t_i$
-%	\item[mean IU] $(1/n_{cl})\sum_i n_{ii} / (t_i + \sum_j n_{ji} - n_{ii})$
-%	\item[frequency weighted IU] $\sum_k t_k)^{-1}\sum_it_in_{ii}/(t_i + \sum_j n_{ji} - n_{ii})$
-%\end{description}
+\begin{description}
+	\item[mean accuracy] $(1/n_{cl}) \sum_i n_{ii}/t_i$
+	\item[mean IU] $(1/n_{cl})\sum_i n_{ii} / (t_i + \sum_j n_{ji} - n_{ii})$
+	\item[frequency weighted IU] $\sum_k t_k)^{-1}\sum_it_in_{ii}/(t_i + \sum_j n_{ji} - n_{ii})$
+\end{description}
 
 where $n_{ij}$ is the number of pixels of class $i$ predicted to belong to
 class $j$, where there are $n_{cl}$ different region classes and $t_i = \sum_j
