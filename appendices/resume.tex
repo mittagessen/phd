@@ -11,459 +11,532 @@ que ces méthodes visent principalement à remédier les problèmes résultant d
 caractéristiques de l'écriture arabe, elles sont conçues pour être applicables
 à l'écriture et aux inscriptions dans une variété d'autres systèmes d'écriture.
 
-\section{Document Image Analysis and Optical Character Recognition}
+\section{L'analyse d'imges de documents et reconnaissance optique de caractères}
 
-Document Image Analysis (DIA) is a subfield of Computer Vision (CV) which aims
-to understand document contents through processing of its digital images.
-Documents are defined loosely by the field, including not only handwritten and
-printed text on paper, but also writing on other supple supports such as
-papyrus or palm leafs and even inscriptions.
+L'analyse d'images de documents (AID) est un sous-domaine de la vision par
+ordinateur (VO) qui cherche à comprendre le contenu des documents par
+le traitement de leurs images numériques.  Les documents sont définis
+de façon libérale par le domaine, comprenant pas seulement les
+documents manuscrits et le texte imprimé sur papier, mais aussi
+l'écriture sur d'autres supports souples tels que le papyrus ou les
+feuilles de palmier et même les inscriptions.
 
-The difference to general computer vision lies not so much in the methods
-employed but the nature of the input images. These images are usually obtained
-through cameras or scanners, often in a professional setting, resulting in
-source material with minimal noise from non-pertinent elements which are often
-encountered in the natural scene images treated by other branches of CV.
-Notwithstanding the cleaner input data, the structured representations desired
-as output tend to be of higher complexity and quantity in DIA than other
-applications, requiring detection, classification, and relation of dozens to
-hundreds of document elements such as lines, characters, illustrations, and
-tables. 
+La différence vis-à-vis de la vision par ordinateur en général ne se trouve pas
+dans les méthodes employées, mais dans la nature des images traitées.
+Ces images sont généralement obtenues par des caméras ou des scanners,
+souvent dans un contexte professionnel, ce qui permet d'obtenir un
+matériel source avec un minimum de bruit provenant d'éléments non
+pertinents que l'on rencontre souvent dans les images de scènes
+naturelles traitées par d'autres branches du VO. Malgré des données d'entrée
+plus propres, les représentations structurées souhaitées en sortie ont
+tendance à être plus complexes et plus nombreuses dans la AID que dans
+d'autres applications, nécessitant la détection, la classification et
+la mise en relation de dizaines d'éléments de documents tels que des
+lignes, des caractères, des illustrations et des tableaux.
 
-Like other fields in computer science, DIA research can be partitioned into
-specific tasks, one or more of which are solved by a particular proposed
-method. The most prominent task of DIA is optical character recognition (OCR),
-but others, either based on OCR or entirely novel, such as document
-classification and dating or keyword spotting exist. OCR, the conversion of
-printed, written or inscribed writing into machine-encoded text, is a long
-established process, both as a task in computer vision research and its
-practical use in applications ranging from address parsing to aids for the
-blind. It is arguably the origin of all DIA with a number of patents ranging
-back to the early nineteenth century.
+Comme dans d'autres domaines de l'informatique, la recherche en DIA peut être
+divisée en tâches spécifiques, dont une ou plusieurs sont résolues par
+une méthode particulière proposée. La tâche la plus importante de la
+DIA est la reconnaissance optique de caractères (ROC), mais d'autres,
+basées sur la ROC ou entièrement nouvelles, telles que la
+reconnaissance de documents de classification, de datation ou de
+repérage par mot clé, existent. La ROC, la conversion de textes imprimés,
+écrits ou inscrits en texte codé par machine, est un processus établi depuis
+longtemps, à la fois en tant que tâche dans la recherche sur la vision
+par ordinateur et son utilisation pratique dans des applications comme
+l'analyse des adresses ou les aides aux aveugles. Il est sans doute à
+l'origine de toute AID avec un certain nombre de brevets remontant
+au début du XIXe siècle.
 
-These first approaches, decades earlier than the earliest computers, have now
-evolved to the routine application of DIA techniques for tasks such as address
-parsing for mail routing, cheque verification, and book retrodigitization.
-Indeed, there is now the widespread claim in the field that OCR is
-fundamentally solved, at least for modern, machine-printed documents in English
-with a reasonable low level of noise where modern commercial retrodigitization
-software routinely achieves character accuracy rates above 99\%. Nevertheless,
-there exist almost 4000 written languages and several hundred writing systems,
-for the vast majority of which practical OCR systems are not available. Even
-accounting for the use of purely alphabetic scripts such as Latin and Cyrillic,
-which present less of a challenge to state of the art OCR when employed
-accordant with modern western typographic practices, it is clear that a
-substantial proportion of human literary output is not yet accessible through
-retrodigitization.
+Ces premières approches, des décennies avant les premiers ordinateurs, ont
+maintenant évolué en l'application quotidienne des techniques de DIA
+pour des tâches telles que l'analyse des adresses pour la distribution
+du courrier, la vérification des chèques et la rétro-numérisation des
+livres. En effet, on revendique aujourd'hui dans la profession que la
+ROC est fondamentalement résolue, au moins pour les documents imprimés
+modernes en anglais avec un niveau de bruit raisonnablement faible, où
+les logiciels commerciaux modernes de rétrodigitalisation atteignent
+régulièrement des taux de précision des caractères supérieurs à 99\%.
+Néanmoins, il existe près de 4000 langues écrites et plusieurs centaines de
+systèmes d'écriture, pour la grande majorité desquels des systèmes de
+ROC pratiques ne sont pas disponibles. Même en considérant seulement
+l'utilisation d'écritures purement alphabétiques telles que le latin et
+le cyrillique, qui posent moins de problèmes à la ROC de pointe
+lorsqu'elles sont employées conformément aux pratiques typographiques
+occidentales modernes, il est clair qu'une part importante de la
+production littéraire humaine n'est pas encore accessible par la
+rétro-numérisation.
 
-This is even more true for historical material. Large scale digital scanning
-projects in rich countries have resulted in the creation of substantial digital
-libraries that are de facto inaccessible to both the public and scholars even
-for material as recent as the late nineteenth century as typographical and
-orthographical variation degrade the quality of digitized text by software
-geared towards modern documents substantially. This is most likely a temporary
-state of affairs for the most numerous material in the archives of the Global
-North where projects such as OCR-D\footnote{\url{http://ocr-d.de}} are paving
-the way to translate advances in pure DIA research to library practice. Along
-these projects and in more specific efforts such as \cite{smith2018research} we
-have seen the crystallization of a collective research program for the
-digitization of historical and \emph{minority script} material that is shared
-by both humanities scholars engaged in digital methods and computer vision
-experts. Nevertheless, these communities remain fractured along geographical,
-linguistic, and professional boundaries.
+C'est encore plus clair pour le matériel historique. Les projets de
+numérisation à grande échelle dans les pays riches ont permis de créer de
+vastes collections numériques de les bibliothèques qui sont de facto
+inaccessibles au public et aux chercheurs, même pour des documents aussi
+récents que ceux de la fin du XIXe siècle car les variations orthographiques et
+typographiques dégradent considérablement la qualité du texte numérisé par les
+logiciels adaptés aux documents modernes. Il s'agit très probablement d'un état
+de fait temporaire pour les documents les plus nombreux dans les archives des
+pays développés où des projets tels que OCR-D\footnote{\url{http://ocr-d.de}}
+ouvrent la voie pour transférer les progrès de la recherche pure en AID à la
+pratique des bibliothèques. Dans le cadre de ces projets et d'efforts plus
+spécifiques tels que \cite{smith2018research}, on a vu la cristallisation d'un
+programme de recherche collective pour la numérisation du matériel historique
+et des systèmes d'écriture minoritaires, partagé par les chercheurs en sciences
+humaines engagés dans les méthodes numériques et les experts de la vision par
+ordinateur. Néanmoins, ces communautés restent fracturées sur le plan
+géographique, les frontières linguistiques et professionnelles.
 
-On the other hand, the lack of funding combined with the deterioration of
-collections elsewhere through conflict and environmental influences increases
-the risk of permanent loss of cultural heritage of interest to only a small
-number of scholars and minority populations. Even famed collections such as the
-manuscripts of Timbuktu, have barely escaped destruction through conflict in
-recent years and are in acute danger of being destroyed by humidity. 
+D'autre part, le manque de financement combiné à la détérioration des
+collections dans les autres pays en raison de conflits et d'influences
+environnementales augmente le risque de perte permanente du patrimoine culturel
+qui n'intéresse qu'un petit nombre de chercheurs et de populations
+minoritaires. Même des collections célèbres telles que les manuscrits de
+Tombouctou ont à peine échappé à la destruction par les conflits de ces
+dernières années et sont en grand danger d'être détruites par l'humidité. 
 
-\subsection{Tasks}
+\subsection{Tâches}
 
-As one of the core application of document image analysis, OCR has devolved
-into a large number of subproblems. Not all of them are strictly necessary for
-a functional OCR system and in fact many of them can only be implemented in
-material-specific fashion and are therefore relegated to specialized
-applications. A closer analysis of the requirements on an OCR system capable of
-processng Arabic-script text effectively follows in the next section.
+En tant qu'application centrale de l'analyse d'images de documents, la ROC
+s'est divisée en un grand nombre de sous-problèmes. Ils ne sont pas tous
+strictement nécessaires à un système ROC fonctionnel et, en fait, beaucoup
+d'entre eux ne peuvent être mis en œuvre que de manière spécifique aux
+matériaux et sont donc relégués à des applications spécialisées.
 
-The typical optical character recognition pipeline is built around four basic
-processing steps:
+Le pipeline typique de la reconnaissance optique de caractères est construit
+autour de quatre étapes de traitement de base :
 
 \begin{description}
-\item [Preprocessing] Denoising, deskewing and dewarping, and binarization
-\item [Layout Analysis] Extracting structural information from document page
-images and enriching it with additional semantic information.
-\item [Transcription] Extracting textual information from all or a subset of
-objects identified by in the layout analysis step.
+\item [Prétraitement] Le débruitage, le redressement, et la binarisation
+\item [Segmentation des pages] Extraction des informations structurelles des
+images de pages de documents et les enrichir avec des informations sémantiques
+supplémentaires.
+\item [Transcription] Extraction d'informations textuelles de la totalité ou
+d'un sous-ensemble des objets identifiés à l'étape précédente.
 \end{description}
 
-While this characterization holds for all but the most esoteric pipelines the
-exact functional blocks depend heavily on the type and structure of the
-documents to be processed. Each of these processing steps contains one or more
-methods that solve a particular task, such as:
+Si cette caractérisation est valable pour tous les pipelines de données, sauf
+les plus ésotériques, les blocs fonctionnels exacts dépendent fortement du type
+et de la structure des documents à traiter. Chacune de ces étapes de traitement
+contient une ou plusieurs méthodes qui servent à résoudre une tâche
+particulière, comme par exemple:
 
 \begin{description}
-\item [Binarization] Classifying the pixels of an image into two classes:
-foreground, i.e. text, and background, i.e. everything else.
-\item [Denoising] Increasing the page image quality for subsequent problems.
-Denoising includes processes such as background normalization, color space
-adjustments, deblurring, or stain removal.
-\item [Deskewing and Dewarping] Correcting both the perspective distortion
-inherent in camera capture and other degradations introduced commonly in
-scanning setups such as rotation, warping along the binding, \dots
-\item [Region Segmentation] Subdividing a page image into components such as text, decoration, notes, \dots
-\item [Text Line Segmentation] Extracting the text lines from a page image.
-Text line segmentation is notable for being a task where not only a large
-variety of techniques exist but the modellisation of the line itself has been
-subject to considerable research.
-\item [Character Segmentation] Segmenting text on a page image down to the
-glyph or even lower level. While a common operation in traditional OCR systems
-it is mostly unnecessary with state of the art methods. A related task that is
-of interest to the humanities, especially paleo- and epigraphers, is character
-alignment, i.e. the locating individual characters on a document page given the
-full page text.
-\item [Script and Font Recognition] Classifying the language, writing system,
-style, or typeface of the text. This classification can be performed at
-different levels, such as document-wide or individually for whole or parts of a
-line.
-\item [Table Recognition] Inferring the logical structure of table images.
+\item [Binarisation] La classification des pixels d'une image en deux classes :
+le front, c'est-à-dire le texte, et le fond, c'est-à-dire tout le
+reste.
+\item [Débruitage] Augmenter la qualité de l'image de la page pour les tâches
+	suivantes. Le débruitage comprend des processus tels que la
+		normalisation de fond ou l'élimination des taches.
+\item [Deskewing and Dewarping] Corriger à la fois la distorsion de perspective
+	inhérente à la capture par caméra et d'autres dégradations introduites
+couramment pendant de scanning telles que la
+rotation, le déformation le long de la reliure, \dots
+\item [Segmentation en regions]  Subdiviser une image de page en éléments tels que du texte, de la décoration, des notes, des points, etc.
+\item [Segmentation en lignes] Extraction des lignes de texte d'une image de page.
+\item [Segmentation en caractères] Segmentation du texte sur une image de page
+	jusqu'au niveau du glyphe ou même à un niveau inférieur. Bien qu'il
+		s'agisse d'une opération courante dans les systèmes ROC
+		traditionnels, elle est le plus souvent superflue avec les
+		méthodes de pointe.
+\item [Classification du système d'écriture et de la police de caractères] Classifier la langue, le système d'écriture, le style ou la police de
+caractères du texte. Cette classification peut être effectuée à
+différents niveaux, par exemple à l'échelle du document ou
+individuellement pour tout ou partie d'une ligne.
+\item [Reconnaissance des tableaux] Inférer la structure logique des images des tableaux.
 \end{description}
 
-\section{Motivation and Scientific Contributions}
+\section{Motivation et contributions scientifiques}
 
-Arabic-script material represents one of the largest literary traditions in
-human history, both in terms of volume and geographical spread. Examples range
-from religious texts, most prominently the Quran, the holy book of Islam, over
-poetry, to scientific and legal texts in addition to a large corpus of
-administrative records. The sheer number of these texts across a multitude of
-domains make them a prime target for new paradigms in the humanities employing
-computational methodology such as \emph{distant reading} and quantitative
-palaeography. These methods require either large text corpora or accurate DIA
-methods based on one or more of the abovementioned component tasks of an OCR
-system. As the vast majority of Arabic texts have never existed in digital
-form, high quality retrodigitization through OCR forms the foundation for a
-substantial number of Arabic Digital Humanities research projects.
+L'écriture arabe représente l'une des plus grandes traditions littéraires de
+l'histoire de l'humanité, tant en termes de volume que de diffusion
+géographique. Les exemples vont des textes religieux, en particulier le Coran,
+le livre saint de l'Islam, à la poésie, en passant par les textes scientifiques
+et juridiques, sans oublier un vaste corpus de documents administratifs. Le
+nombre considérable de ces textes dans une multitude de domaines en fait une
+cible privilégiée pour les nouveaux paradigmes des sciences humaines qui
+utilisent des méthodes computationnelles telles que la lecture à distance et la
+paléographie quantitative. Ces méthodes nécessitent soit de grands corpus de
+textes, soit des méthodes précises de AID basées sur une ou plusieurs des
+tâches susmentionnées d'un système ROC. Comme la grande majorité des textes
+arabes n'ont jamais existé sous forme numérique, la rétro-numérisation de haute
+qualité par ROC constitue la base d'un nombre important de projets de recherche
+en sciences humaines numériques arabes.
 
-When I started working on this thesis, OCR of machine-printed Arabic text was
-largely dismissed by humanities scholars working on these documents, even ones
-already deeply involved in the digital humanities, and funding agencies as
-impractical, even more so for historical or multigraphic material. Accurate
-Arabic handwriting recognition seemed completely out of reach. While a long
-trail of publications on OCR of simple Arabic datasets such as KHATT
-\cite{mahmoud2014khatt} existed and a number of open and proprietary OCR
-software such as Tesseract, Abbyy FineReader, and Sakhr offered nominal support
-for the recognition of Arabic-script text, these solutions never materialised
-in actual scholarly or large-scale library practice. There are a multitude of
-reasons for this: high error rates for classifiers ang segmenters ill-suited to
-the cursive nature of the writing system, a lack of readily available software
-and technical expertise, and substantial cost and effort required to adapt
-existing solutions to the material of interest.
+Lorsque j'ai commencé à travailler sur cette thèse, la ROC du texte arabe
+imprimé a été largement rejetée par les chercheurs en sciences humaines
+travaillant sur ces documents, même ceux qui étaient déjà très impliqués dans
+les sciences humaines numériques, et par les organismes de financement comme
+peu pratique, encore plus pour le matériel historique ou multigraphique. La
+reconnaissance précise de l'écriture à la main arabe semblait totalement
+inatteignable. Bien qu'il existe une longue tradition de publications sur la
+ROC d'ensembles de données arabes simples tels que KHATT\cite{mahmoud2014khatt}
+et qu'un certain nombre de logiciels de ROC ouverts et propriétaires tels que
+Tesseract, Abbyy FineReader et Sakhr offrent un soutien nominal pour la
+reconnaissance de textes en caractères arabes, ces solutions ne se sont jamais
+concrétisées dans la pratique réelle des bibliothèques universitaires ou à
+grande échelle. Les raisons en sont multiples : taux d'erreur élevé des
+classificateurs et des segmenteurs mal adaptés à la nature cursive du système
+d'écriture, manque de logiciels et de compétences techniques facilement
+disponibles, et coûts et efforts substantiels nécessaires pour adapter les
+solutions existantes au matériel d'intérêt.
 
-It was quickly clear that the challenges keeping practical OCR out of the hands
-of scholars working on Arabic-script printed and handwritten texts, mirror
-those of many other researchers engaged in retrodigitization of historical and
-non-Latin script material. Imitating the prevailing opinion on Arabic OCR,
-\cite{widner2017toward} claimed medieval (Latin-script) manuscripts to be
-practically impervious to contemporary OCR. Similar statements can likely be
-found for other domains.
+Il est rapidement apparu que les obstacles qui empêchent les chercheurs
+travaillant sur des textes imprimés et manuscrits en caractères arabes
+d'utiliser la ROC dans la pratique sont les mêmes que ceux rencontrés par de
+nombreux autres chercheurs engagés dans la rétro-numérisation de documents
+historiques et non-latins. Imitant l'opinion dominante sur la ROC arabe,
+\cite{widner2017toward} a revendiqué que les manuscrits médiévaux (en
+caractères latins) étaient pratiquement imperméables à la ROC contemporaine. On
+peut probablement trouver des évaluations similaires pour d'autres domaines.
 
-As such this work should be seen on a more general intersection between
-humanities and computer science. The research it entails is not a unconnected
-collection of methods soling single tasks in Arabic DIA but part of a coherent
-ecosystem for \emph{humanities} DIA consisting of two principal elements: the
-Kraken OCR engine and the eScriptorium virtual research environment. 
+En tant que telle, cette thèse doit être considérée à l'intersection plus
+générale entre les sciences humaines et l'informatique. La recherche qui y est
+présentée n'est pas un ensemble de méthodes non connectées permettant de
+résoudre des tâches uniques dans l'AID arabe, mais fait partie d'un écosystème
+cohérent pour l'AID des sciences humaines composé de deux éléments principaux :
+le système ROC Kraken et l'environnement de recherche virtuel (ERV)
+eScriptorium.
 
-Kraken is a feature-complete, modular OCR system. It differs from other
-solutions in multiple important ways: digitally inclined scholars as a target
-audience and software design aimed at maximum flexibility. It has also been
-extensively adapted towards better processing of historical documents in
-non-Latin script, especially Arabic.
+Le Kraken est un système ROC complet et modulaire. Il se distingue des autres
+solutions de plusieurs façons importantes : les chercheurs en sciences humaines
+à tendance numérique comme utilisateurs et la conception du logiciel qui
+cherche une flexibilité maximale. Il a également été largement adapté en vue
+d'un meilleur traitement des documents historiques en caractères non latins,
+notamment en arabe.
 
-As part of the adaptation work for making Kraken a more capable tool for Arabic
-text work a retrodigitization feasibility study on a leading Arabic-language
-journal published by the American University of Beirut was performed which
-produced the first detailled analysis on the weaknesses and strengths of state
-of state of the art OCR methods on machine-printed Arabic text.
+Dans le cadre des travaux d'adaptation visant à faire de Kraken un outil plus
+performant pour le travail sur les textes arabes, deux études de faisabilité de
+la rétro-numérisation de livres imprimés en caractères arabes classiques et
+d'une importante revue de langue arabe publiée par l'Université Américaine de
+Beyrouth ont été réalisées, qui ont produit la première analyse détaillée sur
+les faiblesses et les capacités des méthodes de ROC de pointe sur les textes
+arabes imprimés.
 
-This thesis contributes two trainable line segmentation systems, a basic
-one capable of only detecting baselines, and a more advanced one allowing
-region and line segmentation in addition to classification. The latter is
-included in Kraken and allows joint region and line detection and inference of
-line orientation. This second method has also been optimized for memory usage,
-reducing memory consumption by circa fifty per cent in comparison to similarly
-performing fully convolutional semantic segmentation networks.
+Cette thèse contribue de deux systèmes de segmentation de lignes entraînables,
+un système élémentaire capable de détecter uniquement les lignes de base, et un
+système plus avancé permettant la segmentation des régions et des lignes en
+plus de la classification. Ce dernier est inclus dans le Kraken et permet la
+détection conjointe de régions et de lignes et l'inférence de l'orientation des
+lignes. Cette seconde méthode a également été optimisée pour l'utilisation de
+la mémoire, réduisant la consommation de mémoire d'environ cinquante pour cent
+par rapport aux réseaux de neurones à segmentation sémantique à convolution
+totale, ayant des performances similaires.
 
-An abstraction layer on top of the pytorch neural networking library has been
-added which allows the flexible reconfiguration of the artificial neural
-networks (RNA) employed for both layout analysis and text transcription through
-a lightweight ANN definition language which is able to express many features of
-common architectures employed in computer vision tasks. This layer allows the
-relatively simple addition of new layer types and thus quick prototyping and
-efficient hyperparameter optimization even for endusers without in-depth
-machine learning knowledge as has been demonstrated by \cite{strobel2020much}. 
+Un nouveau backend de réseau neuronal a été ajouté au Kraken. Basé sur la
+bibliothèque de réseaux de neurones pytorch, il permet la reconfiguration
+flexible des réseaux de neurones artificiels (ARN) utilisés à la fois pour la
+segmentation des pages et la transcription du texte grâce à un langage de
+définition d'ARN léger qui est capable d'exprimer de nombreuses
+caractéristiques des architectures courantes utilisées dans les tâches de
+vision par ordinateur. Cette couche permet l'ajout relativement simple de
+nouveaux types d'ARN et donc un prototypage rapide et une optimisation efficace
+des hyperparamètres, même pour les utilisateurs finaux sans connaissances
+approfondies en matière d'apprentissage machine, comme l'a démontré
+\cite{strobel2020much}.
 
-During the initial case studies several thousand lines of training data for
-text transcription were annotated and made available as public datasets. I was
-involved in the technical conceptualization and the transcription guidelines
-for these datasets. Another openly licensed dataset of four hundred
-Arabic-script manuscript pages in a variety of languages, styles, and domains
-was annotated with baselines and line orientation to enable evaluation of
-layout analysis methods on historical Arabic-script material.  This
-highly-challenging dataset remains the only handwritten non-Latin dataset for
-the baseline paradigm for layout analysis.
+Au cours des premières études de cas, plusieurs milliers de lignes de données
+de formation pour la transcription de textes ont été annotées et mises à la
+disposition du public. J'ai participé à la conceptualisation technique et aux
+directives de transcription pour ces ensembles de données. Un autre ensemble de
+données sous licence libre de quatre cents pages de manuscrits en écriture
+arabe dans une variété de langues, de styles et de domaines a été annoté avec
+des lignes de base et l'orientation des lignes pour permettre l'évaluation des
+méthodes d'analyse de la mise en page sur des documents historiques en écriture
+arabe.  Cet ensemble de données très complexe reste le seul ensemble de données
+manuscrites non latines pour le paradigme de base de l'analyse de la mise en
+page.
 
-The second component of this retrodigitization ecosystem is the eScriptorium
-VRE.  While Kraken is designed for maximum flexibility, eScriptorium takes
-another approach. Conceived as a full-blown palaeographic research and
-publication environment for scholarly use, OCR functionality is only a small
-part of its planned features. As it is impractical to expose all functionality
-of Kraken on such a platform, the design of eScriptorium allows manual and
-semi-automatic internvention at each step of the process either through manual
-manipulation in the interface or graphical and programmatic data exchange
-interfaces.
+La deuxième composante de cet écosystème de rétro-numérisation est l'ERV
+eScriptorium.  Alors que le Kraken est conçu pour une flexibilité maximale,
+l'eScriptorium adopte une autre approche. Conçu comme un environnement de
+recherche paléographique et de publication à part entière pour un usage
+scientifique, la fonctionnalité ROC n'est qu'une petite partie des
+caractéristiques prévues. Comme il n'est pas pratique d'exposer toutes les
+fonctionnalités du Kraken sur une telle plate-forme, la conception
+d'eScriptorium permet une intervention manuelle et semi-automatique à chaque
+étape du processus, soit par une manipulation manuelle dans l'interface, soit
+par des interfaces d'échange de données graphiques et programmatiques.
 
-As eScriptorium aims to offer additional scholarly functions beyond pure
-retrodigitization the platform is also an ideal test case for computer
-vision-assisted research in the humanities. In some cases, these advanced
-functions tie into text transcription. A method for deriving grapheme locations
-from the implicit alignment produced by a line-based text recognition ANNs and
-an evaluation on fragmentary Hebrew material is presented. 
+Comme eScriptorium vise à offrir des fonctions scientifiques supplémentaires
+au-delà de la simple rétro-numérisation, la plateforme est également un cadre
+de test idéal pour la recherche en sciences humaines assistée par la vision
+artificielle. Dans certains cas, ces fonctions avancées sont liées à la
+transcription de textes. Une méthode permettant de dériver les emplacements des
+graphèmes à partir de l'alignement implicite produit par une reconnaissance de
+texte par ligne ANN et une évaluation sur des fragments de matériel hébraïque
+est présentée.
 
 \section{L'écriture arabe}
 
-The Arabic writing system is one of the geographically and chronologically most
-widely used writing system in human history. It is the primary script for the
-Arabic language, Farsi, Urdu, and multiple others on the Indian subcontinent
-and has been used historically to produce texts in Spanish to Chinese.
+Le système d'écriture arabe est l'un des systèmes d'écriture les plus répandus
+de l'histoire de l'humanité, géographiquement et chronologiquement. Il s'agit
+de l'écriture principale de la langue arabe, du farsi, de l'ourdou et de
+plusieurs autres langues du sous-continent indien. Historiquement, elle a été
+utilisée pour produire des textes de l'espagnol au chinois.
 
-While there is still some dispute on its exact origins, the scholarly consensus
-is that the Arabic script evolved either from Nabatean or Syriac script in the
-Middle East over the course of multiple centuries with maturation occuring
-during the seventh century CE.  Linked closely to the spread of Islam, a number
-of alphabetic variants and calligraphic regional styles developed in the
-subsequent centuries. Nevertheless it is far from a purely liturgical script
-with a wealth of administrative records, philosophical and scientific
-treatises, poetry, \dots existing.
+Bien que ses origines exactes soient encore controversées, les historiens
+s'accordent à dire que l'écriture arabe a évolué à partir de l'écriture
+nabatéenne ou syriaque au Moyen-Orient au cours de plusieurs siècles, la
+maturation ayant eu lieu au cours du septième siècle de notre ère.  Étroitement
+liés à la propagation de l'Islam, un certain nombre de variantes alphabétiques
+et de styles calligraphiques régionaux se sont développés au cours des siècles
+suivants. Néanmoins, on est loin d'une écriture purement liturgique avec une
+abondance de documents administratifs, de traités philosophiques et
+scientifiques, de poésie, etc.
 
-It is therefore of a misnomer to speak of a single Arabic script from the
-perspective of DIA research. Each style in combination with the regional
-preferences and the context of their utilization presents particular
-challenges.
+Il est donc erroné de parler d'une seule écriture arabe du point de vue des
+recherches de l'AID. Chaque style, en combinaison avec les préférences
+régionales et le contexte de leur utilisation, présente des défis particuliers.
 
-\subsection{The Principles of the Arabic script}
+\subsection{Les principes de l'écriture arabe}
 
-The Arabic script is an \emph{abjad}, a consonantal writing system, which means
-it only requires that consonants and long vowels to be written, the reader is
-supposed to supply the appropriate short vowels themselves from the context.
-Short vowels and other marks for features such as doubling (gemination) and
-nunation (adding a final n), can optionally be added (\emph{tashkil} or
-vocalization) but are only systematically used when transcribing the Quran or
-elementary texts for language learners. Like Syriac and Hebrew it is written
-from right to left with the exception of numbers which are written from left to
-right. 
+L'écriture arabe est un \emph{abjad}, un système d'écriture consonantique, ce qui
+signifie qu'elle ne nécessite que l'écriture des consonnes et des voyelles
+longues, le lecteur étant censé fournir lui-même les voyelles courtes
+appropriées selon le contexte.  Les voyelles courtes et autres marques pour des
+caractéristiques telles que le doublage (gémination) et la nunation (ajout d'un
+n final), peuvent être ajoutées en option (\emph{tashkil}) mais ne sont
+systématiquement utilisées que lors de la transcription du Coran ou de textes
+élémentaires pour les apprenants en langues. Comme le syriaque et l'hébreu, il
+s'écrit de droite à gauche, à l'exception des nombres qui s'écrivent de gauche
+à droite.
 
-In contrast to other widely used script like Latin, Arabic is written solely in
-a cursive form. Like cursive variants of other scripts individual letters
-change their shape depending on their position in a word: initial, medial,
-final, and independent shapes exist, in addition to style-specific calligraphic
-rules for letter placement. One difference to cursive writing in other scripts
-is that not all letters can be connected to each other. As whitespace does not
-necessarily indicate the beginning of a new word, calligraphers are largely
-free to vary inter-word, inter-syllable, and inter-stroke spacing as desired.
-This spacing variation can throw off optical character recognition systems.
+Contrairement à d'autres écritures très courantes comme le latin, l'arabe est
+écrit uniquement dans une forme cursive. Comme les variantes cursives d'autres
+écritures, les lettres individuelles changent de forme en fonction de leur
+position dans un mot : des formes initiales, médianes, finales et indépendantes
+existent, en plus des règles calligraphiques spécifiques au style pour le
+placement des lettres. Une différence avec l'écriture cursive des autres
+écritures est que toutes les lettres ne peuvent pas être reliées entre elles.
+Comme les espaces n'indiquent pas nécessairement le début d'un nouveau mot, les
+calligraphes sont largement libres de faire varier l'espacement entre les mots,
+les syllabes et les coups comme ils le souhaitent.  Cette variation de
+l'espacement peut perturber les systèmes de reconnaissance optique des
+caractères.
 
-Another distinction is the lack of capitalization and Western-style
-punctuation, the latter having been only introduced in the twentieth century
-CE. Instead particular words and phrases are used to introduce a new sentence
-or question and stokes are placed above titles and headings.
+Une autre distinction est l'absence de majuscule et la ponctuation de type
+occidental, cette dernière n'ayant été introduite qu'au XXe siècle de notre
+ère. Au lieu de cela, des mots et des phrases particuliers sont utilisés pour
+introduire une nouvelle phrase ou question et les accents sont placés au-dessus
+des titres et des rubriques.
 
-Additional letter forms exist in variants of the Arabic script adapted to other
-languages which feature phonemes that do not occur in Arabic. These are usually
-adapted by adding dots to graphemes representing similar sounds in Arabic, such
-as the Persian \emph{pe} derived from \emph{bāʾ} by adding two additional dots
-below. As there are plenty of languages that are or have been written in the
-script, there is a large number of these variants.
+Il existe d'autres formes de lettres dans des variantes de l'écriture arabe
+adaptées à d'autres langues qui comportent des phonèmes qui ne se trouvent pas
+en arabe. Elles sont généralement adaptées en ajoutant des points aux graphèmes
+représentant des sons similaires en arabe, comme le persan \emph{pe} dérivé de
+\emph{bāʾ} en ajoutant deux points supplémentaires ci-dessous. Comme il y a
+beaucoup de langues qui sont ou ont été écrites dans l'écriture, il existe un
+grand nombre de ces variantes.
 
-A particular difficulty for OCR systems is the peculiar way Arabic text is
-justified. Hyphenation, the splitting of words to facilitate line-wrapping, is
-absent in all but the earliest text. Instead of whitespace justification common
-in alphabetic scripts, more visually pleasing alternatives were devised.
-Stretching of letter connections, curving the baseline, and stacking or
-displacing fragments of the last word above or next to the line are common
-occurrences with the latter two methods posing a particular challenge even to
-modern layout analyis systems.
+Une difficulté particulière pour les systèmes ROC est la façon particulière
+dont le texte arabe est justifié. La césure, c'est-à-dire la division des mots
+pour faciliter le retour à la ligne, est absente de tous les textes, sauf les
+plus anciens. Au lieu de la justification par espace blanc, courante dans les
+écritures alphabétiques, des alternatives plus agréables visuellement ont été
+conçues.  L'allongement des liens entre les lettres, la courbure de la ligne de
+base et la superposition ou le déplacement de fragments du dernier mot
+au-dessus ou à côté de la ligne sont des phénomènes courants, ces deux
+dernières méthodes posant un défi particulier, même aux systèmes modernes de
+segmentation des pages.
 
 \subsection{Styles}
 
-A large number of calligraphc styles have been devised over the centuries.
-While some are recognized throughout the Islamic world, such as \emph{naskh},
-others are specific to certain geographic area, e.g. the North African
-\emph{maghribi} or Persian \emph{nastaʼlīq}. The earliest styles such as
-\emph{ḥijāzī} and kufic are families of different styles, as standardization
-was low. By the thirteenth century CE six canonical styles had emerged. These
-are usually paired, one display (majuscule) and one text (minuscule) script:
+Un grand nombre de styles calligraphiques ont été conçus au cours des siècles.
+Si certains sont reconnus dans l'ensemble du monde islamique, comme le
+\emph{naskh}, d'autres sont spécifiques à certaines zones géographiques, par
+exemple le \emph{maghribi} nord-africain ou le \emph{nastaʼlīq} persan. Les
+premiers styles tels que le \emph{ḥijāzī} et le coufique sont des familles de
+styles différents, car la standardisation était faible. Au treizième siècle de
+notre ère, six styles canoniques étaient apparus. Ils sont généralement
+appariés, une écriture d'affichage (majuscule) et une écriture de texte
+(minuscule) :
 
 \begin{itemize}
-        \item \emph{ṯuluṯ} with \emph{naskh}
-        \item \emph{muḥaqqaq} with \emph{rayḥān}
-        \item \emph{tawqīʿ} and \emph{riqāʿ}
+        \item \emph{ṯuluṯ} et \emph{naskh}
+        \item \emph{muḥaqqaq} et \emph{rayḥān}
+        \item \emph{tawqīʿ} et \emph{riqāʿ}
 \end{itemize}
 
-Regional styles were not only linked to geographic areas but also language use.
-In the persian-speaking parts of the Islamic world (Ottoman Empire, Iran,
-India) hanging styles such as \emph{nastaʼlīq} with individual words descending
-onto a common baseline were popular as they were more suited to the different
-letter combinations of Turkish and Persian. Other styles were both
-geographically limited and restricted to certain uses such as the \emph{divanî}
-Ottoman chancery style.
+Les styles régionaux n'étaient pas seulement liés aux zones géographiques mais
+aussi à l'utilisation de la langue.  Dans les parties du monde islamique
+influencées par le persan (Empire Ottoman, Iran, Inde), des styles suspendus
+tels que \emph{nastaʼlīq} avec des mots individuels descendant sur une ligne de
+base commune étaient populaires car ils étaient plus adaptés aux différentes
+combinaisons de lettres du turc et du persan. D'autres styles étaient à la fois
+géographiquement limités et restreints à certains usages comme le
+\emph{divanî} style chancellerie ottomane.
 
-\subsection{Requirements for Arabic OCR system}
+\subsection{Critères pour les systèmes de ROC arabes}
 
-In summary the recognition of printed and handwritten Arabic texts requires a
-number of features not commony found in OCR engines. The principal requirements
-ones are, in order of processing inside a typical pipeline:
+En résumé, la reconnaissance des textes arabes imprimés et manuscrits nécessite
+un certain nombre de caractéristiques que l'on ne trouve pas couramment dans
+les systèmes ROC actuels. Les principales exigences sont, dans l'ordre de
+traitement à l'intérieur d'un pipeline typique :
 
 \begin{description}
-	\item[Freedom of Binarization] The variety of supports, inks, and
-		decorations employed in Arabic text makes the development of a
-		general binarization method unlikely. An Arabic OCR system
-		should therefore be binarization free.
-	\item[Segmentation of curved and slanted lines] The frequent use of
-		slanted and curved lines for both practical and aesthetic
-		purposes necessites a layout analysis method capable of
-		extracting and representing these effectively.
-	\item[Semantic layout analysis] The extensive use of paratext requires
-		an LA system that is capable of separating multiple texts on
-		the same document page.
-	\item[Advanced reading order determination] In addition to classifying
-		the different textual components on a page it is also necessary
-		to bring them in the correct order for proper document
-		understanding.
-	\item[Segmentation-free transcription] As Arabic is written only in
-		cursive form and letter connections can change significantly
-		between styles, an Arabic transcription method should operate
-		on whole lines instead of separating it into characters.
-	\item[Data creation and curation tools] While not directly part of an
-		OCR pipeline, ergonomic tools that can be used to annotate the
-		full range of Arabic text features, are crucial for both
-		concrete digitization projects and for creating datasets for
-		future research.
+	\item[Èlimination de la binarisation] La variété des supports, des encres et des décorations utilisés
+		dans les textes arabes rend peu probable le développement d'une
+		méthode générale de binarisation. Une système ROC arabe devrait
+		donc être sans binarisation.
+	\item[Segmentation des lignes courbes et inclinées] L'utilisation
+		fréquente de lignes inclinées et courbes à des fins tant
+		pratiques qu'esthétiques nécessite une méthode de segmentation
+		des pages capable de les extraire et de les représenter
+		efficacement.
+	\item[Segmentation sémantique des pages] L'utilisation extensive du
+		paratexte nécessite un système de segmentation capable de
+		séparer plusieurs textes sur la même page de document.
+	\item[Détermination de l'ordre de lecture avancée] En plus de
+		classifier les différents éléments textuels d'une page, il est
+		également nécessaire de les mettre dans le bon ordre pour une
+		véritable compréhension du document.
+	\item[Transcription sans segmentation] Comme l'arabe s'écrit uniquement
+		sous forme cursive et que les liaisons entre les lettres
+		peuvent changer de manière significative d'un style à l'autre,
+		une méthode de transcription arabe devrait fonctionner sur des
+		lignes entières au lieu de les séparer en caractères.
+	\item[Les outils de création et de conservation des données]
+		Même s'ils ne font pas directement partie d'un pipeline de ROC,
+		les outils ergonomiques qui peuvent être utilisés pour annoter
+		toute la gamme des caractéristiques du texte arabe sont
+		essentiels pour les projets de numérisation concrets et pour
+		créer des ensembles de données pour les recherches futures.
 \end{description}
 
-\section{Case studies on Arabic-script OCR}
+\section{Études sur le ROC en écriture arabe}
 
-Two accuracy studies on a number of classical Arabic-script texts and the
-leading Arabic language scholarly journal al-Abhath were performed with an
-early version of the Kraken OCR engine to determine the strengths and
-limitations of current OCR engines on these documents. As a result, we have
-determined two key recommendations for substantially improving Arabic-script
-OCR: (1) a more systematic approach to training data production, and (2) the
-development of key technological components, especially multi-language models
-and improved line segmentation and layout analysis.
+Deux études de précision sur un certain nombre de textes classiques en écriture
+arabe et sur la principale revue savante de langue arabe, al-Abhath, ont été
+réalisées avec une version antérieure du système ROC Kraken afin de déterminer
+les points forts et les limites des logiciels ROC actuels sur ces documents. En
+conséquence, nous avons déterminé deux recommandations clés pour améliorer
+substantiellement la ROC en écriture arabe : (1) une approche plus systématique
+de la production de données de l'entrainement, et (2) le développement de
+composants technologiques clés, en particulier des modèles multilingues et une
+meilleure méthode de segmentation des lignes et de la mise en page.
 
-The preliminary first study showed that despite the low character error rates
-(<3\%) achieved by typeface specific models, the substantial differences
-between typefaces result in markedly higher error rates of these models on
-dissimilar typefaces. While this poor generalization can be traced to some
-extent to the limitations of the transcription network (shallow LSTM trained
-without regularization) in this early Kraken version it showed the need for
-both a more powerful neural networking backend in the system and a careful
-selection of training data to ensure the representability of the training data
-set for the desired target domain.
+La première étude préliminaire a montré que malgré les faibles taux d'erreur de
+caractères (<3\%) obtenus par les modèles spécifiques aux polices de
+caractères, les différences substantielles entre les polices de caractères se
+traduisent par des taux d'erreur nettement plus élevés desdits modèles sur des
+polices de caractères dissemblables. Bien que cette mauvaise généralisation
+puisse être attribuée dans une certaine mesure aux limites du réseau de
+transcription (LSTM peu profond entraîné sans régularisation) dans cette
+première version du Kraken, elle a montré la nécessité à la fois d'un backend
+de réseau neuronal plus puissant dans le système et d'une sélection minutieuse
+des données d'entraînement pour assurer la représentativité de l'ensemble des
+données d'entraînement pour le domaine cible souhaité.
 
-The second study was constructed from the beginning around a much more rigorous
-analysis of the typefaces in the material and an in-depth manual evaluation of
-the OCR output in comparison to purely computational evaluation. Its subject,
-the al-Abhath journal was determined to entail two groups of typefaces although
-there are slight intra-group variations, especially for the first typeface
-which was used for the majority of the journal's run. To reflect this analysis
-it was decided to produce 5000 lines of training data for the first typeface
-and 2000 for the second typeface. Lines for training were drawn randomly from
-the two typeface clusters and manually transcribed with the CorpusBuilder
-software. Typeface-specific transcription models were trained on the two
-datasets and subsequently evaluated by an outside contractor and OpenITI on a
-separate validation set (see ~\ref{tab_champs:table_1} and
-~\ref{tab_champs:table_2}). As a result of the review it became clear that
-Kraken significantly outperforms Abbyy's OCR software for Arabic text
-recognition. A detailled manual evaluation of the automatic transcription
-identified multiple common error types: misrecognition of uncommon ligatures,
-letter forms, and elongation characters, doubled letters, and multigraphic 
-text. While some of these issue could be resolved with higher quality training
-data, multigraphic text processing support in the OCR engine which was
-subsequently added (chapitre~\ref{ch:multi}). The assessment also identified
-the need for better line segmentation of Arabic texts as the Latin-optimized
-module in Kraken tended to truncate and split text lines with some frequency.
+La seconde étude a été construite dès le début autour d'une analyse beaucoup
+plus rigoureuse des polices de caractères présentes dans le matériel et d'une
+évaluation manuelle approfondie des résultats de la ROC par rapport à une
+évaluation purement computationnelle. Son sujet, la revue al-Abhath, a été
+déterminée à comporter deux groupes de polices de caractères, bien qu'il y ait
+de légères variations intra-groupe, en particulier pour la première police de
+caractères qui a été utilisée pour la majorité du cycle de la revue. Pour se
+conformer à cette analyse, il a été décidé de produire 5000 lignes de données
+d'entraînement pour la première police de caractères et 2000 pour la seconde.
+Les lignes d'entraînement ont été tirées au hasard des deux groupes de
+caractères et transcrites manuellement avec le logiciel CorpusBuilder. Des
+modèles de transcription spécifiques aux polices de caractères ont été
+entraînés sur les deux ensembles de données, puis évalués par un prestataire
+extérieur et OpenITI sur un ensemble de validation distinct (voir tableaux
+~\ref{tab_champs:table_1} et ~\ref{tab_champs:table_2}). À l'issue de l'examen,
+il est apparu clairement que Kraken surpasse significativement le logiciel ROC
+d'Abbyy pour la reconnaissance de textes arabes. Une évaluation manuelle
+détaillée de la transcription automatique a permis d'identifier plusieurs types
+d'erreurs courantes : mauvaise reconnaissance de ligatures peu courantes, de
+formes de lettres rares et de caractères d'allongement, de texte multigraphique
+et le sortie de lettres doublées. Bien que certains de ces problèmes aient pu
+être résolus grâce à des données d'entraînement de meilleure qualité, le
+traitement de texte multigraphique dans le système ROC a été ajouté
+subséquemment (chapitre~\ref{ch:multi}). L'évaluation a également identifié le
+besoin d'une meilleure segmentation des lignes des textes arabes, car le module
+optimisé pour le latin dans le Kraken avait tendance à tronquer et à diviser
+les lignes de texte avec une certaine fréquence.
 
-\section{Layout Analysis}
+\section{Segmentation des pages}
 
-For the processing of both printed and handwritten Arabic-script documents it
-is clear that a flexible, and preferably trainable, layout analysis method is
-necessary, as a failure to extract text lines makes it automatically impossible
-to transcribe these correctly with any text recognition method.
+Pour le traitement des documents imprimés et manuscrits en caractères arabes,
+il est évident qu'une méthode d'analyse de la mise en page flexible, et de
+préférence entraînable, est nécessaire, vu que l'impossibilité d'extraire des
+lignes de texte rend automatiquement impossible leur transcription correcte
+avec n'importe quelle méthode de reconnaissance de texte.
 
-While a large number of training datasets following different text line
-representations exist for modern and historical documents in Latin-script, this
-is not the case for Arabic manuscripts. To aid in the development of we
-prepared a dataset of 400 Arabic and Persian manuscript pages annotated with
-their text lines.
+Alors qu'il existe un grand nombre d'ensembles de données d'entraînement
+suivant différentes représentations de lignes de texte pour les documents
+modernes et historiques en écriture latine, ce n'est pas le cas pour les
+manuscrits arabes. Pour aider au développement, nous avons préparé un ensemble
+de données de 400 pages de manuscrits arabes et persans annotés avec leurs
+lignes de texte.
 
-It is important to understand the exact nature of the text line segmentation in
-an OCR pipeline and how it relates to the transcription method. While the
-primary purpose is to identify text lines, a text line segmenter's task is also
-to aid the extraction of lines in a way that optimizes transcription
-performance. As such different representations of text lines can be produced by
-an LA system, e.g. bounding boxes, bounding polygons, pixel clouds, baselines,
-etc. Not all of these are suitable for the calligraphic conventions of the
-Arabic script, e.g. drawing a rectangular bounding box around a curved or
-slanted line will necessarily include parts of adjacent lines inside the box.
-In addition, transcription accuracy is improved when lines are centered inside
-the rectangular image strip fed into the transcription network.
+Il est important de comprendre la nature exacte de la segmentation des lignes
+de texte dans un pipeline ROC et son lien avec la méthode de transcription. Si
+l'objectif premier est d'identifier les lignes de texte, la tâche d'un
+segmenteur de lignes de texte est également d'aider à l'extraction des lignes
+de manière à optimiser les performances de la transcription. Ainsi, différentes
+représentations de lignes de texte peuvent être produites par un système de
+segmentation, par exemple des boîtes englobantes, des polygones englobants, des
+nuages de pixels, des lignes de base, etc. Tous ces éléments ne sont pas
+adaptés aux conventions calligraphiques de l'écriture arabe. Par exemple, le
+tracé d'un rectangle englobant une ligne courbe ou inclinée inclura
+nécessairement des parties de lignes adjacentes à l'intérieur du rectangle.  En
+outre, la précision de la transcription est améliorée lorsque les lignes sont
+centrées à l'intérieur de la bande d'image rectangulaire introduite dans le
+réseau de transcription.
 
-A representation capable of both encoding a line without adjacent noise and
-allowing the normalization of the line onto a straight line is therefore highly
-desirable for documents that contain non-straight lines with some regularity.
-For the dataset the baseline representation was chosen as it is both quick to
-annotate, relatively easy to learn by computer vision methods, and flexible
-enough to allow normalization of arbitrarily shaped lines.
+Une représentation capable à la fois d'encoder une ligne sans bruit adjacent et
+de permettre la normalisation de la ligne sur une ligne droite est donc
+hautement souhaitable pour les documents qui contiennent des lignes non droites
+avec une certaine régularité.  Pour l'ensemble de données, la représentation de
+la ligne de base a été choisie car elle est à la fois rapide à annoter,
+relativement facile à apprendre par les méthodes de vision par ordinateur, et
+suffisamment polyvalente pour permettre la normalisation de lignes de forme
+arbitraire.
 
-A baseline is just a virtual line upon which most characters rest. While they
-are typically straight in printed documents, they can be defined as polylines
-which allows them to follow the line curvature. By project the curved elements
-onto a straight baseline we can transform a curved line into straight one
-suitable for processing by the transcription model. If the baseline is paired
-with a bounding polygon, it is also possible to suppress elements outside of
-the text line of interest in the process.
+Une ligne de base n'est qu'une ligne virtuelle sur laquelle la plupart des
+caractères reposent. Alors qu'ils soient généralement droits dans les documents
+imprimés, ils peuvent être définis comme des polylignes, ce qui leur permet de
+suivre la courbure de la ligne. En projetant les éléments courbes sur une ligne
+de base droite, nous pouvons transformer une ligne courbe en une ligne droite
+pouvant être traitée par le modèle de transcription. Si la ligne de base est
+associée à un polygone englobant, il est également possible de supprimer des
+éléments en dehors de la ligne de texte qui nous intéresse dans le processus.
 
-We proposed a segmentation method, based on a deep convolutional semantic
-segmentation neural network (U-Net), following this baseline representation and
-evaluated it on both our and the widely used cBAD dataset which achieved
-similar accuracy to other state of the art methods (see table~\ref{tab:foo}).
-While the scores on the Arabic dataset were lower than on Latin writing, our
-dataset is much more diverse which indicates the general suitability of this
-approach to Arabic manuscript text line segmentation.
+Nous avons proposé une méthode de segmentation, basée sur un réseau neuronal de
+segmentation sémantique convolutive profonde (U-Net), suivant cette
+représentation de la ligne de base et l'avons évaluée sur notre ensemble de
+données et un ensemble de données latins cBAD. La méthode a atteint une
+précision similaire à celle d'autres méthodes de pointe (voir
+tableau~\ref{tab:foo}).   Bien que les résultats obtenus sur l'ensemble de
+données arabes aient été inférieurs à ceux obtenus sur l'écriture latine, notre
+ensemble de données est beaucoup plus diversifié, ce qui indique la pertinence
+générale de cette approche pour la segmentation des lignes de texte des
+manuscrits arabes.
 
-While effective, this method lacked several features necessary for a practical
-segmenter. First it did not include a way to calculate line orientation, second
-it lacked an algorithm to compute a bounding polygon for non-line content
-suppression, and it was incapable of recognizing lines and regions jointly. By
-changing the output layer of the neural network to perform multi-label pixel
-classification, the new method is able to detect both lines and regions
-simultaneously. The addition of markers classes in the pixel output indicating
-which end of a line is the beginning and which the end allows the determination
-of line orientation. In addition, a new postprocessing method for both
-extracting the baselines from the raw pixel map output of the semantic
-segmentation network and for calculating a bounding polygon was proposed.
-Lastly, the pixel labelling network has been changed to a more memory-efficient
-ReNet-like network which utilizes vertically and horizontally scanning LSTM
-layers instead of deep stacks of convolutional layers to achieve large
-receptive fields.
+Bien qu'efficace, cette méthode manquait de plusieurs caractéristiques
+nécessaires à un segmenteur pratique. Premièrement, elle ne comporte pas de
+moyen de calculer l'orientation des lignes, deuxièmement, elle ne dispose pas
+d'un algorithme pour calculer un polygone englobant pour la suppression du
+contenu non-ligne, et elle est incapable de reconnaître conjointement les
+lignes et les régions. En changeant la couche de sortie du réseau neuronal pour
+effectuer une classification de pixels multi-étiquettes, la nouvelle méthode
+est capable de détecter à la fois les lignes et les régions simultanément. Les
+nouvelles classes de marqueurs dans la carte de sortie indiquent quelle
+extrémite d'un ligne est le début et quelle fin permet de déterminer
+l'orientation de la ligne. En outre, une nouvelle méthode de post-traitement a
+été proposée pour extraire les lignes de base de la sortie de la carte de
+pixels brute du réseau de segmentation sémantique et pour calculer un polygone
+englobant. Enfin, le réseau de segmentation sémantique a été changé en un
+réseau de type ReNet plus efficace en mémoire qui utilise des couches LSTM
+balayées verticalement et horizontalement au lieu de piles profondes de couches
+convolutionnelles pour obtenir de grands champs récepteurs.
 
-This new method was evaluated on both the Arabic dataset, a new release of the
-cBAD dataset, and a number of smaller Latin datasets. Results were comparable
-to the state of the art for both region and text line segmentation with some
-improvement over the previous method in scores on the Arabic dataset.
+Cette deuxième méthode a été évaluée à la fois sur l'ensemble de données
+arabes, une nouvelle version de l'ensemble de données cBAD et un certain nombre
+d'ensembles de données latines plus petites. Les résultats étaient comparables
+à la pointe de la technologie pour la segmentation des régions et des lignes de
+texte, avec une certaine amélioration par rapport à la méthode précédente dans
+les résultats sur l'ensemble de données arabes.
 
 Enfin, nous avons proposé une méthode simple pour la détection du système
 d'écriture et de I'emphase dans le texte lignes. Ce système est utile pour le
@@ -489,189 +562,224 @@ modèles de transcription.
 
 \subsection{Le logiciel ROC Kraken}
 
-Kraken is a modular, open source OCR engine designed to be particular useful
-for retrodigitization in the humanities. Apart of state of the art
-methods for transcription and layout analysis, it includes a number of other
-features which make it of interest to humanities scholars. 
+Le Kraken est un logiciel de ROC modulaire et open source conçu pour être
+particulièrement utile pour la rétro-numérisation dans les sciences humaines.
+Outre les méthodes de pointe pour la transcription et l'analyse de la mise en
+page, il comprend un certain nombre d'autres fonctionnalités qui le rendent
+intéressant pour les chercheurs en humanités.
 
-Great care has been taken in its development to reduce implicit assumption on
-the functioning of text and to make limitations explicit. It has been extended
-from its origins as a fork of the OCRopus system with full Unicode
-right-to-left, bidirectional, and vertical writing support, script detection,
-and multiscript recognition. A simple JSON interface allowing the configuration
-of a mapping between numerical model outputs to sequences of Unicode code
-points and vice versa. This mechanism is most useful for large logographic
-scripts such as Chinese writing system as it allows the decomposition of one
-Unicode code point representing a single grapheme cluster into its logical
-components in the output of the neural network.
+Un grand soin a été apporté à son développement pour réduire les hypothèses
+implicites sur le fonctionnement du texte et pour rendre ses limitations
+explicites. Il a été étendu depuis ses origines en tant que bifurcation du
+système OCRopus avec un support Unicode complet de droite à gauche,
+bidirectionnel et vertical de l'écriture, la détection des scripts et la
+reconnaissance multigraphique. Une interface JSON simple permettant la
+configuration d'un mappage entre les sorties de modèles numériques et les
+séquences de points de code Unicode et vice versa. Ce mécanisme est
+particulièrement utile pour les écritures logographiques de grande dimension
+telles que le système d'écriture chinois car il permet la décomposition d'un
+point de code Unicode représentant un seul groupe de graphèmes en ses
+composants logiques dans la sortie du réseau neuronal.
 
-As Kraken is designed to be easily embedded into other applications it offers
-both a simple API and a flexible serialization systems through templates.
-Default templates for a number of formats such a ALTO, hOCR, and TEI are
-provided per default. Processing modules can be accessed both through the API
-and the command line which allows the flexible substitution of functional
-blocks or the use of subsystems for complementing own methods.
+Comme le Kraken est conçu pour être facilement intégré dans d'autres
+applications, il offre à la fois une API simple et un système de sérialisation
+flexible grâce à des templates. Des templates pour un certain nombre de formats
+tels que ALTO, hOCR, et TEI sont fournis par défaut. Les modules de traitement
+sont accessibles à la fois par l'API et par la ligne de commande qui permet la
+substitution flexible de blocs fonctionnels ou l'utilisation de sous-systèmes
+pour compléter ses propres méthodes.
 
-In the case where sane defaults are desirable but can be detrimental in edge
-cases, these can generally be disabled or adapted. Examples range from textual
-processing such as bidirectional text support\footnote{The Unicode BiDi
-algorithm has cases were an explicit markup of directionality can be required.}
-and text normalization to changing the architectures and training parameters of
-the artificial neural networks employed in page segmentation and transcription.
+Dans le cas où des défauts raisonnables sont souhaitables mais peuvent être
+désavantageux dans les cas marginaux, ils peuvent généralement être désactivés
+ou adaptés. Les exemples vont du traitement textuel tel que la prise en charge
+de texte bidirectionnel\footnote{L'algorithme Unicode BiDi a des cas où un
+balisage explicite de la directionalité peut être requis.} et de la
+normalisation du texte au changement des architectures et des paramètres
+d'entraînement des réseaux neuronaux artificiels employés dans la segmentation
+et la transcription des pages.
 
-The transcription module operates as a standard segmentation-less sequence
-classifier using an artificial neural network to map an image of a single line
-of text into a sequence of labels which are then mapped to Unicode code points.
-The RNA employed per default is a hybrid CNN-RNN trained with the CTC cost
-function. A simple network specification language allows the adaptation of the
-network to specific tasks. Character accuracies for a number of different
-scripts using this classifier are shown in table~\ref{tab:acc}.
+Le module de transcription fonctionne comme un classificateur de séquences sans
+segmentation, utilisant un réseau neuronal artificiel pour mapper une image
+d'une seule ligne de texte en une séquence d'étiquettes qui sont ensuite
+mappées en points de code Unicode.  L'ARN utilisé par défaut est un CNN-RNN
+hybride entraîné avec la fonction de coût CTC. Un langage simple de
+spécification de réseau permet d'adapter le réseau à des tâches spécifiques.
+Les précisions des caractères pour un certain nombre de scripts différents
+utilisant ce classificateur sont indiquées dans le tableau~\ref{tab:acc}.
 
-Page segmentation is provided through the region and line segmentation system
-described above. Like other parts of the software it is highly configurable and
-allows the detection of arbitrary regions and text lines with sufficient
-training data.
+La segmentation des pages est assurée par le système de segmentation des
+régions et des lignes décrit ci-dessus. Comme d'autres parties du logiciel, il
+est hautement configurable et permet la détection de régions et de lignes de
+texte arbitraires avec suffisamment de données d'entraînement. Les données
+d'entraînement peuvent être fournies dans un certain nombre de formats de
+fichiers standard tels que ALTO et PageXML ou via une simple API.
 
 \subsection{L'alignement des Caractères}
 
-A task of some paleographical interest is the automatic alignment of text
-transcription with the respective glyphs in an image. While this could be
-naively done with a character-segmenting approach similar to older OCR engines
-we evaluated a method that utilizes the implicit alignment of the CTC cost
-function to locate graphemes in an image given a diplomatic transcription and
-compared it to a SIFT-flow system. The method is intended to work on the Dead
-Sea Scrolls, highly fragmentary manuscripts written chiefly in Hebrew.
+Une tâche d'un certain intérêt paléographique est l'alignement automatique de
+la transcription du texte avec les glyphes respectifs dans une image. Bien que
+cela puisse être fait naïvement avec une approche de segmentation des
+caractères similaire aux anciens logiciels de ROC, nous avons évalué une
+méthode qui utilise l'alignement implicite de la fonction de coût CTC pour
+localiser les graphèmes dans une image, à partir d'une transcription
+diplomatique, et nous l'avons comparée à un système SIFT-flow. La méthode est
+destinée à fonctionner sur les manuscrits de la mer Morte, des manuscrits très
+fragmentaires écrits principalement en hébreu.
 
-In a first step fragmentary Hebrew manuscripts are segmented with a page
-segmentation model specifically trained for this material. Linewise diplomatic
-transcriptions from the QWB database are then matched to the segmenter output
-to create training data for a transcription model in a semi-automatic fashion.
-Circa 2500 lines from 440 fragments were then used to transfer-learn a new
-transcription model from an existing medieval Hebrew manuscript transcription
-model. As the training data varies wildly in style, individual characters are
-often severely degraded, and the model is trained to severely overfit the CER
-of is fairly high with ca. 30\% on the validation set.
+Dans un premier stade, les manuscrits hébraïques fragmentaires sont segmentés à
+l'aide d'un modèle de segmentation des pages spécifiquement entraîné pour ce
+matériel. Les transcriptions diplomatiques par ligne de la base de données QWB
+sont ensuite mises en correspondance avec la sortie du segmenteur afin de créer
+des données d'entraînement pour un modèle de transcription de manière
+semi-automatique.  Environ 2500 lignes provenant de 440 fragments ont ensuite
+été utilisées pour faire une apprentissage par transfer d'un nouveau modèle de
+transcription à partir d'un modèle de transcription de manuscrit hébraïque
+médiéval existant.  Comme les données d'apprentissage varient énormément en
+termes de style, les caractères individuels sont souvent gravement dégradés, et
+le modèle est entraîné à surajuster sévèrement, le CER est assez élevé avec
+environ 30\% sur l'ensemble de validation.
 
-The activations of this overfitted model are used to determine character
-locations on material in the semi-automatically created training set. When
-evaluated against human-annotated glyph locations, the system places the
-character closest to the actual location 90.3\% of the time with an average IoU
-of 0.81, significantly outperforming SIFT-flow method even when anchoring it
-with the raw OCR character locations.
+Les activations de ce modèle surajusté sont utilisées pour déterminer les
+positions des caractères sur le matériel dans l'ensemble d'entraînage créé
+semi-automatiquement. Lorsqu'il est évalué vis-à-vis des positions de glyphes
+annotées par l'homme, le système place le caractère le plus proche de la
+position réelle 90,3\% du temps avec une IoU moyenne de 0,81, surpassant
+significativement la méthode SIFT-flow même lorsqu'il l'ancre avec les
+positions brutes des caractères ROC.
 
 \section{eScriptorium}
 
-eScriptorium is a open source document analysis and annotation platform. Its
-aim is to combine computational tools with manual digital tools for
-transcription an deep annotation of texts and images on paleographic,
-philological, and linguistic levels. It is targeted at scholars from the
-humanities but also librarians and archivists, students, computer scientists,
-and the general public. Originating from the Scripta project, whose aim is to
-facilitate the study of writing in all its forms across history, its core
-principles are openness, flexibility, and language- and writing system
-independence. 
+eScriptorium est une plateforme d'analyse et d'annotation de documents open
+source. Elle cherche à combiner des techniques de calcul avec des outils
+numériques manuels pour la transcription et l'annotation approfondie de textes
+et d'images aux niveaux paléographique, philologique et linguistique. Il
+s'adresse aux chercheurs en sciences humaines, mais aussi aux bibliothécaires
+et archivistes, aux étudiants, aux informaticiens et au grand public. Issu du
+projet Scripta, qui cherche à faciliter l'étude de l'écriture sous toutes ses
+formes au fil de l'histoire, ses principes de base sont la transparence, la
+flexibilité et l'indépendance de la langue et du système d'écriture.
 
-The latter is especially important as the range of languages and writing
-systems studied inside Scripta is enormous, covering the ancient Near East,
-Iran and Central Asia, India, South-East and East Asia, as well as the
-Classical and Medieval West. Therefore, as with Kraken, a concerted effort has
-been made to reduce assumptions on the functioning of text.
+Ce dernier point est particulièrement important car la gamme des langues et des
+systèmes d'écriture étudiés dans le cadre de Scripta est énorme, couvrant le
+Proche-Orient ancien, l'Iran et l'Asie centrale, l'Inde, l'Asie du Sud-Est et
+de l'Est, ainsi que l'Occident classique et médiéval. Par conséquent, comme
+pour le Kraken, un effort concerté a été fait pour réduire les hypothèses sur
+le fonctionnement du texte.
 
-eScriptorium utilizes Kraken for its computer vision needs. As such the OCR
-pipeline construction is mirrored in the interface of eScriptorium, with a
-step-wise approach of data import, (automatic or manual) page segmentation,
-(automatic or manual) transcription, annotation, and export.
+eScriptorium utilise le Kraken pour ses besoins en vision par ordinateur.
+Ainsi, la construction du pipeline ROC est reflétée dans l'interface
+d'eScriptorium, avec une approche par étapes de l'importation des données, de
+la segmentation des pages (automatique ou manuelle), de la transcription
+(automatique ou manuelle), de l'annotation et de l'exportation.
 
-The requirement to accomodate a large variety of writing systems, especially
-the need to be able to process rare and historical writing,  imposes some
-design restrictions on eScriptorium that go beyond measures taken for making
-the computational methods in Kraken versatile. By definition rare languages
-lack large pre-existing datasets which can be used to seed the OCR process.
-Therefore manual annotation and verification of segmentation and transcription
-cannot be a simple afterthought but must be seen as a fundamental part of the
-interface, both to allow practical work with the smallest of datasets which
-cannot yet be feasably processed with the automatic methods implemented and to
-assist in the efficient bootstrapping of automatic processing.
+La nécessité de s'adapter à une grande variété de systèmes d'écriture, en
+particulier la volonté de pouvoir traiter des écritures rares et historiques,
+impose à eScriptorium certaines restrictions de conception qui vont au-delà des
+mesures prises pour rendre les méthodes computationnelles de Kraken
+polyvalentes. Par définition, les langages rares manquent de grands ensembles
+de données préexistants qui peuvent être utilisés pour lancer le processus de
+ROC.  Par conséquent, l'annotation et la vérification manuelles de la
+segmentation et de la transcription ne peuvent pas être une simple réflexion
+après coup, mais doivent être considérées comme une partie fondamentale de
+l'interface, à la fois pour permettre un travail pratique avec les plus petits
+ensembles de données qui ne peuvent pas encore être traités avec les méthodes
+automatiques mises en œuvre et pour aider au démarrage efficace du traitement
+automatique.
 
-It also precludes the use of common techniques to increase the generalization
-and training burden of automatic methods such as statistical language models
-and generalized models for tasks like page segmentation. Powerful language
-models for low resource languages such as Old Vietnamese are equally
-unrealistic as a page segmenter that can accurately extract lines from Chinese
-inscriptions, Arabic manuscripts, Incunabula, and newspapers with a single RNA
-model. Therefore, the platform is designed to allow frequent training and
-re-training through model inventories, intermediate interfaces for data import
-and export, and prospectively fine-grained evaluation reports as already exist
-in Kraken.
+Elle empêche également l'utilisation de techniques courantes pour augmenter la
+généralisation et la charge de formation des méthodes automatiques telles que
+les modèles de langage statistique et les modèles généralisés pour des tâches
+comme la segmentation des pages. Les modèles linguistiques puissants pour les
+langues à faibles ressources telles que le vietnamien ancien sont tout aussi
+irréalistes qu'un segmenteur de pages capable d'extraire avec précision des
+lignes d'inscriptions chinoises, de manuscrits arabes, d'incunables et de
+journaux avec un seul modèle RNA. Par conséquent, la plate-forme est conçue
+pour permettre un apprentissage et un réapprentissage fréquents grâce à des
+inventaires de modèles, des interfaces intermédiaires pour l'importation et
+l'exportation de données, et des rapports d'évaluation prospectifs à grain fin
+comme ceux qui existent déjà dans le Kraken.
 
-A final aspect reinforcing these design constraints in the platform stems not
-from the source material but the kind of work performed on it. Humanities
-scholars perform a wide range of research utilizing a large number of different
-paradigms on textual material. This methodological pluralism results in
-different conventions for transcription even on material in the same language
-depending on a scholar's particular preferences. As such there is a fundamental
-need to accomodate different standards and to make these visible to others,
-especially in the context of artificial intelligence systems which are, after
-all, nothing but powerful tools for statistical inference. Open systems can aid
-in communicating the standards and assumptions of these processes but the fact
-remains that for a mere humanities user unfamiliar with the terminology of
-computer science these are hidden in a magic black box (and vice versa).
-Ontologies can principally bridge this divide but are complex to set up and
-maintain and often clash with the ad-hoc nature of research. Our best option
-remains to follow standards where available, offer interfaces to take and bring
-data and artifacts out of and into eScriptorium, and accept that it is highly
-unlikely for one tool to be both of practical use and universal.
+Un dernier aspect renforçant ces contraintes de conception dans la plate-forme
+provient non pas du matériel source mais du type de travail effectué sur
+celui-ci. Les chercheurs en humanités effectuent un large éventail de
+recherches en utilisant un grand nombre de paradigmes différents sur le
+matériel textuel. Ce pluralisme méthodologique se traduit par des conventions
+de transcription différentes, même sur du matériel dans la même langue, en
+fonction des préférences particulières du chercheur et de son domaine. Il
+existe donc un besoin fondamental de s'adapter aux différentes normes et de les
+rendre visibles aux autres, en particulier dans le contexte des systèmes
+d'intelligence artificielle qui ne sont, après tout, que de puissants outils
+d'inférence statistique. Les systèmes ouverts peuvent aider à communiquer les
+normes et les hypothèses de ces procédures, mais il n'en reste pas moins que
+pour un simple utilisateur de sciences humaines peu familier avec la
+terminologie de l'informatique, celles-ci sont cachées dans une boîte noire
+magique (et vice versa).  Les ontologies peuvent principalement combler ce
+fossé, mais elles sont complexes à mettre en place et à entretenir et se
+heurtent souvent à la nature ad hoc de la recherche. Notre meilleure option
+reste de suivre les standards lorsqu'ils existent, d'offrir des interfaces pour
+prendre et apporter des données et des artefacts depuis et vers l'eScriptorium,
+et d'accepter qu'il est très peu probable qu'un seul outil soit à la fois
+pratique et universel.
 
 \section{Conclusions et Perspectives}
 
-In conclusion we have presented in this dissertation work that represents a
-step forward towards the practical retrodigitization of Arabic-script documents
-and historical and non-Latin material in general. Page segmentation and
-transcription are now in principle capable of digitizing any Arabic-script
-document but more importantly the inclusion of these methods in both a
-low-level OCR system and a high-level VRE, which are both totally open for
-adaptation, reuse, and sharing, make the use of these tools in digital
-humanities projects both large and small significantly more attractive.
+En conclusion, nous avons présenté dans cette thèse un travail qui représente
+un pas en avant vers la rétro-numérisation pratique des documents en écriture
+arabe et des documents historiques et non-latins en général. La segmentation
+des pages et la transcription sont maintenant en principe capables de numériser
+n'importe quel document en caractères arabes, mais surtout l'inclusion de ces
+méthodes dans un système de ROC de bas niveau et un ERV de haut niveau, qui
+sont tous deux totalement ouverts à l'adaptation, la réutilisation et le
+partage, rendent l'utilisation de ces outils dans les projets de sciences
+humaines numériques, petits et grands, beaucoup plus attrayante.
 
-It is clear that substantial work remains ahead. We have studied to general
-requirements of a general purpose Arabic-script OCR system and validated the
-state of the art at the beginning of the thesis in two studies. While the most
-pressing issues, layout analysis, more powerful transcription methods, and
-better tooling for data creation, curation, and dissemination, have been
-resolved to a large extent, not all tasks are currently solvable in a
-satisfactorily manner.
+Il est clair qu'un travail substantiel reste à faire. Nous avons étudié les
+exigences générales d'un système de ROC à usage général en écriture arabe et
+validé l'état de l'art au début de la thèse dans deux études. Bien que les
+questions les plus urgentes, l'analyse de la mise en page, des méthodes de
+transcription plus puissantes et de meilleurs outils pour la création, la
+conservation et la diffusion des données, aient été résolues dans une large
+mesure, toutes les tâches ne sont pas actuellement résolues de manière
+satisfaisante.
 
-The most immediate concern for Arabic manuscript OCR is reading order
-determination. As described above, research into this topic is scarce and
-existing methods are hand-crafted heuristics incapable of dealing with the
-often complex structure of historical manuscripts. While datasets are
-non-existent or implicitly hidden in datasets for other tasks, the abilities of
-artificial intelligence for spatial reasoning with a large number of objects
-has increased in recent years with the advent of graph neural networks.
+La tâche la plus urgente pour la ROC des manuscrits arabes est la détermination
+de l'ordre de lecture. Comme décrit ci-dessus, la recherche sur ce sujet est
+rare et les méthodes existantes sont des heuristiques artisanales incapables de
+traiter la structure souvent complexe des manuscrits historiques. Alors que les
+ensembles de données sont inexistants ou implicitement cachés dans des
+ensembles de données pour d'autres tâches, les capacités de l'intelligence
+artificielle pour le raisonnement spatial avec un grand nombre d'objets ont
+augmenté ces dernières années avec le développement des réseaux neuronaux de
+graphes.
 
-Despite current OCRs system being capable of impressive feats even on highly
-degraded and unusual documents with more ergonomic training data requirements
-than ever before, bootstrapping training data is still the most time-consuming
-task of modern computer vision techniques. While we can now effectively use
-transfer learning to adapt existing models to new material with minimal amounts
-of data, more advanced domain adaptation methods offer great promise for making
-more material accessible without human intervention.
+Bien que les systèmes de ROC de pointe sont capables de réaliser des exploits
+impressionnants même sur des documents très dégradés et atypiques, avec des
+exigences en matière de données d'entraînement plus ergonomiques que jamais, le
+repérage des données d'entraînement est toujours la tâche la plus longue des
+techniques modernes de vision par ordinateur. Alors que nous pouvons maintenant
+utiliser efficacement l'apprentissage par transfert pour adapter les modèles
+existants à de nouveaux documents avec des quantités minimales de données, des
+méthodes d'adaptation de domaine plus avancées offrent de grandes promesses
+pour rendre plus de documents accessibles sans intervention humaine.
 
-Development in eScriptorium will surely continue and incorporate advances in
-automatic methods to the extent it aids in humanities research. Avenues not
-explored in this thesis include non-textual operations, such as  various image
-classification tasks, dating, clustering of similar documents, or text reuse
-detection.
+Le développement d'eScriptorium va sûrement se poursuivre et intégrer les
+progrès des méthodes automatiques dans la mesure où il aide la recherche en
+sciences humaines. Les pistes non explorées dans cette thèse comprennent les
+opérations non textuelles, telles que diverses tâches de classification
+d'images, la datation, le regroupement de documents similaires ou la détection
+de la réutilisation de textes.
 
-Lastly, even with the availability of powerful, open computer vision tools, the
-landscape of datasets remain fractured. While more than ever scholars recognize
-the importance of sharing data to advance not only humanities but also computer
-science research the favorite way to do so remains the profane github
-repository with a non-descriptive README file. A combination of VREs aware of
-the importance of proper metadata, enlarged input of archival practice in
-scholarly research, and the use of open research data infrastructures as
-already widespread in other scientific disciplines has the potential to improve
-this state of affairs considerably in the next few year.
+Enfin, même avec la disponibilité d'outils de vision par ordinateur puissants
+et ouverts, le paysage des ensembles de données reste fracturé. Alors que les
+chercheurs reconnaissent plus que jamais l'importance du partage des données
+pour faire progresser non seulement les sciences humaines mais aussi la
+recherche informatique, le moyen préféré pour y parvenir reste le dépôt github
+profane avec un fichier README non descriptif. Une combinaison d'ERV conscients
+de l'importance de métadonnées appropriées, d'un apport élargi de la pratique
+archivistique dans la recherche scientifique, et de l'utilisation
+d'infrastructures de données de recherche ouvertes comme c'est déjà le cas dans
+d'autres disciplines scientifiques, a le potentiel d'améliorer considérablement
+cet état de fait dans les prochaines années.
 
 \end{french}
 

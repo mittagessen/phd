@@ -4,6 +4,6 @@ all:
 	xelatex main.tex
 
 clean:
-	rm -f main.aux main.bcf main.run.xml main.log main.bbl main.lof main.blg main.lot *.log
+	rm -f main.aux main.bcf main.run.xml main.log main.bbl main.lof main.blg main.lot *.log main.toc
 	rm -f chapters/*.aux chapters/*.bcf chapters/*.run.xml
 

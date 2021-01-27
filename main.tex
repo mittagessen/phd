@@ -7,7 +7,7 @@
 
 \author{Benjamin KIESSLING}
 
-\institute{École Pratique des autes Études}
+\institute{l'École Pratique des Hautes Études}
 \doctoralschool{École doctorale de l'École Pratique des Hautes Études}{472}
 \specialty{Voir spécialités ED}
 \date{01 fevrier 2021}
@@ -43,7 +43,7 @@
 
 \begin{document}
 
-\maketitle{}
+\pslcover
 
 \frontmatter
 \input{layout/dedication.tex}
@@ -57,16 +57,10 @@
 \listoftables
 
 \mainmatter
-\begin{refsection}
 \include{chapters/intro}
-\printbibliography[heading=subbibliography]
-\end{refsection}
 \cleardoublepage
 \part{The Arabic Writing System}
-\begin{refsection}
 \include{chapters/arabic.tex}
-\printbibliography[heading=subbibliography]
-\end{refsection}
 \begin{refsection}
 \import{./chapters/alwusta}{soa.tex}
 \printbibliography[heading=subbibliography]
@@ -116,7 +110,5 @@
 \begin{appendices}
 \include{appendices/resume.tex}
 \end{appendices}
-
-\printbibliography
 
 \end{document}
