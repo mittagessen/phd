@@ -1,5 +1,16 @@
 ﻿\chapter{Important New Developments in Arabographic Optical Character Recognition (OCR)}
 \chaptermark{Arabic OCR}
+\thispagestyle{empty}
+\vfill
+This chapter has been published as \fullcite{kiessling2017important}
+\newpage
+\nocite{soa0}
+\nocite{soa1}
+\nocite{soa2}
+\nocite{soa3}
+\nocite{soa4}
+\nocite{soa5}
+\nocite{soa6}
 
 \section{Introduction}
 
@@ -8,75 +19,68 @@
 The OpenITI team\footnote{The co-PIs of the Islamicate Texts Initiative (ITI)
 are Sarah Bowen Savant (Aga Khan University, London), Maxim G. Romanov (Leipzig
 University), and Matthew Thomas Miller (Roshan Institute for Persian Studies,
-University of Maryland, College Park).} b uilding on the foundational
+University of Maryland, College Park).} building on the foundational
 open-source OCR work of the Leipzig University’s (LU) Alexander von Humboldt
 Chair for Digital Humanities—has achieved Optical Character Recognition (OCR)
 accuracy rates for classical Arabic-script texts in the high nineties. These
 numbers are based on our tests of seven different Arabic-script texts of
 varying quality and typefaces, totaling over 7,000 lines (~400 pages, 87,000
-words; see Table~\ref{tab:soa_tab1} for full details). These accuracy rates not
+words; see table~\ref{tab:soa_tab1} for full details). These accuracy rates not
 only represent a distinct improvement over the actual\footnote{Proprietary OCR
 programs for Persian and Arabic (e.g., Sakhr’s Automatic Reader, ABBYY
-Finereader, Readiris)
-over-promise the level of accuracy they deliver in practice when used on
-classical texts. These companies claim that they provide accuracy rates in the
-high 90 percentages (e.g., Sakhr claims 99.8\% accuracy for high-quality
-documents). This may be the case for texts with simplified typeset and no short
-vowels; however, our tests of ABBYY Finereader and Readiris on high-quality
-scans of classical texts turned out accuracy rates of between 65\% and 75\%.
-Sakhr software was not available to us, as the developers offer no trial
-versions and it is the most expensive commercial OCR solution for Arabic.
-Moreover, since these programs are not open-source and offer only limited
-trainability (and created training data cannot be reused), their costs are
-prohibitive for most students and scholars and they cannot be modified
-according to the interests and needs of the academic community or the public at
-large. Most importantly, they have no web interfaces that would enable the
-production of wider, user-generated collections.} accuracy rates of the various
-proprietary OCR options for printed classical Arabic-script texts, but, equally
-important, they are produced using an open-source OCR software called Kraken
-(developed by Benjamin Kiessling, LU), thus enabling us to make this
-Arabic-script OCR technology freely available to the broader Islamic, Persian,
-and Arabic Studies communities in the near future. In the process we also
-generated over 7,000 lines of “gold standard” (double-checked) data that can be
-used by others for Arabic-script OCR training and testing
+Finereader, Readiris) over-promise the level of accuracy they deliver in
+practice when used on classical texts. These companies claim that they provide
+accuracy rates in the high 90 percentages (e.g., Sakhr claims 99.8\% accuracy
+for high-quality documents). This may be the case for texts with simplified
+typeset and no short vowels; however, our tests of ABBYY Finereader and
+Readiris on high-quality scans of classical texts turned out accuracy rates of
+between 65\% and 75\%.  Sakhr software was not available to us, as the
+developers offer no trial versions and it is the most expensive commercial OCR
+solution for Arabic.  Moreover, since these programs are not open-source and
+offer only limited trainability (and created training data cannot be reused),
+their costs are prohibitive for most students and scholars and they cannot be
+modified according to the interests and needs of the academic community or the
+public at large. Most importantly, they have no web interfaces that would
+enable the production of wider, user-generated collections.} accuracy rates of
+the various proprietary OCR options for printed classical Arabic-script texts,
+but, equally important, they are produced using an open-source OCR software
+called Kraken (developed by Benjamin Kiessling, LU), thus enabling us to make
+this Arabic-script OCR technology freely available to the broader Islamic,
+Persian, and Arabic Studies communities in the near future. In the process we
+also generated over 7,000 lines of “gold standard” (double-checked) data that
+can be used by others for Arabic-script OCR training and testing
 purposes.\footnote{This gold standard data is available at:
 \url{https://github.com/OpenArabic/OCR_GS_Data}.}
 
 \begin{table}[h!]
+\begin{minipage}{\textwidth}
 \begin{center}
 \caption{Description of data}
 \label{tab:soa_tab1}
-\begin{tabularx}{\columnwidth}{lp{1.7cm}p{1.7cm}p{1.7cm}} \toprule
-& \textbf{P-val} & \textbf{R-val} & \textbf{F-val}\\
-\addlinespace
-\textbf{cBAD}\ \\ \midrule
-Planet & 0.937 & 0.926 & 0.931\\
-DMRZ & 0.925 & 0.905 & 0.915\\
-UPVLC &0.911 & 0.902 & 0.907\\
-TJNU & 0.852 & 0.885 & 0.868\\
-DMRZ-2017 & 0.773 & 0.743 & 0.758\\
-proposed\footnotemark[3] & 0.867 & 0.945 & 0.904\\
-\addlinespace
-\textbf{BADAM}\ \\ \midrule
-\cite{kiessling2019badam} & 0.941 & 0.901 & 0.924\\
-proposed & 0.932 & 0.957 & 0.944\\
-\addlinespace
-\textbf{OHG}\ \\ \midrule
-\cite{quiros2018multi} & 0.962 & 0.971 & 0.966\\
-\cite{quiros2018multi}\footnotemark[4] & 0.984 & 0.977 & 0.980\\
-proposed & 0.978 & 0.973 & 0.975\\
-proposed\footnotemark[4] & 0.909 & 0.919 & 0.914\\
-\addlinespace
-\textbf{Bozen}\ \\ \midrule
-\cite{quiros2018multi} & 0.958 & 0.991 & 0.974\\
-\cite{quiros2018multi}\footnotemark[4] & 0.945 & 0.989 & 0.966 \\
-proposed & 0.972 & 0.982 & 0.977 \\
-proposed\footnotemark[4] & 0.936 & 0.949 & 0.942\\
+\renewcommand*{\thefootnote}{\alph{footnote}}
+\begin{tabularx}{\textwidth}{lXllllll} \toprule
+& & & & \multicolumn{4}{c}{\textbf{Size of data samples}}\\
+\cline{5-8}
+& \textbf{Book}\footnotemark[1] & \textbf{Quality} & \textbf{Type} & \textbf{Pages} & \textbf{Lines} & \textbf{Words} & \textbf{Chars}\\
+\midrule
+	\textbf{1} & Ibn al-Faqīh \newline\scriptsize{al-Buldān} & 	  high\footnotemark[2] & training 		& 79 & \num{1466} & \num{16909} & \num{92730}\\
+	\textbf{2} & Ibn al-Athīr \newline\scriptsize{al-Kāmil} &  	  high\footnotemark[2] & testing 		& 40 & 794 & \num{12818} & \num{58481}\\
+	\textbf{3} & Ibn Qutayba \newline\scriptsize{Adab al-kātib} & high\footnotemark[2] & testing	& 55 & 794 & \num{7848} &  \num{42230}\\
+	\textbf{4} & al-Jāḥiẓ \newline\scriptsize{al-Ḥayawān} & 	  high\footnotemark[2] & testing		& 65 & 992 & \num{11870} &  \num{59191}\\
+	\textbf{5} & al-Yaʿqūbī \newline\scriptsize{al-Taʿrīkh} & 	  high\footnotemark[2] & testing		& 68 & \num{1050} & \num{13487} & \num{66341}\\
+	\textbf{6} & al-Dhahabī \newline\scriptsize{Taʾrīkh al-Islām}  & low\footnotemark[3] & testing	& 50 & \num{1110} & \num{11045} & \num{55047}\\
+	\textbf{7} & Ibn al-Jawzī \newline\scriptsize{al-Muntaẓam} &    low\footnotemark[3] & testing		& 50 & 938 & \num{13156} & \num{62574}\\
+\midrule
+\multicolumn{4}{r}{} & 407 & \num{7144} & \num{87133} & \num{436594}\\
 \bottomrule
 \end{tabularx}
 \end{center}
+\renewcommand\footnoterule{}
+\footnotetext[1]{For details on the editions, see bibliography}
+\footnotetext[2]{300 dpi, grayscale spanned specifically for the purpose of testing with ideal parameters}
+\footnotetext[3]{200 dpi, black-and-white, pre-binarized, both downloaded from \url{http://www.archive.org} (via \url{http://waqfeya.org})}
+\end{minipage}
 \end{table}
-
 
 \subsection{OCR and its Importance for Islamicate Studies Fields}
 
@@ -107,7 +111,8 @@ technical details).
 
 
 \section{Initial OCR Tests}
- 
+
+
 We began our experiments by using Kraken to train a model\footnote{“Training a
 model” is a general term used in machine learning for training a program to
 recognize certain patterns in data. In the context of OCR work, it refers to
@@ -120,7 +125,7 @@ binarized—converted into black-and-white images; if binarization is not
 performed properly, a lot of information is lost from an image, negatively
 affecting the accuracy of the OCR process. For this reason, for best results,
 one should avoid using pre-binarized images.} scans of \textasciitilde1,000 lines of
-Ibn al-Faqīh’s al-Buldān (work \#0). We first generated training data (line
+Ibn al-Faqīh’s al-Buldān (work \#1). We first generated training data (line
 transcriptions) for all of these lines, double checked them (creating so-called
 “gold standard” data), trained the model, and, finally,
 tested its ability to accurately recognize and extract the text. The results
@@ -129,14 +134,43 @@ impressive 99.68\% accuracy rate on the Arabic script alone (i.e., when errors
 related to punctuation and spaces were removed from consideration; such
 non-script errors are easy to fix in the post-correction phase and, in many
 cases, this correction process for non-script errors can be automated). See
-Table 2, row \#0 for full details.\footnote{We have also experimented with the
+table~\ref{tab:soa_tab2}, row \#1 for full details.\footnote{We have also experimented with the
 internal configuration of our models: more extensive models, containing 200
 nodes in the hidden middle layer, showed slightly better accuracy in most cases
-(works \#3-4 were an exception to this pattern), but it took twice as long to
+(works \#4-5 were an exception to this pattern), but it took twice as long to
 train and the OCR process using the larger model also takes more time.}
 
+\begin{table}[h!]
+\begin{minipage}{\textwidth}
+\begin{center}
+\caption{Accuracy rates in test of our custom model}
+\label{tab:soa_tab2}
+\renewcommand*{\thefootnote}{\alph{footnote}}
+	\begin{tabularx}{\textwidth}{lp{2.2cm}XXXXXX} \toprule
+& & & & \multicolumn{4}{c}{\textbf{Character accuracy}}\\
+\cline{5-8}
+& \textbf{Book}\footnotemark[1] & \textbf{Quality} & \textbf{Type} & \textbf{Size 100} & \textbf{Ar}\footnotemark[2] & \textbf{Size 200} & \textbf{Ar}\footnotemark[2]\\
+\midrule
+\textbf{1} & Ibn al-Faqīh \newline\scriptsize{al-Buldān} & 	  high\footnotemark[3] & training & 95.88\% & 99.68\% & 97.56\% & 99.68\%\\
+\textbf{2} & Ibn al-Athīr \newline\scriptsize{al-Kāmil} &  	  high\footnotemark[3] & testing & 85.78\% & 90.90\% & 87.18\% & 90.56\%\\
+\textbf{3} & Ibn Qutayba \newline\scriptsize{Adab al-kātib} & high\footnotemark[3] & testing	& 75.28\% & 87.67\% & 74.03\% & 87.90\% \\
+\textbf{4} & al-Jāḥiẓ \newline\scriptsize{al-Ḥayawān} & 	  high\footnotemark[3] & testing & 69.03\% & 72.78\% & 68.32\% & 71.87\%\\
+\textbf{5} & al-Yaʿqūbī \newline\scriptsize{al-Taʿrīkh} & 	  high\footnotemark[3] & testing & 78.78\% & 83.42\% & 78.28\% & 81.85\%\\
+\textbf{6} & al-Dhahabī \newline\scriptsize{Taʾrīkh al-Islām}  & low\footnotemark[4] & testing	& 92.19\% & 97.54\% & 94.42\% & 97.61\%\\
+\textbf{7} & Ibn al-Jawzī \newline\scriptsize{al-Muntaẓam} &    low\footnotemark[4] & testing & 90.40\% & 97.39\% & 92.26\% & 97.80\%\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\renewcommand\footnoterule{}
+\footnotetext[1]{For details on the editions, see bibliography}
+\footnotetext[2]{Performance on Arabic only (excluding punctuation, spaces and numerals}
+\footnotetext[3]{300 dpi, grayscale spanned specifically for the purpose of testing with ideal parameters}
+\footnotetext[4]{200 dpi, black-and-white, pre-binarized, both downloaded from \url{http://www.archive.org} (via \url{http://waqfeya.org})}
+\end{minipage}
+\end{table}
+
 These numbers were so impressive that we decided to expand our study and use
-the model built on the text of Ibn al-Faqīh’s al-Buldān (work \#0) to OCR six
+the model built on the text of Ibn al-Faqīh’s al-Buldān (work \#1) to OCR six
 other texts. We deliberately selected texts that were different from Ibn
 al-Faqīh’s original text in terms of both their Arabic typeface, editorial
 orthographic conventions, and image quality. These texts represent at least two
@@ -152,42 +186,138 @@ long-term preservation). “Pre-binarized” means that the  images were convert
 to black and white during the scanning process, ostensibly for size reduction,
 resulting in some degradation of quality.}
 
-When looking at the results in Table 2, it is important that the reader notes
-that works \#1-6 are “testing” data. That is, these accuracy results were
-achieved by utilizing a model built on the text of work \#0 to perform OCR on
+When looking at the results in table~\ref{tab:soa_tab2}, it is important that the reader notes
+that works \#2-7 are “testing” data. That is, these accuracy results were
+achieved by utilizing a model built on the text of work \#1 to perform OCR on
 these other texts. For this reason it is not surprising that the accuracy rates
-for works \#1-4 are not as high as the accuracy rates for the training text,
-work \#0. The point that is surprising is that the use of the work \#0-based
-model on the low quality scans of works \#5-6 achieved a substantially higher
+for works \#2-5 are not as high as the accuracy rates for the training text,
+work \#1. The point that is surprising is that the use of the work \#1-based
+model on the low quality scans of works \#6-7 achieved a substantially higher
 accuracy rate (97.61\% and 97.8\% respectively on their Arabic script alone) than
-on the high-quality scans of works \#1-4. While these higher accuracy rates for
-works \#5-6 are the result of a closer affinity between their typefaces and that
-of work \#0, it also indicates that the distinction between high-  and
+on the high-quality scans of works \#2-5. While these higher accuracy rates for
+works \#6-7 are the result of a closer affinity between their typefaces and that
+of work \#1, it also indicates that the distinction between high-  and
 low-quality images is not as important for achieving high accuracy rates with
 Kraken as we initially believed. In the future, this will help reduce
 substantially both the total length of time it takes to OCR a work and the
 barriers to entry for researchers wanting to OCR the low-quality scans they
 already possess.
 
-Table 3: Ligature Variations in Typefaces
+\begin{table}[h!]
+\begin{center}
+\caption{Ligature variations in typefaces. The table highlights only a few
+	striking differences and is not meant to be comprehensive; examples
+	similar to those of the main text are "greyed out."}
+\label{tab:soa_tab3}
+\renewcommand*{\thefootnote}{\alph{footnote}}
+	\begin{tabularx}{\textwidth}{Xp{0.16\textwidth}ccp{0.06\textwidth}ccccc} \toprule
+\textbf{Book} & & & & & & & & \\
+\midrule
+\textbf{1} & Ibn al-Faqīh \newline\scriptsize{al-Buldān} & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-1.png}} 
+							 & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-2.png}}
+							 & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-3.png}}
+							 & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-4.png}}
+							 & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-5.png}}
+							 & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-6.png}}
+							 & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-7.png}}
+							 & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-1-col-8.png}}
+							 \\
+\textbf{2} & Ibn al-Athīr \newline\scriptsize{al-Kāmil} & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-1.png}} 
+							& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-2.png}}
+							& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-3.png}}
+							& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-4.png}}
+							& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-5.png}}
+							& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-6.png}}
+							& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-7.png}}
+							& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-8.png}}
+							\\
+\textbf{3} & Ibn Qutayba \newline\scriptsize{Adab al-kātib} & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-1.png}} 
+							    & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-2.png}}
+							    & \tiny{not present}
+							    & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-4.png}}
+							    & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-5.png}}
+							    & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-6.png}}
+							    & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-7.png}}
+							    & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-2-col-8.png}}
+							    \\
+\textbf{4} & al-Jāḥiẓ \newline\scriptsize{al-Ḥayawān} & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-1.png}} 
+						      & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-2.png}}
+						      & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-3.png}}
+						      & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-4.png}}
+						      & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-5.png}}
+						      & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-6.png}}
+						      & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-7.png}}
+						      & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-4-col-8.png}}
+						      \\
+\textbf{5} & al-Yaʿqūbī \newline\scriptsize{al-Taʿrīkh}& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-1.png}}
+						       & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-2.png}}
+						       & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-3.png}}
+						       & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-4.png}}
+						       & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-5.png}}
+						       & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-6.png}}
+						       & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-7.png}}
+						       & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-5-col-8.png}}\\
+\textbf{6} & al-Dhahabī \newline\scriptsize{Taʾrīkh al-Islām}& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-6-col-1.jpg}}
+							     & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-6-col-2.jpg}}
+							     & \tiny{not present}
+							     & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-6-col-4.jpg}}
+							     & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-6-col-5.jpg}}
+							     & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-6-col-6.jpg}}
+							     & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-6-col-7.jpg}}
+							     & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-6-col-8.jpg}}\\
+\textbf{7} & Ibn al-Jawzī \newline\scriptsize{al-Muntaẓam}& \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-7-col-1.png}}
+							  & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-7-col-2.png}}
+							  & \tiny{not present}
+							  & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-7-col-4.png}}
+							  & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-7-col-5.png}}
+							  & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-7-col-6.png}}
+							  & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-7-col-7.png}}
+							  & \raisebox{-0.5\height}{\includegraphics[width=0.06\textwidth]{images/crops/row-7-col-8.png}}\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{table}
+
 (the table highlights only a few striking differences and is not meant to be comprehensive;
 examples similar to those of the main text are “greyed out”)  
-The decreased accuracy results for works \#1-4 are explainable by a few factors:
+
+The decreased accuracy results for works \#2-5 are explainable by a few factors:
 
 \begin{enumerate}
-	\item The typeface of works \#3-4 is different than work \#0 and it utilizes a number of ligatures that are not present in the typeface of work \#0 (for examples, see Table 3 above). 
-	\item The typefaces of work \#1-2 are very similar to that of \#0, but they both have features that interfere with the \#0-based model. \#1 actually uses two different fonts, and the length of connections—kashīdas—between letters vary dramatically ( 0.3 kashīda to 2 kashīdas and everything in between), which is not the case with \#0, where letter spacing is very consistent. 
-	\item The text of work \#2 is highly vocalized—it has more ḥarakāt than any other texts in the sample (and especially in comparison with the model work \#0).
-	\item The text of work \#2 also has very complex and overabundant punctuation with highly inconsistent spacing. 
+	\item The typeface of works \#4-5 is different than work \#1 and it utilizes a number of ligatures that are not present in the typeface of work \#1 (for examples, see table~\ref{tab:soa_tab3} below). 
+	\item The typefaces of work \#2-3 are very similar to that of \#1, but they both have features that interfere with the \#1-based model. \#2 actually uses two different fonts, and the length of connections—kashīdas—between letters vary dramatically (0.3 kashīda to 2 kashīdas and everything in between), which is not the case with \#1, where letter spacing is very consistent. 
+	\item The text of work \#3 is highly vocalized—it has more ḥarakāt than any other texts in the sample (and especially in comparison with the model work \#1).
+	\item The text of work \#3 also has very complex and overabundant punctuation with highly inconsistent spacing. 
 \end{enumerate}
 
-Our \#0-based model could not completely handle these novel features in the texts of works \#1-4 because it was not trained to do so. As the results in Table 4 of the following section show, new models can be trained to handle these issues successfully.
+Our \#1-based model could not completely handle these novel features in the texts of works \#2-5 because it was not trained to do so. As the results in table~\ref{tab:soa_tab4} of the following section show, new models can be trained to handle these issues successfully.
 
-Table 4: Accuracy Rates in Text-Specific Models  
-
+\begin{table}[h!]
+\begin{minipage}{\textwidth}
+\begin{center}
+\caption{Accuracy rates in text-specific models}
+\label{tab:soa_tab4}
+\renewcommand*{\thefootnote}{\alph{footnote}}
+\begin{tabularx}{\textwidth}{lXllll} \toprule
+& & & & \multicolumn{2}{c}{\textbf{Character accuracy}}\\
+\cline{5-6}
+& \textbf{Book}\footnotemark[1] & \textbf{Quality} & \textbf{Type} & \textbf{Size 100} & \textbf{Ar}\footnotemark[2]\\
+\midrule
+\textbf{2} & Ibn al-Athīr \scriptsize{al-Kāmil} &  	  high\footnotemark[3] & testing & 93.79\% & 97.71\%\\
+\textbf{3} & Ibn Qutayba \scriptsize{Adab al-kātib} & high\footnotemark[3] & testing & 89.30\% & 98.47\%\\
+\textbf{4} & al-Jāḥiẓ \scriptsize{al-Ḥayawān} & 	  high\footnotemark[3] & testing & 94.87\% & 97.59\%\\
+\textbf{5} & al-Yaʿqūbī \scriptsize{al-Taʿrīkh} & 	  high\footnotemark[3] & testing & 96.81\% & 99.18\% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\renewcommand\footnoterule{}
+\footnotetext[1]{For details on the editions, see bibliography}
+\footnotetext[2]{Performance on Arabic only (excluding punctuation, spaces and numerals}
+\footnotetext[3]{300 dpi, grayscale spanned specifically for the purpose of testing with ideal parameters}
+\end{minipage}
+\end{table}
 
 \section{Round \#2 Tests: Training New Models}
-
 
 The most important advantage of Kraken is that its workflow allows one to train
 new models relatively easily, including text-specific ones. In a nutshell, the
@@ -196,27 +326,31 @@ number will vary depending on the complexity of the typeface) aligned with
 images of these lines as they appear in the printed edition. The training
 itself takes 12-24 hours and is performed by a machine without human
 involvement; multiple models can be trained simultaneously. Kraken includes
-tools for the production of transcription forms (see Figure 1 below); the data
+tools for the production of transcription forms (see figure~\ref{fig:soa_1} below); the data
 supplied through these forms is then used to train a new model. (Since there
 are a great number of Arabic-script texts that have already been converted into
 digital texts, one can use these as the base texts to fill in the forms more
 quickly—i.e., instead of typing the transcription—and then double-check them
 for accuracy; this was what we did, and it saved us a lot of time.)
 
-
-Figure 1: Kraken’s Transcription Interface  
+\begin{figure}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/image10.png}
+	\caption{Kraken’s Transcription Interface}
+	\label{fig:soa_1}
+\end{figure}
 
 
 The importance of Kraken’s ability to quickly train new models is illustrated
-clearly by texts such as works \#1-4 . When using the model built on work \#0 in
+clearly by texts such as works \#2-5 . When using the model built on work \#1 in
 our initial round of testing, we were only able to achieve accuracy rates
-ranging from the low seventies to low nineties on these texts (see Table 2).
-However, when we trained models on works \#1-4 specifically in our second round
+ranging from the low seventies to low nineties on these texts (see table~\ref{tab:soa_tab2}).
+However, when we trained models on works \#2-5 specifically in our second round
 of testing, the accuracy rates for these texts substantially improved, reaching
-into the high nineties (see full results in Table 4 above). The accuracy
-results for work \#4, for example, improved from 83.42\% on Arabic script alone
-in our first work \#0-based model tests to 99.18\% accuracy when we trained a
-mode on this text. The accuracy rates for works \#1-3 similarly improved,
+into the high nineties (see full results in table~\ref{tab:soa_tab4} above). The accuracy
+results for work \#5, for example, improved from 83.42\% on Arabic script alone
+in our first work \#1-based model tests to 99.18\% accuracy when we trained a
+mode on this text. The accuracy rates for works \#2-4 similarly improved,
 increasing from 90.90\% to 97.71\% , 87.90\% to 98.47\%, from 72.78\% to
 97.59\%, respectively. (See Appendix for the accuracy rates of these new models
 on all other texts as well.) These accuracy rates for Arabic-script recognition
@@ -245,21 +379,25 @@ The two rounds of testing presented here indicate that with a fairly modest
 amount of gold standard training data (\textasciitilde800–1,000 lines) Kraken is
 consistently able to produce OCR results for Arabic-script documents that
 achieve accuracy rates in the high nineties. In some cases, such as works
-\#5-6, achieving OCR accuracy rates of up to 97.5\% does not even require
+\#6-7, achieving OCR accuracy rates of up to 97.5\% does not even require
 training a new model on that text. However, in other cases, such as works
-\#1-4, achieving high levels of OCR accuracy does require training a model
+\#2-5, achieving high levels of OCR accuracy does require training a model
 specific to that typeface, and, in some select cases of texts with similar
 typefaces but different styles of vocalization, font variations, and
-punctuation patterns (e.g., works \#1-2), training a model for the
+punctuation patterns (e.g., works \#2-3), training a model for the
 peculiarities of a particular edition.
 
-
-Figure 2: Web-based OCR Pipeline Flowchart
+\begin{figure}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/image3.png}
+	\caption{Web-based OCR pipeline flowchart}
+	\label{fig:soa_2}
+\end{figure}
   
 
 In the near future we are planning to develop a user-friendly web-interface for
 the generation of new training data and the post-correction of the OCR output
-(See, Figure 2 above). Data supplied by users will allow us to train new
+(see figure~\ref{fig:soa_2} above). Data supplied by users will allow us to train new
 models. It should be stressed that training edition-specific models is quite
 valuable, as there is a number of multivolume books—often with over a dozen
 volumes per text—that need to be converted into proper digital editions. In the
@@ -290,9 +428,9 @@ is drastically better, it supports right-to-left scripts and combined LTR/RTL
 use.
 
 The OCR method that powers Kraken is based on a long short-term memory
-(Hochreiter and Schmidhuber, 1997) recurrent neural network utilizing the
-Connectionist Temporal Classification objective function (Graves et al., 2006,
-as elaborated in Breuel et al., 2013). In contrast to other systems requiring
+\cite{hochreiter1997long} recurrent neural network utilizing the Connectionist
+Temporal Classification objective function (\cite{graves2006connectionist}, as
+elaborated in \cite{breuel2013high}). In contrast to other systems requiring
 character level segmentation before classification, it is uniquely suited for
 the recognition of connected Arabographic scripts because the objective
 function used during training is geared towards assigning labels—i.e.,
@@ -301,7 +439,7 @@ characters/glyphs—to regions of unsegmented input data.
 The system works on unsegmented data both during training and recognition—its
 base unit is a text line (line recognizer). For training, a number of printed
 lines have to be transcribed using a simple HTML transcription interface (see
-Figure 1 above). The total amount of training data (i.e., line image-text
+figure~\ref{fig:soa_1} above). The total amount of training data (i.e., line image-text
 pairs) required may vary depending on the complexity of the typeface and number
 of glyphs used by the script. Acquisition of training data can be optimized by
 line-wise alignment of existing digital editions with printed lines, although
@@ -339,45 +477,97 @@ Humboldt Chair for Digital Humanities, LU), Fatemeh Keshavarz (Roshan Institute
 for Persian Studies, UMD), and David Taylor (ISMC, AKU) for their guidance and
 support of our work. 
 
-%Bibliography and Links
-%
-%
-%Computer-Science Bibliography
-%* Hochreiter, Sepp, and Jürgen Schmidhuber. “Long short-term memory.” Neural computation 9.8 (1997): 1735-1780.
-%* Graves, Alex, et al. “Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks,” Proceedings of the 23rd international conference on Machine learning. ACM, 2006.
-%* Breuel, Thomas M., et al. “High-performance OCR for printed English and Fraktur using LSTM networks,” 12th International Conference on Document Analysis and Recognition. IEEE, 2013.
-%* CLSTM neural network library: https://github.com/tmbdev/clstm  
-%
-%
-%Links to open source software:
-%* Nidaba: https://openphilology.github.io/nidaba/
-%* Kraken: https://github.com/mittagessen/kraken
-%* OCR-Evaluation tools: https://github.com/ryanfb/ancientgreekocr-ocr-evaluation-tools  
-%
-%
-%OpenITI Gold-Standard Data for Arabic OCR:
-%* Link: https://github.com/OpenArabic/OCR_GS_Data 
-%
-%
-%Editions of Printed Texts (when two dates are given, the second one is CE)
-%* [#0] Ibn al-Faqīh (d. 365/975). Al-Buldān. Ed. Yūsuf al-Hādī. Beirut: ʿĀlam al-Kutub, 1996 CE.
-%* [#1] Ibn al-Athīr (d. 630/1232). Al-Kāmil fī al-taʾrīkh. Ed. ʿAbd Allāh al-Qāḍī. Beirut: Dār al-Kutub al-ʿIlmiyya, 1415/1994.
-%* [#2] Ibn Qutayba (d. 276/889). Adab al-kātib. Ed. Muḥammad al-Dālī. Muʾassasat al-Risāla, n.d.
-%* [#3] al-Jāḥiẓ (d. 255/868). Al-Ḥayawān. Beirut: Dār al-Kutub al-ʿIlmiyya, 1424/2003.
-%* [#4] al-Yaʿqūbī (d. 292/904). Al-Taʿrīkh. Beirut: Dār Ṣādir, n.d.
-%* [#5] al-Dhahabī (d. 748/1347). Taʾrīkh al-Islām. Al-Maktaba al-Tawfīqiyya, n.d.
-%* [#6] Ibn al-Jawzī (d. 597/1201). Al-Muntaẓam. Ed. Muḥammad al-Qādir ʿAṭā, Muṣṭafá al-Qādir ʿAṭā. Beirut: Dār al-Kutub al-ʿIlmiyya, 1412/1992.
-
 \begin{subappendices}
+\newpage
 \section{Performance of Text-Specific Models}
 
-Table A: Performance of \#1-Based Model on Other Texts
-  
-Table B: Performance of \#2-Based Model on Other Texts
-  
-Table C: Performance of \#3-Based Model on Other Texts
-  
-Table D: Performance of \#4-Based Model on Other Texts
+\begin{table}[H]
+\begin{minipage}{\textwidth}
+\begin{center}
+\caption{Performance of \#2-based model on other texts}
+\label{tab:soa_atab1}
+\renewcommand*{\thefootnote}{\alph{footnote}}
+\begin{tabularx}{\textwidth}{lp{2.2cm}XXXXXX} \toprule
+& & & & \multicolumn{4}{c}{\textbf{Character accuracy}}\\
+\cline{5-8}
+& \textbf{Book}& \textbf{Quality} & \textbf{Type} & \textbf{Size 100} & \textbf{Ar}& \textbf{Size 200} & \textbf{Ar}\\\midrule
+\textbf{2} & \textbf{Ibn al-Athīr \newline\scriptsize{al-Kāmil}} &  	  \textbf{high} & \textbf{training} & \textbf{93.79\%} & \textbf{97.71\%} & \textbf{93.58\%} & \textbf{97.59\%}\\
+\textbf{3} & Ibn Qutayba \newline\scriptsize{Adab al-kātib} & high& testing	& 82.68\% & 95.72\% & 80.92\% & 94.88\% \\
+\textbf{4} & al-Jāḥiẓ \newline\scriptsize{al-Ḥayawān} & 	  high& testing & 71.78\% & 75.16\% & 70.85\% & 74.27\%\\
+\textbf{5} & al-Yaʿqūbī \newline\scriptsize{al-Taʿrīkh} & 	  high& testing & 79.67\% & 84.40\% & 78.12\% & 82.21\%\\
+\textbf{6} & al-Dhahabī \newline\scriptsize{Taʾrīkh al-Islām}  & low& testing	& 90.68\% & 95.95\% & 90.37\% & 95.78\%\\
+\textbf{7} & Ibn al-Jawzī \newline\scriptsize{al-Muntaẓam} &    low& testing & 93.33\% & 98.51\% & 92.96\% & 98.22\%\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{minipage}
+\end{table}
+
+\begin{table}[H]
+\begin{minipage}{\textwidth}
+\begin{center}
+\caption{Performance of \#3-based model on other texts}
+\label{tab:soa_atab2}
+\renewcommand*{\thefootnote}{\alph{footnote}}
+\begin{tabularx}{\textwidth}{lp{2.2cm}XXXXXX} \toprule
+& & & & \multicolumn{4}{c}{\textbf{Character accuracy}}\\
+\cline{5-8}
+& \textbf{Book}& \textbf{Quality} & \textbf{Type} & \textbf{Size 100} & \textbf{Ar}& \textbf{Size 200} & \textbf{Ar}\\\midrule
+\textbf{2} & Ibn al-Athīr \newline\scriptsize{al-Kāmil} &  	  high& testing & 83.52\% & 88.56\% & 83.55\% & 88.56\%\\
+\textbf{3} & \textbf{Ibn Qutayba \newline\scriptsize{Adab al-kātib}} & \textbf{high}& \textbf{training} & \textbf{89.30\%} & \textbf{98.47\%} & \textbf{89.42\%} & \textbf{98.44\%} \\
+\textbf{4} & al-Jāḥiẓ \newline\scriptsize{al-Ḥayawān} & 	  high& testing & 74.82\% & 76.51\% & 74.87\% & 76.65\%\\
+\textbf{5} & al-Yaʿqūbī \newline\scriptsize{al-Taʿrīkh} & 	  high& testing & 81.50\% & 84.05\% & 79.81\% & 83.67\%\\
+\textbf{6} & al-Dhahabī \newline\scriptsize{Taʾrīkh al-Islām}  & low& testing	& 84.89\% & 93.19\% & 83.08\% & 92.53\%\\
+\textbf{7} & Ibn al-Jawzī \newline\scriptsize{al-Muntaẓam} &    low& testing & 87.56\% & 94.21\% & 86.34\% & 93.57\%\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{minipage}
+\end{table}
+
+\begin{table}[H]
+\begin{minipage}{\textwidth}
+\begin{center}
+\caption{Performance of \#4-based model on other texts}
+\label{tab:soa_atab3}
+\renewcommand*{\thefootnote}{\alph{footnote}}
+\begin{tabularx}{\textwidth}{lp{2.2cm}XXXXXX} \toprule
+& & & & \multicolumn{4}{c}{\textbf{Character accuracy}}\\
+\cline{5-8}
+& \textbf{Book}& \textbf{Quality} & \textbf{Type} & \textbf{Size 100} & \textbf{Ar}& \textbf{Size 200} & \textbf{Ar}\\\midrule
+\textbf{2} & Ibn al-Athīr \newline\scriptsize{al-Kāmil} &  	  high& testing & 80.23\% & 86.27\% & 82.46\% & 87.48\%\\
+\textbf{3} & Ibn Qutayba \newline\scriptsize{Adab al-kātib} & high& testing	& 80.90\% & 91.54\% & 82.61\% & 93.24\% \\
+\textbf{4} & \textbf{al-Jāḥiẓ \newline\scriptsize{al-Ḥayawān}} & 	  \textbf{high}& \textbf{training} & \textbf{94.86\%} & \textbf{97.59\%} & \textbf{94.82\%} & \textbf{97.41\%}\\
+\textbf{5} & al-Yaʿqūbī \newline\scriptsize{al-Taʿrīkh} & 	  high& testing & 90.91\% & 95.13\% & 91.28\% & 94.71\%\\
+\textbf{6} & al-Dhahabī \newline\scriptsize{Taʾrīkh al-Islām}  & low& testing	& 81.93\% & 91.23\% & 83.03\% & 92.22\%\\
+\textbf{7} & Ibn al-Jawzī \newline\scriptsize{al-Muntaẓam} &    low& testing & 84.07\% & 93.58\% & 86.26\% & 94.20\%\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{minipage}
+\end{table}
+
+\begin{table}[H]
+\begin{minipage}{\textwidth}
+\begin{center}
+\caption{Performance of \#5-based model on other texts}
+\label{tab:soa_atab4}
+\renewcommand*{\thefootnote}{\alph{footnote}}
+\begin{tabularx}{\textwidth}{lp{2.2cm}XXXXXX} \toprule
+& & & & \multicolumn{4}{c}{\textbf{Character accuracy}}\\
+\cline{5-8}
+& \textbf{Book}& \textbf{Quality} & \textbf{Type} & \textbf{Size 100} & \textbf{Ar}& \textbf{Size 200} & \textbf{Ar}\\ \midrule
+\textbf{2} & Ibn al-Athīr \newline\scriptsize{al-Kāmil} &  	  high& testing & 79.80\% & 86.35\% & N/A & N/A\\
+\textbf{3} & Ibn Qutayba \newline\scriptsize{Adab al-kātib} & high& testing	& 72.99\% & 82.84\% & N/A & N/A \\
+\textbf{4} & al-Jāḥiẓ \newline\scriptsize{al-Ḥayawān} & 	  high& testing & 83.38\% & 87.65\% & N/A & N/A\\
+\textbf{5} & \textbf{al-Yaʿqūbī \newline\scriptsize{al-Taʿrīkh}} & 	  \textbf{high} & \textbf{training} & \textbf{96.81\%} & \textbf{99.18\%} & \textbf{N/A} & \textbf{N/A}\\
+\textbf{6} & al-Dhahabī \newline\scriptsize{Taʾrīkh al-Islām}  & low& testing	& 82.76\% & 90.65\% & N/A & N/A\\
+\textbf{7} & Ibn al-Jawzī \newline\scriptsize{al-Muntaẓam} &    low& testing & 87.71\% & 96.00\% & N/A & N/A\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{minipage}
+\end{table}
 \end{subappendices}
 
 %[1] Our logo, Kraken ibn Ocropus, is based on a depiction of an octopus from a manuscript of Kitāb al-ḥashāʾish fī hāyūlā al-ʿilāj al-ṭibbī (Leiden, UB : Or. 289); special thanks to Emily Selove for help with finding an octopus in the depths of the Islamic manuscript tradition.

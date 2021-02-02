@@ -1,10 +1,7 @@
 \RequirePackage[T1]{fontenc}
 \usepackage{libertinus}
-\setmonofont{inconsolata}
-\RequirePackage[varqu]{zi4}
 
 \usepackage{psl-cover}
-\usepackage{lipsum}
 
 \usepackage{subcaption}
 \usepackage{graphicx} % Required for including images
@@ -14,6 +11,7 @@
 \usepackage{wrapfig} % Allows wrapping text around tables and figures
 \usepackage{arydshln}
 \usepackage{tikz}
+\usepackage{pgfplots}
 \usepackage{rotating}
 \usepackage{flafter}
 
@@ -25,7 +23,10 @@
 \usepackage{epigraph}
 \usepackage{csquotes}
 \usepackage[toc,page]{appendix}
+\usepackage{siunitx}
+\usepackage{minted}
 
+\setmonofont{Inconsolata}
 \usepackage{polyglossia}
 \setdefaultlanguage{english}
 \setotherlanguages{french,arabic}
@@ -35,9 +36,27 @@
 \usepackage{url}
 \urlstyle{same}
 
-\usepackage[style=ieee,backend=biber]{biblatex}
+\usepackage[style=ieee,backend=biber,maxnames=5]{biblatex}
 \addbibresource{phd.bib}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \DeclarePairedDelimiter{\norm}{\vert}{\vert}
+
+\makeatletter
+\renewcommand\part{%
+   \if@openright
+     \cleardoublepage
+   \else
+     \clearpage
+   \fi
+   \thispagestyle{empty}%
+   \if@twocolumn
+     \onecolumn
+     \@tempswatrue
+   \else
+     \@tempswafalse
+   \fi
+   \null\vfil
+   \secdef\@part\@spart}
+\makeatother

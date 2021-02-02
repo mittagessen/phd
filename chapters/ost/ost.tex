@@ -1,11 +1,14 @@
 \chapter{eScriptorium: An Open Source Platform for Historical Document Analysis}
 \chaptermark{eScriptorium}
+\thispagestyle{empty}
+\vfill
+This chapter has been published as \fullcite{KiesslingEtAl2019eScrip}
+\newpage
 
-\section{Abstract}
-
+\section*{Abstract}
 We describe the new open source document analysis and annotation platform
 eScriptorium. It allows to upload document collections, transcribe and segment
-them manually or automatically with the help of the kraken OCR engine.
+them manually or automatically with the help of the Kraken OCR engine.
 
 \section{Introduction}
 
@@ -31,25 +34,24 @@ linguistic). As well as scholars from the humanities, the target groups
 encompass computer scientists, librarians and archivists, students and,
 potentially, the general public. Development of the platform started in
 November 2018, although Kraken, one of its key constituent parts, has been
-under development since 2017.\cite{kiessling2019kraken}
+under development since 2017~\cite{kiessling2019kraken}.
 
 \section{Previous Work}
 
 We decided to embark on this project because we did not know of another open
 source web-based infrastructure capable of dealing sufficiently well with
-historical manuscripts of various writing systems. Transkribus\cite{Kahle} and
-Monk\cite{monk}, \cite{schomaker2016design} are state-of-the-art transcription
+historical manuscripts of various writing systems. Transkribus~\cite{Kahle} and
+Monk~\cite{monk}, \cite{schomaker2016design} are state-of-the-art transcription
 HTR-platforms, yet, their transcription system is not open source and both have
 turned into commercial
 products. Aletheia \cite{aletheia,6065274} has no web interface and its full version has
-become commercial as well. The OCR engines Tesseract 4\cite{tesseract4}, anyOCR
-\cite{bukhari2017anyocr}, ocropus \cite{ocropy,ocropy3} have command line
+become commercial as well. The OCR engines Tesseract 4~\cite{tesseract4}, anyOCR~\cite{bukhari2017anyocr}, OCRopus~\cite{ocropy,ocropy3} have command line
 interfaces or primitive desktop interfaces only,
 even though Google is working to extend its web-based OCR service also to
-handwritten material \cite{walker2018web,ingle2019scalable}.
-Corpusbuilder\cite{corpusbuilder} recently built on kraken and tesseract 4 with
+handwritten material~\cite{walker2018web,ingle2019scalable}.
+Corpusbuilder~\cite{corpusbuilder} recently built on Kraken and tesseract 4 with
 a professional web-based interface, has been developed for print, not
-manuscripts. OCR4all\cite{reul2019ocr4all} is webbased, but cannot handle fully
+manuscripts. OCR4all~\cite{reul2019ocr4all} is webbased, but cannot handle fully
 automatic treatment of manuscripts.
 
 \section{Frontend}
@@ -75,7 +77,7 @@ user’s computer. A second option is to use a
 IIIF manifest\footnote{International Image Interoperability Framework:
 \url{https://iiif.io}} to import directly from a library or archive. The import
 via IIIF manifest also imports the metadata included in this manifest as
-exemplified in Fig~\ref{fig_ost:iiif}.  Images can be uploaded in TIFF, PNG, or JPG formats.
+exemplified in figure~\ref{fig_ost:iiif}.  Images can be uploaded in TIFF, PNG, or JPG formats.
 After uploading to the server they are converted into PNG and compressed
 losslessly. In addition to color images, users can import binarized images
 associated with their color image, as well as page segmentation and text files
@@ -84,7 +86,7 @@ in ALTO\footnote{Analyzed Layout and Text Object (ALTO) XML Schema
 Analysis and Ground truth Elements XML format.
 \url{https://github.com/PRImA-Research-Lab/PAGE-XML}} and TEI-XML (Text
 Encoding Initiative) import and export are in preparation. A document overview
-(see Fig.~\ref{fig_ost:overview}) enables users to browse through the document and to select images
+(see figure ~\ref{fig_ost:overview}) enables users to browse through the document and to select images
 for manual or automatic treatment, to change the order of images, and to add
 further images or delete existing ones.  Each document image is represented by
 a thumbnail image with icons that represent different procedures; the icons
@@ -123,11 +125,11 @@ a first basic system functioning, but the transition to polygons is already
 underway and will be available soon. Users can transcribe manually or, once a
 model has been trained, automatically. Corresponding lines in the transcription
 interface and manuscript image or binarization are visualized by a lightbox
-(see Fig.~\ref{fig_ost:lightbox}). Manual transcription can be an end in itself
+(see figure~\ref{fig_ost:lightbox}). Manual transcription can be an end in itself
 or for Ground Truth generation. Automatic transcription can also be corrected
 through the same manual interface. Users can save transcriptions and go back in
 history to see or restore previous versions. Clicking on a line opens an
-enlarged image of the line and a box for transcription (see Fig.~\ref{fig_ost:transcription}).
+enlarged image of the line and a box for transcription (see figure~\ref{fig_ost:transcription}).
 
 \begin{figure}
 	\centering
@@ -149,7 +151,7 @@ experience with training specific ligatures or allographs, for example. Users
 can also choose to resolve abbreviations, or not. One of the project aims is to
 make hyperdiplomatic transcriptions possible, which can then enable the
 combination of quantitative and qualitative paleographical analysis, for
-instance.\cite{kiessling2019escripta}
+instance~\cite{kiessling2019escripta}.
 
 \begin{figure}
 	\centering
@@ -167,7 +169,7 @@ instance.\cite{kiessling2019escripta}
 The transcription and visualization panels are fully synchronized so that any
 zoom and panning of the image is also applied to the transcription so that
 users can always see the transcription corresponding to the image zone, as
-shown in Fig.~\ref{fig_ost:zoom}. This enables ergonomic transcription and
+shown in figure~\ref{fig_ost:zoom}. This enables ergonomic transcription and
 proofreading, and also enables users to deal with sources in any format (e.g.
 landscape or portrait) and size (e.g. large tables) far beyond the real estate
 of a regular computer screen.
@@ -182,18 +184,18 @@ of a regular computer screen.
 \subsection{Automatic layout segmentation}
 
 Current layout segmentation requires binarization and allows only for
-horizontal bounding boxes around regions and/or lines (see Fig.~\ref{fig_ost:automatic}). Users can
+horizontal bounding boxes around regions and/or lines (see figure~\ref{fig_ost:automatic}). Users can
 design regions around writing blocks which can help to improve automatic
 segmentation with the current algorithm, and they can also correct line
 segmentation via the GUI. However, we have also developed a trainable baseline
 segmenter that does not require binarization and is able to deal with curved
-lines and highly complex layout as well as deteriorated material (see Fig.~\ref{fig_ost:arabic}
+lines and highly complex layout as well as deteriorated material (see figure~\ref{fig_ost:arabic}
 and \cite{kiessling2019badam}. We are currently working on its integration into
 the platform and the transition from rectangular to polygonal zones. A sample
 page of the ground truth creation module that can also serve to correct
 automatic annotation can
-be seen in Fig.~\ref{fig_ost:baseline}. Any writing direction will be possible. Layout segmentation
-ground truth has been created for Arabic\cite{kiessling2019badam}, and other scripts, notably
+be seen in figure~\ref{fig_ost:baseline}. Any writing direction will be possible. Layout segmentation
+ground truth has been created for Arabic~\cite{kiessling2019badam}, and other scripts, notably
 Hebrew, Greek and Latin, are in preparation.\footnote{Some of this is prepared
 in the French-Israeli project Tikkoun Sofrim
 (\url{https://tikkunsofrim.hypotheses.org})
@@ -219,9 +221,9 @@ must either transcribe some pages manually or upload an existing transcription
 in ALTO format (PageXML or TEI XML will also be available soon). They can then
 choose those pages they would like to use as input for the training process.
 Once the training has finished, they can apply the trained model to pages with
-segmented layout. Another possibility is to upload a kraken model that has been
+segmented layout. Another possibility is to upload a Kraken model that has been
 trained outside eScriptorium. A result of such an automatic transcription is
-shown in Fig.~\ref{fig_ost:automatic}. In the Tikkoun Sofrim and Sofer Mahir projects, we have been
+shown in figure~\ref{fig_ost:automatic}. In the Tikkoun Sofrim and Sofer Mahir projects, we have been
 able to reach character error ratios between 2\% and 8.9\%.\footnote{The Geneva
 146 manuscript displayed on tikkoun sofrim.firebaseapp.com had a CER of 8.9\%.
 The BNF 150 manuscript displayed there as well had a CER of 2.8\%.}
@@ -286,8 +288,8 @@ concern. Distributed services were considered but past experiences have proven
 that these are impossible to maintain for projects with very limited resources
 such as this one. This should make for reasonable development time when
 introducing new features across the platform. The principal component of the
-backend is the kraken engine for Handwritten Text Recognition, developed by Ben
-Kiessling. At present, very few kraken options are exposed through the frontend
+backend is the Kraken engine for handwritten text recognition, developed by Ben
+Kiessling. At present, very few Kraken options are exposed through the frontend
 in an attempt not to overwhelm the user, but these will be added cautiously
 when the need arises.
 
@@ -320,7 +322,7 @@ On the computational side, we plan to include keyword spotting as well as
 automatic classification of manuscripts for dating and provenancing purposes,
 scribe distinction and tools for corpus linguistics and named entity
 recognition. We hope to be able to create an API communicating with DivaDIA for
-some of the methods\cite{wursch2017divaservices}.
+some of the methods~\cite{wursch2017divaservices}.
 
 \subsection{Deep Annotation}
 
@@ -341,7 +343,7 @@ researchers in handwriting may develop a model of script such that (for
 instance) the Latin alphabet has letters such as “a”, and each letter may have
 different forms (allographs) such as \textbf{a} and \textit{a}; these
 allographs may in turn have components such as a stem and a body, and so
-forth\cite{stokes2018modelling}.  Embedding such a model into image annotations
+forth~\cite{stokes2018modelling}.  Embedding such a model into image annotations
 allows much more powerful searches, such as showing images of any letter with
 ascenders in order to compare how one or more scribes constructed this part of
 the letter. Such “deep” annotations have already been used in a group of

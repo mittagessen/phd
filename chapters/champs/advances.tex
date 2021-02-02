@@ -1,13 +1,12 @@
 ﻿\chapter{Advances and Limitations in Open Source Arabic-Script OCR: A Case Study}
 \chaptermark{Advances in Arabic OCR: A Case Study}
 \label{ch:champs}
-Benjamin Kiessling (University of Leipzig/Université Paris Sciences et Lettres)
-Gennady Kurin (University of Maryland)
-Matthew Thomas Miller (Roshan Institute for Persian Studies, University of Maryland) (corresponding author’s email: mtmiller@umd.edu)
-Kader Smail (University of Maryland)
+\thispagestyle{empty}
+\vfill
+This chapter has been accepted for publication as \fullcite{kiessling2020champs}.
+\newpage
 
-\section{Abstract}
-
+\section*{Abstract}
 This work presents an accuracy study of the open source OCR engine, Kraken, on
 the leading Arabic scholarly journal, al-Abhath. In contrast with other
 commercially available OCR engines, Kraken is shown to be capable of producing
@@ -189,20 +188,20 @@ Kraken output and the corresponding output for ABBYY (see Table~\ref{tab_champs:
 
 \begin{table}[h!]
 \begin{center}
-\caption{Contractor's Accuracy Comparison of Abbyy and OpenITI (Kraken) OCR Results}
+\caption{Contractor's accuracy comparison of Abbyy and OpenITI (Kraken) OCR results}
 \label{tab_champs:table_1}
 	\begin{tabularx}{\textwidth}{p{2.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}} \toprule
 & \textbf{Total number of characters} & \textbf{Abbyy character errors} & \textbf{OpenITI character errors} & \textbf{Abbyy character accuracy} & \textbf{OpenITI character accuracy}\\\midrule
-Page \#1 \scriptsize{(00010004\_187997831.tif)} & 1230 & 270 & 38 & 78.049\% & $\mathbf{96.911\%}$ \\
-Page \#2 \scriptsize{(00010004\_187997832.tif)} & 37& 15 & 27 & $\mathbf{59.459\%}$ & 27.027\%\\
-Page \#3 \scriptsize{(00010031\_187998459.tif)} & 3182 & 355 & 23 & 88.843\% & $\mathbf{99.277\%}$\\
-Page \#4 \scriptsize{(00010063\_187999338.tif)} & 3157 & 327 & 29 & 89.642\% & $\mathbf{99.081\%}$\\
-Page \#5 \scriptsize{(00010129\_188001031.tif)} & 3222 & 378 & 16 & 88.268\% & $\mathbf{99.503\%}$\\
-Page \#6 \scriptsize{(00010012.tif)} & 3259 & 326 & 75 & 89.997\% & $\mathbf{97.699\%}$\\
-Page \#7 \scriptsize{(00010030.tif)} & 2503 & 230 & 17 & 90.811\% & $\mathbf{99.321\%}$\\
-Page \#8 \scriptsize{(00010126.tif)} & 2631 & 252 & 170 & 90.422\% & $\mathbf{93.539\%}$\\
-Page \#9 \scriptsize{(00010127.tif)} & 2294 & 223 & 35 & 90.279\% & $\mathbf{98.474\%}$\\
-Page \#10 \scriptsize{(00010132.tif)} & 2296 & 243 & 96 & 89.416\% & $\mathbf{95.819\%}$\\
+Page \#1 \scriptsize{(00010004\_187997831.tif)} & 1230 & 270 & 38 & 78.049\% & \textbf{96.911\%} \\
+Page \#2 \scriptsize{(00010004\_187997832.tif)} & 37& 15 & 27 & \textbf{59.459\%} & 27.027\%\\
+Page \#3 \scriptsize{(00010031\_187998459.tif)} & 3182 & 355 & 23 & 88.843\% & \textbf{99.277\%}\\
+Page \#4 \scriptsize{(00010063\_187999338.tif)} & 3157 & 327 & 29 & 89.642\% & \textbf{99.081\%}\\
+Page \#5 \scriptsize{(00010129\_188001031.tif)} & 3222 & 378 & 16 & 88.268\% & \textbf{99.503\%}\\
+Page \#6 \scriptsize{(00010012.tif)} & 3259 & 326 & 75 & 89.997\% & \textbf{97.699\%}\\
+Page \#7 \scriptsize{(00010030.tif)} & 2503 & 230 & 17 & 90.811\% & \textbf{99.321\%}\\
+Page \#8 \scriptsize{(00010126.tif)} & 2631 & 252 & 170 & 90.422\% & \textbf{93.539\%}\\
+Page \#9 \scriptsize{(00010127.tif)} & 2294 & 223 & 35 & 90.279\% & \textbf{98.474\%}\\
+Page \#10 \scriptsize{(00010132.tif)} & 2296 & 243 & 96 & 89.416\% & \textbf{95.819\%}\\
 \bottomrule
 \end{tabularx}
 \end{center}
@@ -487,7 +486,7 @@ high degree of accuracy, but font alterations do seem to increase error rates.
 
 \begin{figure}[h]
 	\includegraphics[width=\linewidth]{images/image6.png}
-	\caption{Example of poor transcription of italicized passage in figure~\ref{fig3:fig5}}
+	\caption{Example of poor transcription of italicized passage in figure~\protect\ref{fig3:fig5}}
 	\label{fig3:fig6}
 \end{figure}
 
@@ -640,7 +639,7 @@ ignore fatḥa tanwīns in future training data production.
  \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\linewidth]{images/image1.png}
-	\caption{Correctly transcribed fatḥa tanwīn from same page as figure~\ref{fig3:fig16}}
+	\caption{Correctly transcribed fatḥa tanwīn from same page as figure~\protect\ref{fig3:fig16}}
   	\label{fig3:fig17}
 \end{figure}
 

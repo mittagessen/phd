@@ -1,8 +1,14 @@
 \chapter{A Modular Region and Text Line Layout Analysis System}
 \chaptermark{Region and Text Line Layout Analysis}
+\thispagestyle{empty}
+\vfill
+This chapter has been published as \fullcite{KiesslingICFHR2020}. The layout
+analysis method presented herein corresponds to the current implementation in
+the Kraken engine.
 \label{ch:icfhr}
+\newpage
 
-\section{abstract}
+\section*{Abstract}
 High quality document layout analysis is fundamental to the accurate processing
 of handwritten textual material, on both the level of individual lines and
 higher order zones demarking textual and non-textual content. We present an
@@ -158,7 +164,7 @@ and cross region boundaries.
 
 \begin{figure*}[ht]
         \centering
-        \includegraphics[width=0.75\textwidth]{rblla}
+        \includegraphics[width=\textwidth]{rblla}
 	\caption{Architecture of the pixel labelling network. Group
 	normalization layers are omitted. (salmon: 3x3 convolutional layers,
 	dotting indicates dilation by 2x2; purple: 1x1 convolution, blue:
@@ -215,9 +221,9 @@ truth for the baselines classes are simple polylines drawn with a width.
 Regions are encoded
 as filled polygons. Thus the ground truth $y$ is a multi-hot encoded tensor.
 
-\begin{figure}[h]
+\begin{wrapfigure}{O}{0.6\textwidth}
 	\centering
-	\begin{subfigure}{.9\columnwidth}
+	\begin{subfigure}{0.58\textwidth}
 		\includegraphics[width=\textwidth]{overlay_crop.png}
 		\caption{Ground truth overlay for a page with different line
 		orientations (blue: baseline class, red: start\_sep auxiliary
@@ -226,22 +232,22 @@ as filled polygons. Thus the ground truth $y$ is a multi-hot encoded tensor.
 	\end{subfigure}
 	\vskip\baselineskip
 
-	\begin{subfigure}{.9\columnwidth}
+	\begin{subfigure}{0.58\textwidth}
 		\includegraphics[width=\textwidth]{roi_crop.png}
 		\caption{Region of Interests of the distance biased energy map for a sample line of the same image. (red: border of RoIs, blue: baselines)}
 		\label{fig:roi}
 	\end{subfigure}
 	\vskip\baselineskip
 
-	\begin{subfigure}{.9\columnwidth}
+	\begin{subfigure}{0.58\textwidth}
 		\includegraphics[width=\textwidth]{seam_crop.png}
 		\caption{Computed seam/bounding polygon on the masked input image crop. (red: combined upper and lower half-seams, blue: baselines)}
 		\label{fig:seam}
 	\end{subfigure}
 	\caption{Examples of the data model and intermediate representations
 		 for a page from the
-		 BADAM\cite{kiessling2019badam} dataset}
-\end{figure}
+		 BADAM~\protect\cite{kiessling2019badam} dataset}
+\end{wrapfigure}
 
 
 \subsection{Training}
@@ -412,10 +418,12 @@ concatenated to form the final bounding polygon for a line. Fig. \ref{fig:seam}
 shows the result for a single line.
 
 \begin{table}[h!]
+\begin{minipage}{\textwidth}
 \begin{center}
 \caption{Baseline recognition metrics on cBAD 2019, BADAM, OHG, and Bozen}
 \label{tab:bl}
-\begin{tabularx}{\columnwidth}{lp{1.7cm}p{1.7cm}p{1.7cm}} \toprule
+\renewcommand*{\thefootnote}{\alph{footnote}}
+\begin{tabularx}{\textwidth}{XXXX} \toprule
 & \textbf{P-val} & \textbf{R-val} & \textbf{F-val}\\
 \addlinespace
 \textbf{cBAD}\ \\ \midrule
@@ -424,7 +432,7 @@ DMRZ & 0.925 & 0.905 & 0.915\\
 UPVLC &0.911 & 0.902 & 0.907\\
 TJNU & 0.852 & 0.885 & 0.868\\
 DMRZ-2017 & 0.773 & 0.743 & 0.758\\
-proposed\footnotemark[3] & 0.867 & 0.945 & 0.904\\
+proposed & 0.867 & 0.945 & 0.904\\
 \addlinespace
 \textbf{BADAM}\ \\ \midrule
 \cite{kiessling2019badam} & 0.941 & 0.901 & 0.924\\
@@ -432,29 +440,30 @@ proposed & 0.932 & 0.957 & 0.944\\
 \addlinespace
 \textbf{OHG}\ \\ \midrule
 \cite{quiros2018multi} & 0.962 & 0.971 & 0.966\\
-\cite{quiros2018multi}\footnotemark[4] & 0.984 & 0.977 & 0.980\\
+\cite{quiros2018multi}\footnotemark[1] & 0.984 & 0.977 & 0.980\\
 proposed & 0.978 & 0.973 & 0.975\\
-proposed\footnotemark[4] & 0.909 & 0.919 & 0.914\\
+proposed\footnotemark[1] & 0.909 & 0.919 & 0.914\\
 \addlinespace
 \textbf{Bozen}\ \\ \midrule
 \cite{quiros2018multi} & 0.958 & 0.991 & 0.974\\
-\cite{quiros2018multi}\footnotemark[4] & 0.945 & 0.989 & 0.966 \\
+\cite{quiros2018multi}\footnotemark[1] & 0.945 & 0.989 & 0.966 \\
 proposed & 0.972 & 0.982 & 0.977 \\
-proposed\footnotemark[4] & 0.936 & 0.949 & 0.942\\
+proposed\footnotemark[1] & 0.936 & 0.949 & 0.942\\
 \bottomrule
 \end{tabularx}
 \end{center}
+\renewcommand\footnoterule{}
+\footnotetext[1]{Combined region and baseline model}
+\end{minipage}
 \end{table}
 
-\footnotetext[3]{Calculated on random 200 pages of the test set.}
-\footnotetext[4]{Combined region and baseline model}
 
 \begin{table}[h!]
 \begin{center}
 \caption{Metrics for the region detection task of the OHG and Bozen datasets}
 \label{tab:regs}
-\begin{tabularx}{\columnwidth}{lp{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}} \toprule
-	& \textbf{Mean acc} & \textbf{Mean IU} & \textbf{fw IU}\\
+\begin{tabularx}{\textwidth}{lXXX} \toprule
+	& \textbf{Mean accuracy} & \textbf{Mean Intersection-over-Union} & \textbf{frequency-weighted Intersection-over-Union}\\
 \addlinespace
 \textbf{OHG}\ \\ \midrule
 \cite{quiros2018multi} & 0.789 & 0.727 & 0.872\\

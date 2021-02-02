@@ -1,0 +1,101 @@
+\chapter{Conclusion and Perspectives}
+\thispagestyle{empty}
+\newpage
+
+\refsection
+
+The focus of this thesis has been the retrodigitization of historical,
+handwritten and printed Arabic documents with an emphasis on its use in the
+Digital Humanities while being mindful of the need to reduce the bias of
+methods towards a particular script. More specifically, we have gained a deeper
+understanding of the limitations and capabilities of Arabic-script text
+transcription and layout analysis methods, adopted and extended the baseline
+paradigm for layout analysis, developed a simple system for multigraphic OCR,
+and integrated those methods in the open Kraken OCR software. The flexibility
+of this engine is attested through both its use for novel computer vision tasks
+like the character alignment presented in chapter~\ref{ch:algn}, its
+straightforward integration into other workflows such as eScriptorium and
+OCR-D, and its use for a multitude of different languages, scripts, and
+document types. The eScriptorium VRE is a crucial puzzle piece in the
+retrodigitization ecosystem, both in its current state as a platform for
+accessible annotation and transcription and a foundation stone for the
+envisioned deep annotation incorporating more computational methods into the
+primitives of scholarly practice.
+
+While the process is often rough around the edges and still requires some
+tinkering by the end user, understandably given the significant historical
+deficit of Arabic-script OCR in comparison to the treatment of other writing
+systems, we can now, in principle, digitize almost arbitrary documents with
+relatively modest training data requirements. We hope that the open nature of
+both eScriptorium and Kraken with its facilities to encourage sharing of
+training data and artifacts will be a part in this catch up process which will
+likely reduce the gap in accuracy and complexity between the digitization of
+"normal" and "rare" scripts in the comming years.
+
+It is clear that substantial work remains. The most pressing requirements on an
+Arabic OCR system from our initial studies, layout analysis, segmentation-less
+transcription, and data annotation and curation, are largely solved but others
+remain in an unsatisfactory state.
+
+The most immediate of those remaining tasks for Arabic manuscript OCR is
+reading order determination.  As described in chapter~\ref{ch:intro}, research
+on this topic is sparse, methodologically out-of-date, and largely focused on
+modern documents. Hand-crafted heuristics, incapable of accurately dealing with
+the complex structure of historical manuscripts, prevail in practical OCR
+systems. Datasets for evaluation and training of methods are non-existent or
+annotated implicitly in datasets for other tasks without communicated
+standards. Nevertheless, the capacity of machine learning algorithms for
+spatial reasoning with a large number of objects has grown in recent years and
+architectures like graph neural networks\cite{dejean2019versatile} and deep
+models for learning-to-rank such as \cite{tan2019learning,cakir2019deep} offer
+the promise to advance the state of the art substantially in the near future.
+
+While current OCR system are capable of impressive feats even on highly
+degraded, fragmentary, or atypical documents with requirements on training data
+in volume and complexity that is lower than ever before, training data
+acquisition remains the most labor- and time-intensive step of any
+retrodigitization project. Basic transfer learning functionality in Kraken
+reduces this workload to some extent but its use is \emph{ad hoc} and its
+practical efficacy depends heavily on the skills of the individual user. 
+
+Two non-exclusive avenues for more effective model adaptation are currently
+imaginable: a systematization of the data acquisition process, enriching
+datasets and models with metadata that aids in their manual or automatic
+selection for new material, and semi- and unsupervised model adaptation. Some
+digitization projects, such as OCR-D for Latin and OpenITI for Arabic, have
+started to enlist codicological support to put the selection and generation of
+training data on firmer scientific grounds \cite{weichselbaumer2020new}, but
+this remains a rarity. Semi-supervised methods such as
+\cite{keret2019transductive} and unsupervised training \cite{gupta2018learning}
+on the other hand aims to reduce or remove human annotation in data generation
+completely. These approaches are considered one of the \emph{holy grails} of
+DIA but even if methods were to reach the maturity for practical use important
+questions such as how to deal with different transcription standards
+effectively remain unanswered.
+
+The development of eScriptorium will continue for the foreseeable future and
+will integrate advances in automatic computational methods to the extent that
+these aid in humanities research. Chiefly among these and not extensively
+considered in this thesis is deep annotation of textual and non-textual
+components. Applications such as image classification, document dating,
+automatic grouping of documents, and text reuse detection are imaginable.
+Additional means to share, publish, and distribute training data, models, and
+scholarly products in a way that is acceptable to both scholarly practice in
+the humanities and computer science are an important part of development in the
+near-term.
+
+These means are extraordinarily important as even with the current availability
+of powerful and open computer vision tools, the dataset landscape remains
+fractured. While more and more researchers recognize the importance of the
+sharing not only to advance research in the humanities but also to direct
+computer vision research and practice in a way that is of utility to the
+humanities, the best current practice for public datasets remains a profane
+github repository with a non-descriptive README file. A combination of VREs
+conscious of the important of appropriate metadata, expanded input of archival
+and library practice in research activities, and the utilization of research
+data repositories already commonplace in other disciplines, has the potential
+to significantly improve this state of affairs in the coming years.
+
+\phantomsection
+\printbibliography[heading=subbibliography]
+\endrefsection
