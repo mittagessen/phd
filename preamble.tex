@@ -1,7 +1,11 @@
 \RequirePackage[T1]{fontenc}
 \usepackage{libertinus}
 
-\usepackage{psl-cover}
+\usepackage[entitle]{psl-cover}
+
+\usepackage{ifthen}
+\newboolean{defended}
+\setboolean{defended}{false}
 
 \usepackage{subcaption}
 \usepackage{graphicx} % Required for including images
