@@ -125,7 +125,7 @@ Halakhah).\footnote{\url{https://sofermahir.hypotheses.org}} In the Tikkoun
 Sofrim project,  crowdsourcing and machine learning is used to correct errors
 in the automatic transcriptions of manuscripts of medieval exegetical
 literature
-\cite{Kuflik2019}.\footnote{\url{https://tikkunsofrim.hypotheses.org}}
+\cite{kuflik2019tikkoun}.\footnote{\url{https://tikkunsofrim.hypotheses.org}}
 
 \begin{figure}[t] \centering
 	\includegraphics[width=.5\textwidth]{images/ms.png}
@@ -360,7 +360,6 @@ composition but from a different manuscript.
 
 \subsection{Transcript Alignment}\label{sec:al}
 
-
 %\begin{figure*}[t]
 \begin{figure}[t]
 
@@ -368,9 +367,6 @@ composition but from a different manuscript.
 \includegraphics[width=1\columnwidth]{images/P702-Fg010-R-C01-R01-D12092012-T111025-LR924_012_F_rewrite._reordered_with_text._page_cutout.png}
   %\includegraphics[width=1.0\linewidth]{images/P702-Fg010-R-C01-R01-D12092012-T111025-LR924_012_F_rewrite._reordered_with_text._page.png}
   \label{fig:algn_regularAlignment}
-%\end{subfigure} \begin{subfigure}{0.48\textwidth}
-  %\includegraphics[width=1.0\linewidth]{images/P442-Fg001-R-C01-R01-D01092013-T114646-LR924_012_rewrite._reordered_with_text._page.png}
-  %\label{fig:rotatedAlignment} \end{subfigure}
   \vspace*{-5mm} \caption{Aligned glyphs of a whole fragment. Alternating red
 	and green polygons indicate areas. Yellow overlay indicates identified
 	letter.} \vspace*{-5mm} \label{fig:algn_align}
@@ -409,17 +405,16 @@ between the centers of the bounding boxes of the glyphs.
 % anchors - 48.1\% .  Accuracy with added anchors of interword spaces - 74\%.
 % OCR derived alignment accuracy - $\mathbf{90.3\%}$. 
 
-\begin{table}[h!]
-\begin{center}
-	\begin{tabularx}{0.5\textwidth}{Xl} \toprule
-Method& Accuracy\\\midrule
+\begin{table}[h]
+\centering
+\caption{Transcription alignment accuracy}
+\begin{tabularx}{.8\textwidth}{Xl} \toprule
+\textbf{Method}& \textbf{Accuracy}\\\midrule
 Optical flow without anchors&48.1\%\\
 Optical flow with added anchors&74.0\%\\
 OCR derived alignment & $\mathbf{90.3\%}$\\ \bottomrule
 \end{tabularx}
-\caption{Transcription alignment accuracy}
 \label{tab:algn_tab1}
-\end{center}
 \end{table}
 
 To further examine the performance of our leading transcription alignment
@@ -430,29 +425,28 @@ polygon of the glyph of the OCR system and the human annotated ground truth:
 % 87.1\% median, 20.5\% standard deviation.
 
 \begin{table}[h!]
-\begin{center}
-\begin{tabularx}{0.5\textwidth}{Xll}
+\centering
+\caption{OCR bounding box overlap with ground truth}
+\begin{tabularx}{0.8\textwidth}{Xll}
 \toprule
-Statistic & Area & Area percentage\\\midrule
-Average&31.0&81.0\%\\
-Median&23.8&87.1\%\\ 
+& \textbf{Area} & \textbf{Area percentage}\\\midrule
+Mean &31.0&81.0\%\\
+Median &23.8&87.1\%\\ 
 Standard deviation&30.8&20.5\%\\ \bottomrule
 \end{tabularx} 
-\caption{OCR bounding box overlap with ground truth}
 \label{tab:algn_tab2}
-\end{center}
 \end{table}
 
-As can be seen, the accuracy of the OCR based transcription alignment method is
-the highest among the methods we've used, and the intersection of the
-recognized bounding polygon with the original glyph bounding box is high as
-well.  An alignment example is displayed in figure~\ref{fig:algn_align}.  The
-interword space in line 2, for instance, has been well detected and shows that
-our alignment method provides excellent results on the word level.
-Fig.~\ref{fig:algn_alignedGlyphs} shows aligned glyphs of a single line compared to
-the ground truth.  Finally, the ground truth allows for overlapping glyph
-bounding boxes, a feature impossible for the current and all other known
-algorithms.
+As can be seen in table~\ref{tab:algn_tab1}, the accuracy of the OCR based
+transcription alignment method is the highest among the methods we've used, and
+the intersection of the recognized bounding polygon with the original glyph
+bounding box is high as well (table~\ref{tab:algn_tab2}). An alignment example
+is displayed in figure~\ref{fig:algn_align}. The interword space in line 2, for
+instance, has been well detected and shows that our alignment method provides
+excellent results on the word level. Figure~\ref{fig:algn_alignedGlyphs} shows
+aligned glyphs of a single line compared to the ground truth.  Finally, the
+ground truth allows for overlapping glyph bounding boxes, a feature impossible
+for the current and all other known algorithms.
 
 An analysis of the errors shows that the results can be further improved as
 some letters and some positions quite consistently reveal a higher error

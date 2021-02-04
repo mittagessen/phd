@@ -371,13 +371,13 @@ traitement à l'intérieur d'un pipeline typique :
 		également nécessaire de les mettre dans le bon ordre pour une
 		véritable compréhension du document.
 	\item[Transcription sans segmentation] Comme l'arabe s'écrit uniquement
-		sous forme cursive et que les liaisons entre les lettres
+		sous form\-e cursive et que les liaisons entre les lettres
 		peuvent changer de manière significative d'un style à l'autre,
 		une méthode de transcription arabe devrait fonctionner sur des
 		lignes entières au lieu de les séparer en caractères.
 	\item[Les outils de création et de conservation des données]
 		Même s'ils ne font pas directement partie d'un pipeline de ROC,
-		les outils ergonomiques qui peuvent être utilisés pour annoter
+		les outils ergonomiques qui peuv\-ent être utilisés pour annoter
 		toute la gamme des caractéristiques du texte arabe sont
 		essentiels pour les projets de numérisation concrets et pour
 		créer des ensembles de données pour les recherches futures.
@@ -435,7 +435,7 @@ les lignes de texte.
 
 \section{Segmentation des pages}
 
-Pour le traitement des documents imprimés et manuscrits en caractères arabes,
+Pour le traitement des documents imprimés et manuscrits en caractères arab\-es,
 il est évident qu'une méthode d'analyse de la mise en page flexible, et de
 préférence entraînable, est nécessaire. En effet, l'impossibilité d'extraire des
 lignes de texte rend automatiquement impossible leur transcription correcte
@@ -583,7 +583,7 @@ mappées en points de code Unicode.  L'ARN utilisé par défaut est un CNN-LSTM
 hybride entraîné avec la fonction de coût CTC. Un langage simple de
 spécification de réseau permet d'adapter le réseau à des tâches spécifiques.
 Les précisions des caractères pour un certain nombre de scripts différents
-utilisant ce classificateur sont indiquées dans le tableau~\ref{tab:acc}.
+utilisant ce classificateur sont indiquées dans le tableau~\ref{tab:kraken_acc}.
 
 La segmentation des pages est assurée par le système de segmentation des
 régions et des lignes décrit ci-dessus. Comme d'autres parties du logiciel, il
@@ -619,7 +619,7 @@ environ 30\% sur l'ensemble de validation.
 
 Les activations de ce modèle surajusté sont utilisées pour déterminer les
 positions des caractères sur le matériel dans l'ensemble d'entraînage créé
-semi-automati\-que\-ment. Lorsqu'il est évalué vis-à-vis des positions de glyphes
+semi-auto\-ma\-ti\-que\-ment. Lorsqu'il est évalué vis-à-vis des positions de glyphes
 annotées par l'homme, le système place le caractère le plus proche de la
 position réelle 90,3\% du temps avec une IoU moyenne de 0,81, surpassant
 significativement la méthode SIFT-flow même lorsqu'il l'ancre avec les
@@ -627,15 +627,15 @@ positions brutes des caractères identifiés par la ROC.
 
 \section{eScriptorium}
 
-eScriptorium est une plateforme d'analyse et d'annotation de documents open
-source. Elle cherche à combiner des techniques de calcul avec des outils
-numériques manuels pour la transcription et l'annotation approfondie de textes
-et d'images aux niveaux paléographique, philologique et linguistique. Il
-s'adresse aux chercheurs en humanités, mais aussi aux bibliothécaires
-et archivistes, aux étudiants, aux informaticiens et au grand public. Issu du
-projet Scripta, qui cherche à faciliter l'étude de l'écriture sous toutes ses
-formes au fil de l'histoire, ses principes de base sont la transparence, la
-flexibilité et l'indépendance de la langue et du système d'écriture.
+eScriptorium est une plateforme libre d'analyse et d'annotation de documents.
+Elle cherche à combiner des techniques de calcul avec des outils numériques
+manuels pour la transcription et l'annotation approfondie de textes et d'images
+aux niveaux paléographique, philologique et linguistique. Il s'adresse aux
+chercheurs en humanités, mais aussi aux bibliothécaires et archivistes, aux
+étudiants, aux informaticiens et au grand public. Issu du projet Scripta, qui
+cherche à faciliter l'étude de l'écriture sous toutes ses formes au fil de
+l'histoire, ses principes de base sont la transparence, la flexibilité et
+l'indépendance de la langue et du système d'écriture.
 
 Ce dernier point est particulièrement important car la gamme des langues et des
 systèmes d'écriture étudiés dans le cadre de Scripta est énorme, couvrant le

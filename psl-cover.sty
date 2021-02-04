@@ -134,6 +134,12 @@
   \@cotutelletrue
 }
 
+\newif\if@entitle\@entitlefalse
+\DeclareOption{entitle}{
+  \@entitletrue
+}
+
+
 \ProcessOptions{}\relax{}
 
 \if@nomaketitle
@@ -144,8 +150,9 @@
 }
 \fi
 
-\if@cotutelle
 \newcommand{\entitle}[1]{\gdef\@entitle{#1}}
+
+\if@cotutelle
 \newcommand{\otherinstitute}[1]{\gdef\@otherinstitute{#1}}
 \newcommand{\logootherinstitute}[1]{\gdef\@logootherinstitute{#1}}
 \fi
@@ -191,15 +198,22 @@
           \textbf{\@title{}}\unskip\strut\par
           \vspace{5mm}
           \color{pslblue}
-          \@entitle{}\unskip\strut\par
+          \if@entitle
+            \@entitle{}\unskip\strut\par
+          \fi
         \end{minipage}
       };
       \else
-      \node[yshift=31mm] at (o) {
+      \node[yshift=33mm] at (o) {
         \begin{minipage}[h]{.85\paperwidth}
           \centering
           \fontsize{18}{22}\selectfont
           \textbf{\@title{}}\unskip\strut\par
+          \vspace{5mm}
+          \color{pslblue}
+          \if@entitle
+            \@entitle{}\unskip\strut\par
+          \fi
         \end{minipage}
       };
       \fi
@@ -207,7 +221,7 @@
       %% author
       \node[xshift=-85mm, yshift=-8mm, anchor=north west] at (o) {
         \begin{minipage}[h]{.3\paperwidth}
-          \pslbluelabel{Soutenue par}\unskip\strut\par
+          \pslbluelabel{\ifthenelse{\boolean{defended}}{Soutenue par}{A soutenir par} }\unskip\strut\par
           \vspace{1mm}
           {\fontsize{16}{19}\selectfont\textbf{\@author{}}}\unskip\strut\par
           \vspace{1mm}
@@ -246,25 +260,33 @@
           \hspace{-2mm}
           \fontsize{9}{11}\selectfont
           \begin{tabularx}{93mm}{p{56mm}X}
-            \psljurystyle{\@jiname}{\@jitt}{\@jirole}
-            \psljurystyle{\@jiiname}{\@jiitt}{\@jiirole}
-            \psljurystyle{\@jiiiname}{\@jiiitt}{\@jiiirole}
-            \psljurystyle{\@jivname}{\@jivtt}{\@jivrole}
-            \psljurystyle{\@jvname}{\@jvtt}{\@jvrole}
-            \psljurystyle{\@jviname}{\@jvitt}{\@jvirole}
-            \psljurystyle{\@jviiname}{\@jviitt}{\@jviirole}
-            \psljurystyle{\@jviiiname}{\@jviiitt}{\@jviiirole}
-            \psljurystyle{\@jixname}{\@jixtt}{\@jixrole}
-            \psljurystyle{\@jxname}{\@jxtt}{\@jxrole}
-            \psljurystyle{\@jxiname}{\@jxitt}{\@jxirole}
-            \psljurystyle{\@jxiiname}{\@jxiitt}{\@jxiirole}
+            \fontsize{10}{12}\selectfont \@jiname & \emph{\@jirole}\\
+            \@jitt &   \\[3.5mm]
+            \fontsize{10}{12}\selectfont \@jiiname & \emph{\@jiirole}\\
+            \@jiitt &   \\[3.5mm]
+            \fontsize{10}{12}\selectfont \@jiiiname & \emph{\@jiiirole}\\
+            \@jiiitt &   \\[3.5mm]
+            \fontsize{10}{12}\selectfont \@jivname & \emph{\@jivrole}\\
+            \@jivtt &   \\[3.5mm]
+            \fontsize{10}{12}\selectfont \@jvname & \emph{\@jvrole}\\
+            \@jvtt &   \\[3.5mm]
+            \fontsize{10}{12}\selectfont \@jviname & \emph{\@jvirole}\\
+            \@jvitt &   \\[3.5mm]
+            \fontsize{10}{12}\selectfont \@jviiname & \emph{\@jviirole}\\
+            \@jviitt &   \\[3.5mm]
+
+
+
+
+
+
           \end{tabularx}
           \vspace{-3mm}
         \end{minipage}
       };
 
       %% PSL institute logo
-      \node[xshift=-56mm, yshift=-124mm] at (o) {
+      \node[xshift=-44mm, yshift=-124mm] at (o) {
         \includegraphics[scale=.4]{\@pslassetspath/logo-institute.jpg}
       };
 
@@ -327,11 +349,11 @@
 }
 
 %% Some text styling
-\newcommand{\pslbluelabel}[1]{{\color{pslblue}\fontsize{12}{15}\selectfont #1}}
+\newcommand{\pslbluelabel}[1]{\color{pslblue}\fontsize{12}{15}\selectfont #1}
 \newcommand{\psljurystyle}[3]{
   \ifdefempty{#1}{}{
-    \fontsize{10}{12}\selectfont #1 & \\
-    #2 & \emph{#3} \\[3.5mm]
+    \fontsize{10}{12}\selectfont #1 & \emph{#3}\\
+    #2 &  & \\[3.5mm]
   }
 }
 \newcommand{\pslbacknode}[4]{

@@ -188,7 +188,7 @@ Github page: \url{https://github.com/OpenITI/OCR_GS_Data}.}
 
 The first round of OCR accuracy tests were performed by an outside contractor,
 which JSTOR hired to conduct a ten-page manual accuracy comparison between the
-Kraken output and the corresponding output for ABBYY (see Table~\ref{tab_champs:table_1}).
+Kraken output and the corresponding output for ABBYY (see table~\ref{tab_champs:table_1}).
 
 \begin{table}[h!]
 \begin{center}
@@ -279,7 +279,7 @@ on approximately fifty pages.
 \section{OpenITI Accuracy Study}
 
 The OpenITI team began by generating automatic character error rate (CER)
-reports for the al-Abhath data (see Table~\ref{tab_champs:table_2} for full
+reports for the al-Abhath data (see table~\ref{tab_champs:table_2} for full
 results).\footnote{The full CER reports can be found in the following OpenITI
 Github repository:
 \url{https://github.com/OpenITI/OCR_GS_Data/tree/master/ara/abhath}.} In the
@@ -293,7 +293,7 @@ tested these models’ accuracy using the validation sets.\footnote{This method
 of isolating a fixed number of lines of the training data as a validation set
 for automatic accuracy testing is a standard procedure when evaluating machine
 learning models.} These accuracy results can be found in rows 2-3 in
-Table~\ref{tab_champs:table_2}.  These typeface-specific models were the ones
+table~\ref{tab_champs:table_2}.  These typeface-specific models were the ones
 used to produce the OCR output that was transferred to JSTOR and that the
 contractor reviewed for their accuracy study.
 
@@ -307,7 +307,7 @@ incorporate character features from all of the typefaces represented in the
 data upon which it is trained and therefore can often achieve higher levels of
 accuracy on a broader range of typefaces.) We decided to test this model on all
 of the al-Abhath data to determine if total OCR accuracy could be improved and,
-if so, by how much. The results, shown in row \#4 of Table~\ref{tab_champs:table_2}, were
+if so, by how much. The results, shown in row \#4 of table~\ref{tab_champs:table_2}, were
 impressive.\footnote{For this accuracy assessment, 2,096 lines of the 7,000
 lines of training data were isolated as a validation set.} The generalized
 model’s  total character accuracy rate was 97.41\% - a 2.57 percentage point
@@ -400,10 +400,10 @@ error coding below with one further cautionary note. Manual evaluations are
 both essential and problematic: they provide far more detailed data (i.e.,
 “thick data”) about the OCR output and where OCR is failing, but they are much
 more time and labor intensive (and thus more limited in scope) and subject to
-human error. The results presented in Table~\ref{tab_champs:table_3}should be understood in this
+human error. The results presented in table~\ref{tab_champs:table_3}should be understood in this
 light. They should be understood as a snapshot of the human-inferable errors
 present in the OCR output. Each error type and possible ways to address it will
-be discussed in more detail in separate sections below Table~\ref{tab_champs:table_3}.
+be discussed in more detail in separate sections below table~\ref{tab_champs:table_3}.
 
 \begin{table}[h!]
 \begin{center}
@@ -433,6 +433,7 @@ Superscript numerals &26\\
 \subsection{Doubled Letter}
 
 \begin{wrapfigure}{O}{4cm}
+	\centering
 	\includegraphics[height=3cm]{images/image20.png}
 	\caption{"Doubled Letter" errors}
 	\label{fig3:fig4}
@@ -473,8 +474,9 @@ slice.
 
 Errors that occured in the context of changes in the font (bolded, italicized,
 enlarged/decreased text size) represent the largest category of errors in the
-OCR output. Their total numbers are not even fully reflected in Table 3 because
-examples in which whole sections (see examples in figures~\ref{fig3:fig5},\ref{fig3:fig6}) were severely
+OCR output. Their total numbers are not even fully reflected in
+table~\ref{tab_champs:table_3} because examples in which whole sections (see
+examples in figures~\ref{fig3:fig5},\ref{fig3:fig6}) were severely
 mistranscribed were not enumerated (character-by-character) in the error totals
 of the OpenITI manual assessment. Such sections were very rare, and in most
 other cases the OCR still rendered text with font alterations with a relatively
@@ -618,7 +620,7 @@ around which we need to develop a set of guidelines: we do not want to include
 diacritics because of the aforementioned reasons and because including them in
 the training data will require even more time expenditure in the training data
 generation process, but by not including them in texts with light vocalization
-(e.g., al-abhath, some of the Persian texts in our other tests) character
+(e.g., al-Abhath, some of the Persian texts in our other tests) character
 recognition is reduced in words with them. 
 
 \subsection{Missed Fatḥa Tanwīn}
@@ -641,17 +643,7 @@ segment—i.e., in some cases it might be partially getting cut off since it
 appears so high in the line segment box. In either case, we are inclined to
 ignore fatḥa tanwīns in future training data production. 
 
-\subsection{Punctuation Marks, Number, and Other Non-Alphanumeric Symbols}
-
-Punctuation marks, numbers, and other non-alphanumeric symbols (e.g.,
-\$) - especially representatives of each of these categories that were less
-commonly used in al-Abhath - were another recurring source of errors. The way to
-address this problem is by making sure these signs, symbols, and numbers are
-sufficiently represented in the training data.
-
-\subsection{Hamzas}
-
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
@@ -675,6 +667,16 @@ sufficiently represented in the training data.
 	\label{fig3:fig1820}
 \end{figure}
 
+\subsection{Punctuation Marks, Number, and Other Non-Alphanumeric Symbols}
+
+Punctuation marks, numbers, and other non-alphanumeric symbols (e.g.,
+\$) - especially representatives of each of these categories that were less
+commonly used in al-Abhath - were another recurring source of errors. The way to
+address this problem is by making sure these signs, symbols, and numbers are
+sufficiently represented in the training data.
+
+\subsection{Hamzas}
+
 The hamza character was another common source of errors in the output, both in
 the sense that it was misrecognized (see figure~\ref{fig3:fig1820}) and inserted
 in instances in which it was not in the original scan (see
@@ -691,7 +693,23 @@ formats/atypical character patterns. These range from the use of the Arabic
 elongation character (kashīda/tatwīl) (see figure~\ref{fig3:fig21}) to various types of table
 formats (see figures~\ref{fig3:fig22},\ref{fig3:fig23},\ref{fig3:fig24}).
 
-\begin{figure}
+Although the character recognition in these examples is usually not as poor as
+in figure~\ref{fig3:fig23}, we still observed that errors seem to appear more
+frequently in such contexts (see the better recognition in
+figures~\ref{fig3:fig21} and ~\ref{fig3:fig24}). More training data from these
+atypical presentation formats and character patterns will help improve
+accuracy, but improvements in line segmentation are also necessary for such
+examples as figure~\ref{fig3:fig23}.
+
+Full view of our OCR post-correction interface is shown in
+figures~\ref{fig3:fig2124},~\ref{fig3:fig25} in order to show the broader page
+context from which the highlighted lines are drawn and displayed in a line pair
+(image of line and its digital transcription) in the pop-up. Specifically,
+please note that in figure~\ref{fig3:fig24} this line is drawn from a larger
+table and in figures~\ref{fig3:fig25},~\ref{fig3:fig26} this line is drawn from
+a page with significant admixture of both Arabic and Persian in the text.
+
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}[t]{0.48\linewidth}
 	\centering
@@ -715,34 +733,18 @@ formats (see figures~\ref{fig3:fig22},\ref{fig3:fig23},\ref{fig3:fig24}).
 	\begin{subfigure}[t]{0.48\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{images/image11.png}
-	\caption{Example of particularly poor transcription on another atypical
-(table) presentation format\footnote{Full view of our OCR post-correction
-interface is shown in figures~\ref{fig3:fig2124},~\ref{fig3:fig25} in order to
-show the broader page context from which the highlighted lines are drawn and
-displayed in a line pair (image of line and its digital transcription) in the
-pop-up. Specifically, please note that in figure~\ref{fig3:fig24} this line is
-drawn from a larger table and in figures~\ref{fig3:fig25},~\ref{fig3:fig26} this line is
-drawn from a page with significant admixture of both Arabic and Persian in the
-text.}.}
+	\caption{Example of particularly poor transcription on another atypical (table) presentation format.}
 	\label{fig3:fig24}
 	\end{subfigure}
 	\caption{Atypical presentation forms}
 	\label{fig3:fig2124}
 \end{figure}
 
-Although the character recognition in these examples is usually not as poor as
-in figure~\ref{fig3:fig23}, we still observed that errors seem to appear more
-frequently in such contexts (see the better recognition in
-figures~\ref{fig3:fig21} and ~\ref{fig3:fig24}). More training data from these
-atypical presentation formats and character patterns will help improve
-accuracy, but improvements in line segmentation are also necessary for such
-examples as figure~\ref{fig3:fig23}.
-
 \subsection{Non-Arabic Language}
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/image12.png}
+	\includegraphics[width=0.9\linewidth]{images/image12.png}
 	\caption{Example of particularly poor transcription of non-Arabic language in a page of primarily Arabic text.}
 	\label{fig3:fig25}
 \end{figure}
@@ -758,9 +760,9 @@ The second type of error that occurred in the context of non-Arabic script was
 the inverse: that is, poor transcription of Arabic text on a page that is
 predominantly composed of a non-Arabic language (see figure~\ref{fig3:fig26}). 
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/image13.png}
+	\includegraphics[width=0.9\linewidth]{images/image13.png}
 	\caption{Page with substantial non-Arabic language interferes with Arabic OCR.}
 	\label{fig3:fig26}
 \end{figure}
@@ -801,13 +803,13 @@ This problem cannot be addressed in the OCR process. OCR accuracy is
 	\centering
 	\begin{subfigure}[b]{0.48\linewidth}
 	\centering
-	\includegraphics[width=\linewidth]{images/image16.jpg}
+	\includegraphics[height=0.1\textheight]{images/image16.jpg}
 	\caption{Missed line segments (from outside contractor accuracy review).}
 	\label{fig3:fig29}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.48\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{images/image17.jpg}
+	\includegraphics[height=0.1\textheight]{images/image17.jpg}
 	\caption{Large header segmented as one line (from outside contractor accuracy review).}
 	\label{fig3:fig30}
 	\end{subfigure}
