@@ -150,15 +150,19 @@ word).
 \end{description}
 
 \begin{figure}[h]
+	\centering
+	\begin{subfigure}{\textwidth}
 	\includegraphics[width=\linewidth]{images/image8.png}
-	\caption{Typeface \#1 Sample}
-	\label{fig3:fig1} 
-\end{figure}
-
-\begin{figure}[h]
+	\caption{Typeface \#1 sample}
+	\label{fig3:fig1}
+	\end{subfigure}
+	\vskip\baselineskip
+	\begin{subfigure}{\textwidth}
 	\includegraphics[width=\linewidth]{images/image9.png}
-	\caption{Typeface \#2 Sample}
+	\caption{Typeface \#2 sample}
 	\label{fig3:fig2} 
+	\end{subfigure}
+	\caption{Sample of the two typefaces}
 \end{figure}
 
 Both typefaces had some internal font differences and other minor
@@ -190,7 +194,7 @@ Kraken output and the corresponding output for ABBYY (see Table~\ref{tab_champs:
 \begin{center}
 \caption{Contractor's accuracy comparison of Abbyy and OpenITI (Kraken) OCR results}
 \label{tab_champs:table_1}
-	\begin{tabularx}{\textwidth}{p{2.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}} \toprule
+	\begin{tabularx}{\textwidth}{p{2.7cm}XXXXX} \toprule
 & \textbf{Total number of characters} & \textbf{Abbyy character errors} & \textbf{OpenITI character errors} & \textbf{Abbyy character accuracy} & \textbf{OpenITI character accuracy}\\\midrule
 Page \#1 \scriptsize{(00010004\_187997831.tif)} & 1230 & 270 & 38 & 78.049\% & \textbf{96.911\%} \\
 Page \#2 \scriptsize{(00010004\_187997832.tif)} & 37& 15 & 27 & \textbf{59.459\%} & 27.027\%\\
@@ -315,30 +319,21 @@ categories, but its most significant gains were in the category of “inherited�
 characters.
 
 \begin{table}[h!]
-\begin{center}
+\centering
+\begin{minipage}{\textwidth}
 \caption{Overview of OCR accuracy rates (drawn from character error rate (CER) reports}
 \label{tab_champs:table_2}
-\begin{tabularx}{\textwidth}{lp{2.2cm}p{2.2cm}p{2.2cm}p{2.2cm}} \toprule
-& \textbf{Total character accuracy} & \textbf{Arabic script only accuracy} & \textbf{Common character accuracy\footnotemark[17]} & \textbf{Inherited character accuracy\footnotemark[18]}\\\midrule
+\renewcommand\footnoterule{}
+\begin{tabularx}{\textwidth}{lp{2cm}p{2cm}p{2cm}p{2cm}} \toprule
+	& \textbf{Total\newline character accuracy} & \textbf{Arabic script only accuracy} & \textbf{Common character accuracy}\footnote{"Common characters” are characters shared by multiple scripts, primarily punctuation and other signs and symbols. In Arabic script,
+	the kashīda or tatwīl (elongation character) is included in common script class.} & \textbf{Inherited character accuracy}\footnote{“Inherited characters” are characters, such as diacritics, that can be used on multiple languages and they only come to be defined in reference to the character with which they are combined (i.e., they “inherit” the script of the base character with which it is used).}\\\midrule
 Typeface \#1 Model & 95.96\% & 97.56\% & 96.91\% & 79.67\%\\ 
 Typeface \#2 Model & 94.84\% & 97.11\% & 94.16\% & 85.18\% \\
 Generalized Model & 97.41\% & 98.46\% & 96.36\% & 89.44\%\\
 \bottomrule
 \end{tabularx}
-\end{center}
+\end{minipage}
 \end{table}
-
-\footnotetext[17]{“Common characters” are characters shared by multiple
-scripts, primarily punctuation and other signs and symbols. In Arabic script,
-the kashīda or tatwīl (elongation character) is included in common script
-class.}
-
-\footnotetext[18]{ “Inherited characters” are characters, such as diacritics,
-that can be used on multiple languages and they only come to be defined in
-reference to the character with which they are combined (i.e., they “inherit”
-the script of the base character with which it is used).}
-
-\addtocounter{footnote}{2}
 
 \label{s:whitespace}
 According to the CER reports, the most significant source of errors in both the
@@ -437,11 +432,11 @@ Superscript numerals &26\\
 
 \subsection{Doubled Letter}
 
-\begin{figure}[h]
-	\includegraphics[width=\linewidth]{images/image20.png}
+\begin{wrapfigure}{O}{4cm}
+	\includegraphics[height=3cm]{images/image20.png}
 	\caption{"Doubled Letter" errors}
 	\label{fig3:fig4}
-\end{figure}
+\end{wrapfigure}
 
 The “doubled letter” error type was the most frequent that we observed in the
 OCR output data (see example in figure~\ref{fig3:fig4}).\footnote{In the images
@@ -469,6 +464,13 @@ slice.
 
 \subsection{Header/Font Alteration, Footnotes, and Superscript Numerals}
 
+\begin{figure}[h!tp]
+	\includegraphics[width=\linewidth]{images/image6.png}
+	\caption{Example of poor transcription of italicized passage in figure~\protect\ref{fig3:fig5}}
+	\label{fig3:fig6}
+\end{figure}
+
+
 Errors that occured in the context of changes in the font (bolded, italicized,
 enlarged/decreased text size) represent the largest category of errors in the
 OCR output. Their total numbers are not even fully reflected in Table 3 because
@@ -478,16 +480,10 @@ of the OpenITI manual assessment. Such sections were very rare, and in most
 other cases the OCR still rendered text with font alterations with a relatively
 high degree of accuracy, but font alterations do seem to increase error rates.
 
-\begin{figure}[h]
+\begin{figure}[h!tp]
 	\includegraphics[width=\linewidth]{images/image19.png}
 	\caption{Example of text in italics}
 	\label{fig3:fig5}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics[width=\linewidth]{images/image6.png}
-	\caption{Example of poor transcription of italicized passage in figure~\protect\ref{fig3:fig5}}
-	\label{fig3:fig6}
 \end{figure}
 
 One of the most common examples of this issue was observed in text headers
@@ -496,14 +492,13 @@ bolded or bolded and enlarged in al-Abhath (see figure~\ref{fig3:fig7}). In some
 headers, as mentioned above, an entirely different typeface was employed (see
 figure~\ref{fig3:fig3}) -- although this is a less common practice.
 
-\begin{wrapfigure}{O}{0.5\textwidth}
+\begin{figure}[h!tp]
 	\centering
-	\includegraphics[width=0.48\textwidth]{images/image5.png}
- 
-	\includegraphics[width=0.48\textwidth]{images/image7.png}
-	\label{fig3:fig7}
+	\includegraphics[height=3cm]{images/image5.png}
+	\includegraphics[height=3cm]{images/image7.png}
 	\caption{Bolded and enlarged text size header and poor transcription}
-\end{wrapfigure}
+	\label{fig3:fig7}
+\end{figure}
 
 Other modifications to the font of the typeface, e.g., footnotes, superscript
 (decreased text size) numerals, also seem to be correlated with decreased
@@ -519,40 +514,40 @@ figure~\ref{fig3:fig914}). This same problem has been observed in an earlier stu
 
 \begin{figure}[!ht]
 	\centering
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\linewidth]{images/image21.png}
+	\includegraphics[height=3cm]{images/image21.png}
 	\caption{Example of problematic ligature and error in transcription}
 	\label{fig3:fig9}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\linewidth]{images/image23.png}
+	\includegraphics[height=3cm]{images/image23.png}
 	\caption{Example of problematic ligature and error in transcription}
 	\label{fig3:fig10}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\linewidth]{images/image22.png}
+	\includegraphics[height=3cm]{images/image22.png}
 	\caption{Atypical dot placement}
 	\label{fig3:fig11}
 	\end{subfigure}
 
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\linewidth]{images/image26.png}
+		\includegraphics[height=3cm]{images/image26.png}
 	\caption{Atypical dot placement}
 	\label{fig3:fig12}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\linewidth]{images/image24.png}
+	\includegraphics[height=3cm]{images/image24.png}
 	\caption{Atypical letter pattern (printing error?)}
 	\label{fig3:fig13}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\linewidth]{images/image25.png}
+	\includegraphics[height=3cm]{images/image25.png}
 	\caption{Atypical dot/letter placement and poor scan quality}
 	\label{fig3:fig14}
 	\end{subfigure}
@@ -584,6 +579,23 @@ is an extreme case that is an outlier in the al-Abhath data, but it clearly
 illustrates this problem.  Moreover, although al-Abhath journal articles are
 not heavily vocalized, this could be a significant issue in other Arabic texts
 that are heavily vocalized. 
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{0.45\linewidth}
+		\centering
+	\includegraphics[height=3cm]{images/image3.png}
+	\caption{Missed fatḥa tanwīn}
+  	\label{fig3:fig16}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.45\linewidth}
+	\centering
+	\includegraphics[height=3cm]{images/image1.png}
+	\caption{Correctly transcribed fatḥa tanwīn from same page as figure~\protect\ref{fig3:fig16}.}
+  	\label{fig3:fig17}
+	\end{subfigure}
+	\caption{Transcription of fatḥa tanwīn}
+\end{figure}
 
 In general, OpenITI has traditionally followed the practice of not transcribing
 Arabic diacritics in our training data production (with one exception discussed
@@ -617,13 +629,6 @@ observed in the CER reports, missed fatḥa tanwīns were a significant source o
 errors. We also observed this in the manual review of the OCR output (see
 figure~\ref{fig3:fig16}).
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\linewidth]{images/image3.png}
-	\caption{Missed fatḥa tanwīn}
-  	\label{fig3:fig16}
-\end{figure}
- 
 Although in the past we have not transcribed fatḥa tanwīns in the training data
 production process, we did include fatḥa tanwīns in the JSTOR pilot training
 data. In many cases the fatḥa tanwīns were transcribed correctly (see
@@ -636,13 +641,6 @@ segment—i.e., in some cases it might be partially getting cut off since it
 appears so high in the line segment box. In either case, we are inclined to
 ignore fatḥa tanwīns in future training data production. 
 
- \begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\linewidth]{images/image1.png}
-	\caption{Correctly transcribed fatḥa tanwīn from same page as figure~\protect\ref{fig3:fig16}}
-  	\label{fig3:fig17}
-\end{figure}
-
 \subsection{Punctuation Marks, Number, and Other Non-Alphanumeric Symbols}
 
 Punctuation marks, numbers, and other non-alphanumeric symbols (e.g.,
@@ -653,34 +651,34 @@ sufficiently represented in the training data.
 
 \subsection{Hamzas}
 
-The hamza character was another common source of errors in the output, both in
-the sense that it was misrecognized (see figure~\ref{fig3:fig1820}) and inserted
-in instances in which it was not in the original scan (see
-figure~\ref{fig3:fig20}). 
-
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{images/image28.png}
+	\includegraphics[height=3cm]{images/image28.png}
 	\caption{Missed hamza}
 	\label{fig3:fig18}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{images/image29.png}
+	\includegraphics[height=3cm]{images/image29.png}
 	\caption{Missed hamza on alif}
 	\label{fig3:fig19}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.3\linewidth}
+	\begin{subfigure}[t]{0.3\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{images/image30.png}
+	\includegraphics[height=3cm]{images/image30.png}
 	\caption{Inserted extra hamza}
 	\label{fig3:fig20}
 	\end{subfigure}
 	\caption{Misrecognized hamzas}
 	\label{fig3:fig1820}
 \end{figure}
+
+The hamza character was another common source of errors in the output, both in
+the sense that it was misrecognized (see figure~\ref{fig3:fig1820}) and inserted
+in instances in which it was not in the original scan (see
+figure~\ref{fig3:fig20}). 
 
 Again, this is a case in which more focused training data will improve
 recognition rates—an intervention we must make at the training data generation
@@ -691,32 +689,30 @@ phase of the OCR process.
 There are a series of errors that occur in the context of atypical presentation
 formats/atypical character patterns. These range from the use of the Arabic
 elongation character (kashīda/tatwīl) (see figure~\ref{fig3:fig21}) to various types of table
-formats (see figures~\ref{fig3:fig22,fig3:fig23,fig3:fig24}).
+formats (see figures~\ref{fig3:fig22},\ref{fig3:fig23},\ref{fig3:fig24}).
 
-\begin{figure}[!ht]
+\begin{figure}
 	\centering
-	\begin{subfigure}[b]{0.9\linewidth}
+	\begin{subfigure}[t]{0.48\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{images/image2.png}
-	\caption{Read letter ‘sin’ into word due to kashīda/tatwīl (elongation)}
+	\caption{Read letter ‘sin’ into word due to kashīda/tatwīl (elongation).}
 	\label{fig3:fig21}
 	\end{subfigure}
-
-	\begin{subfigure}[b]{0.9\linewidth}
+	\begin{subfigure}[t]{0.48\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{images/image31.png}
 	\caption{Example of table format}
 	\label{fig3:fig22}
 	\end{subfigure}
-
-	\begin{subfigure}[b]{0.9\linewidth}
+	\vskip\baselineskip
+	\begin{subfigure}[t]{0.48\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{images/image10.png}
-	\caption{Example of particularly poor transcription on an atypical (table) presentation format}
+	\caption{Example of particularly poor transcription on an atypical (table) presentation format.}
 	\label{fig3:fig23}
 	\end{subfigure}
-
-	\begin{subfigure}[b]{0.9\linewidth}
+	\begin{subfigure}[t]{0.48\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{images/image11.png}
 	\caption{Example of particularly poor transcription on another atypical
@@ -727,7 +723,7 @@ displayed in a line pair (image of line and its digital transcription) in the
 pop-up. Specifically, please note that in figure~\ref{fig3:fig24} this line is
 drawn from a larger table and in figures~\ref{fig3:fig25},~\ref{fig3:fig26} this line is
 drawn from a page with significant admixture of both Arabic and Persian in the
-text.}}
+text.}.}
 	\label{fig3:fig24}
 	\end{subfigure}
 	\caption{Atypical presentation forms}
@@ -744,28 +740,28 @@ examples as figure~\ref{fig3:fig23}.
 
 \subsection{Non-Arabic Language}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/image12.png}
+	\caption{Example of particularly poor transcription of non-Arabic language in a page of primarily Arabic text.}
+	\label{fig3:fig25}
+\end{figure}
+
 There were two significant types of transcription errors that were related to
 the presence of non-Arabic language in the original text. The first, seen in
 figure~\ref{fig3:fig25}, is the poor transcription of non-Arabic characters on a
 page that predominantly contains Arabic text. (Figure~\ref{fig3:fig25}
 represents a particularly poor transcription of the non-Arabic text; most
 transcriptions in such instances were much more accurate.)
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\linewidth]{images/image12.png}
-	\caption{Example of particularly poor transcription of non-Arabic language in a page of primarily Arabic text}
-	\label{fig3:fig25}
-\end{figure}
   
 The second type of error that occurred in the context of non-Arabic script was
 the inverse: that is, poor transcription of Arabic text on a page that is
 predominantly composed of a non-Arabic language (see figure~\ref{fig3:fig26}). 
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{images/image13.png}
-	\caption{Page with substantial Non-Arabic language interferes with Arabic OCR}
+	\includegraphics[width=0.7\linewidth]{images/image13.png}
+	\caption{Page with substantial non-Arabic language interferes with Arabic OCR.}
 	\label{fig3:fig26}
 \end{figure}
  
@@ -774,56 +770,56 @@ multi-language OCR models - a project that OpenITI is currently working on.
 
 \subsection{Poor Scan Quality}
 
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{4cm}
+	\centering
+	\includegraphics[height=4cm]{images/image14.png}
+	\caption{Black shading in background of letters.}
+	\label{fig3:fig27}
+	\end{subfigure}
+	\begin{subfigure}[t]{4cm}
+	\centering
+	\includegraphics[height=4cm]{images/image15.png}
+	\caption{Missing print in letter.}
+	\label{fig3:fig28}
+	\end{subfigure}
+	\caption{Examples of poor scan quality}
+\end{figure} 
+
 Poor scan/print quality—including, errant marks (see figure~\ref{fig3:fig27}), lack of ink
 (see figure~\ref{fig3:fig28}), misplaced letters/punctuation (figure~\ref{fig3:fig13}) - is not a
 particularly common source of errors in the al-Abhath data, but there is a
 critical mass of errors caused by this problem.
-
-\begin{figure}[!ht]
-	\centering
-	\begin{subfigure}[b]{0.9\linewidth}
-	\centering
-	\includegraphics[width=\textwidth]{images/image14.png}
-	\caption{Example of poor scan quality—black shading in background of letters}
-	\label{fig3:fig27}
-	\end{subfigure}
-
-	\begin{subfigure}[b]{0.9\linewidth}
-	\centering
-	\includegraphics[width=\textwidth]{images/image15.png}
-	\caption{Example of poor scan quality—missing print in letter}
-	\label{fig3:fig28}
-	\end{subfigure}
-\end{figure} 
 
 This problem cannot be addressed in the OCR process. OCR accuracy is
 (obviously) limited by the quality of the original scans.
 
 \subsection{Line Segmentation}
 
-One final error type that should be mentioned is line segmentation errors (see
-figures~\ref{fig3:fig2930},\ref{fig3:fig31}). 
-
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\begin{subfigure}[b]{0.45\linewidth}
+	\begin{subfigure}[b]{0.48\linewidth}
 	\centering
-	\includegraphics[width=\textwidth]{images/image16.jpg}
-	\caption{Missed line segments (from outside contractor accuracy review)}
+	\includegraphics[width=\linewidth]{images/image16.jpg}
+	\caption{Missed line segments (from outside contractor accuracy review).}
 	\label{fig3:fig29}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.45\linewidth}
+	\begin{subfigure}[b]{0.48\linewidth}
 	\centering
 	\includegraphics[width=\textwidth]{images/image17.jpg}
-	\caption{Large header segmented as one line (from outside contractor accuracy review)}
+	\caption{Large header segmented as one line (from outside contractor accuracy review).}
 	\label{fig3:fig30}
 	\end{subfigure}
 	\caption{Examples of missegmentation}
 	\label{fig3:fig2930}
 \end{figure} 
 
+One final error type that should be mentioned is line segmentation errors (see
+figures~\ref{fig3:fig2930},\ref{fig3:fig31}). 
+
 This type of error was not commonly found in the OpenITI manual accuracy
-assessment (figure~\ref{fig2930} were errors identified in the outside contractor’s
+assessment (figure~\ref{fig3:fig2930} were errors identified in the outside contractor’s
 review of the OCR output), but there were a few cases in which the line
 segmenter missed a section or a word of a line. Typically this would occur in
 atypical text presentation formats, such as the table seen in figure~\ref{fig3:fig31}.
@@ -831,15 +827,16 @@ atypical text presentation formats, such as the table seen in figure~\ref{fig3:f
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{images/image4.png}
-	\caption{Line segmenter missed final word in the line}
+	\caption{Line segmenter missed final word in the line.}
 	\label{fig3:fig31}
 \end{figure} 
 
 Truncation of Arabic text lines is a known problem for the
-Latin-script-optimized line segmenter in the version of Kraken that was used
+Latin-script-op\-tim\-iz-ed line segmenter in the version of Kraken that was used
 for this study. The implementation of a novel trainable layout analysis method
 has largely solved this issue\cite{kiessling2019badam}.
 
+\sectionmark{Recommendations for Arabic-script OCR}
 \section{Recommendations and Future Avenues of Development for Open Source Arabic-script OCR}
 
 The results of this study indicate that work in the following three areas could

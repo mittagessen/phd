@@ -38,10 +38,75 @@ typefaces and legal restrictions imposed by digitization agents..
 A second direction labels OCR input images, most often lines, to be able to
 select appropriate monolingual recognition models. 
 
+The method described in \cite{fujii2017sequence} labeling whole lines using a
+recurrent neural network is inappropriate for many humanities texts because of
+extensive intra-line script switching. A recurrent neural script classifier
+based on overlapping sliding window profile feature sequences is shown
+in~\cite{singh2015can}. \cite{ul2015sequence} published a conceptually
+simpler approach without feature extraction directly classifying character
+script using an LSTM network. A refined version of the latter method is the
+basis of our script detection system.
+
+\section{RNNs for Script and Emphasis Detection}
+
+\subsection{Script Detection}
+
+The system treats script detection as a segmentation-less sequence
+classification problem, similar to text recognition. Instead of assigning a
+unique label to each code point or grapheme cluster we assign all code points
+of a particular script the same label (figure~\ref{fig:read_transcription}), the network is trained to output the
+correct sequence of script labels using the CTC loss
+function~\cite{graves2006connectionist}. It should be noted that CTC is on the
+face unsuitable for this task, as it includes no mechanism to ensure temporal
+alignment between graphemes in the input sequence and output activations;
+fortunately the LSTM network's activations are fairly close to their
+corresponding location in the input sequence. The output sequence is then used
+to split the line into single-script runs that can be classified with
+monoscriptual recognition models.
+
+\begin{figure}[H]
+        \includegraphics[width=\linewidth]{transcription.png}
+        \centering
+        \captionof{figure}{Modified ground truth (top: original line, middle: transcription,\\ bottom: assigned script classes)}
+        \label{fig:read_transcription}
+\end{figure}
+
+Script classes are ISO 15924 codes determined through each code point's Unicode
+script property\footnote{ISO 15924 includes separate identifiers for Antiqua
+and Fraktur texts and similarly visually distinct calligraphic hands for Syriac
+which are subsumed as Latin and Syriac in the Unicode database.} As there are
+graphemes that occur in multiple scripts, chiefly numerals and punctuation, we
+retain both the common and inherited properties. Merging these during
+post-processing based on their surrounding script increases robustness when
+classifying non-body text such as page numbers and tables, compared to fusing
+them beforehand. Bidirectional text is dealt with by rearranging the target
+sequence into display order using the Unicode BiDi algorithm before script
+assignment.
+
+Apart from the mentioned merging step, two additional post-processing steps are
+performed. The first substitutes all individual runs of a line with the whole
+line if only a single script remains after common/inherited merging. The second
+stems from the observation that often only a subset of scripts the detection
+network is trained on occur in any document. A whitelist is added, merging
+runs of non-included scripts into the surrounding context after filtering for
+common confusions (Arabic-Syriac and Latin-Fraktur).
+
+\subsection{Emphasis Recognition}
+\label{sec:emph}
+
+We evaluated two methods of encoding two common text emphasis methods for
+recognition by a RNN. Initially, italicized and text components with increased
+letter spacing were marked up with special start and stop markers and the model
+was trained to produce these markers. While the results of the training were
+promising, obtaining the amount of training data needed to reliably place both
+markers was infeasible for our target documents. Creating separate labels for
+italicized/spaced graphemes and training for these, remedied the marker
+placement issue with a sufficiently small amount of training data.
+
 \begin{wrapfigure}{r}{4cm}
         \center
         \vspace{1cm}
-        \begin{tikzpicture}[node distance = 2.5cm]
+        \begin{tikzpicture}[node distance = 1cm]
         \tikzset{
           base/.style={draw, align=center, minimum height=4ex, rectangle, text centered},
           proc/.style={base, draw=white, rectangle, text width=8em},
@@ -80,70 +145,7 @@ select appropriate monolingual recognition models.
         \label{fig:read_arch}
 \end{wrapfigure}
 
-The method described in \cite{fujii2017sequence} labeling whole lines using a
-recurrent neural network is inappropriate for many humanities texts because of
-extensive intra-line script switching. A recurrent neural script classifier
-based on overlapping sliding window profile feature sequences is shown
-in~\cite{singh2015can}. \cite{ul2015sequence} published a conceptually
-simpler approach without feature extraction directly classifying character
-script using an LSTM network. A refined version of the latter method is the
-basis of our script detection system.
 
-\section{RNNs for Script and Emphasis Detection}
-
-\subsection{Script Detection}
-
-The system treats script detection as a segmentation-less sequence
-classification problem, similar to text recognition. Instead of assigning a
-unique label to each code point or grapheme cluster we assign all code points
-of a particular script the same label (figure~\ref{fig:read_transcription}), the network is trained to output the
-correct sequence of script labels using the CTC loss
-function~\cite{graves2006connectionist}. It should be noted that CTC is on the
-face unsuitable for this task, as it includes no mechanism to ensure temporal
-alignment between graphemes in the input sequence and output activations;
-fortunately the LSTM network's activations are fairly close to their
-corresponding location in the input sequence. The output sequence is then used
-to split the line into single-script runs that can be classified with
-monoscriptual recognition models.
-
-Script classes are ISO 15924 codes determined through each code point's Unicode
-script property\footnote{ISO 15924 includes separate identifiers for Antiqua
-and Fraktur texts and similarly visually distinct calligraphic hands for Syriac
-which are subsumed as Latin and Syriac in the Unicode database.} As there are
-graphemes that occur in multiple scripts, chiefly numerals and punctuation, we
-retain both the common and inherited properties. Merging these during
-post-processing based on their surrounding script increases robustness when
-classifying non-body text such as page numbers and tables, compared to fusing
-them beforehand. Bidirectional text is dealt with by rearranging the target
-sequence into display order using the Unicode BiDi algorithm before script
-assignment.
-
-\begin{figure}
-        \includegraphics[width=\linewidth]{transcription.png}
-        \centering
-        \captionof{figure}{Modified ground truth (top: original line, middle: transcription,\\ bottom: assigned script classes)}
-        \label{fig:read_transcription}
-\end{figure}
-
-Apart from the mentioned merging step, two additional post-processing steps are
-performed. The first substitutes all individual runs of a line with the whole
-line if only a single script remains after common/inherited merging. The second
-stems from the observation that often only a subset of scripts the detection
-network is trained on occur in any document. A whitelist is added, merging
-runs of non-included scripts into the surrounding context after filtering for
-common confusions (Arabic-Syriac and Latin-Fraktur).
-
-\subsection{Emphasis Recognition}
-\label{sec:emph}
-
-We evaluated two methods of encoding two common text emphasis methods for
-recognition by a RNN. Initially, italicized and text components with increased
-letter spacing were marked up with special start and stop markers and the model
-was trained to produce these markers. While the results of the training were
-promising, obtaining the amount of training data needed to reliably place both
-markers was infeasible for our target documents. Creating separate labels for
-italicized/spaced graphemes and training for these, remedied the marker
-placement issue with a sufficiently small amount of training data.
 
 Separate alphabets for emphasized text components increase model size and
 execution time, tripling the size of the final fully connected layer. This
@@ -151,6 +153,7 @@ large increase in possible output labels also seems to preclude fine-tuning
 base models by resizing the final linear projection of the network.
 
 \subsection{Architecture}
+
 
 Both the script detection and emphasis recognition share a common network
 architecture of bidirectional Long short-term memory RNN blocks trained with
@@ -163,13 +166,7 @@ The networks operate on binarized whole lines. Baselines and line height are
 normalized using a slightly modified version of the centerline normalizer
 implemented in the OCRopus system.
 
-\begin{wrapfigure}{O}{0.7\textwidth}
-	\includegraphics[width=0.68\textwidth]{high.png}
-	\caption{Script recognition on French-Arabic sample page}
-	\label{fig:read_high}
-\end{wrapfigure}
-
-\section{Preliminary Results}
+\section{Results}
 
 The script detection and emphasis recognition were evaluated as part of
 Bibliotheca Arabica which aims to gain new insights into Arabic literature from
@@ -180,6 +177,11 @@ emphasis as semantic markup.
 
 \subsection{Dataset}
 
+\begin{wrapfigure}{o}{0.7\textwidth}
+	\includegraphics[width=0.68\textwidth]{high.png}
+	\caption{Script recognition on French-Arabic sample page}
+	\label{fig:read_high}
+\end{wrapfigure}
 We repurposed publicly available non-synthetic training data for recognition
 models to build a corpus of 76000 script-annotated line images containing
 Arabic, Cyrillic, polytonic Greek, Hebrew, Latin, Fraktur, and (western) Syriac
@@ -190,16 +192,17 @@ selected lines are separated from the corpus as a test set.
 
 Emphasis recognition was evaluated on an English and romanized Arabic catalog
 using emphasis described in \ref{sec:emph} with 350 transcribed lines. An
-additional 50 line transcriptions were used as a test set. Overall 220 lines
+additional fifty line tran\-scriptions were used as a test set. Over\-all 220 lines
 contain some kind of text emphasis. It is representative of a large number of
 catalogs in purview of Bibliotheca Arabica.
 
 \begin{figure}
+\centering
 \begin{tikzpicture}
   \begin{axis}[
         axis lines*=left,
         xbar,
-        width=18cm,
+        width=12cm,
         xlabel={},
         xmin=0,
         xmax=1.0,

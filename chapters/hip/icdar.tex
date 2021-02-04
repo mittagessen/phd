@@ -3,7 +3,9 @@
 \label{ch:hip}
 \thispagestyle{empty}
 \vfill
-This chapter has been published as \fullcite{kiessling2019badam}
+An updated version of the dataset that contains annotations for line
+orientation is available at \url{https://doi.org/10.5281/zenodo.3274427}. This
+chapter has been published as \fullcite{kiessling2019badam}.
 
 \newpage
 \section*{Abstract}
@@ -60,6 +62,37 @@ which despite increasing popularity for Latin documents
 \cite{barakat2018text,quiros2018multi,fink2018baseline} has seen limited uptake
 for other writing systems.
 
+\begin{wrapfigure}{O}{0.6\textwidth}
+	\centering
+	\begin{subfigure}{.55\textwidth}
+		\includegraphics[width=\textwidth]{or9452_margin.jpg}
+		\caption{Expulsion of text into the margin}
+		\label{fig:margin}
+	\end{subfigure}
+	\vskip\baselineskip
+
+	\begin{subfigure}{.55\textwidth}
+		\includegraphics[width=\textwidth]{w561_slanted.jpg}
+		\caption{Per-word slanted baselines}
+		\label{fig:slanted}
+	\end{subfigure}
+	\vskip\baselineskip
+
+	\begin{subfigure}{.55\textwidth}
+		\includegraphics[width=\textwidth]{w590_heaping.jpg}
+		\caption{Heaping of words at end of line}
+		\label{fig:heaping}
+	\end{subfigure}
+	\vskip\baselineskip
+
+	\begin{subfigure}{.55\textwidth}
+		\includegraphics[width=\textwidth]{w644_poetry.jpg}
+		\caption{Pseudo-columns in Persian poetry}
+		\label{fig:poetry}
+	\end{subfigure}
+	\caption{Aspects of Arabic-script handwriting}
+\end{wrapfigure}
+
 \subsection{Related work}
 
 Existing layout analysis datasets capture text lines in a variety of data
@@ -80,98 +113,52 @@ because of object separability, and the existence of an evaluation scheme
 \cite{gruning2018read} that is more directly linked to real world recognition
 error rates than raw pixel accuracy.
 
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{or9452_margin.jpg}
-		\caption{Expulsion of text into the margin}
-		\label{fig:margin}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{w561_slanted.jpg}
-		\caption{Per-word slanted baselines}
-		\label{fig:slanted}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{w590_heaping.jpg}
-		\caption{Heaping of words at end of line}
-		\label{fig:heaping}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{w644_poetry.jpg}
-		\caption{Pseudo-columns in Persian poetry}
-		\label{fig:poetry}
-	\end{subfigure}
-	\caption{Aspects of Arabic-script handwriting}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{img792_expulsion_anno.jpg}
-		\caption{Annotation of dislocated fragments in margin}
-		\label{fig:anno_margin}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{ljs293_holes_anno.jpg}
-		\caption{Holes in writing surface}
-		\label{fig:anno_holes}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{w579_pwb_anno.jpg}
-		\caption{Per-word baseline annotation through imaginary baseline}
-		\label{fig:anno_pwb}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{w591_stacking_anno.jpg}
-		\caption{Separate annotation of heaped elements with complete overlap vs single baseline for partial overlap}
-		\label{fig:anno_stacking}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{w619_poetry_anno.jpg}
-		\caption{Joint annotation of half-verses as a single baseline}
-		\label{fig:anno_poetry}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{.9\columnwidth}
-		\includegraphics[width=\textwidth]{ljs44_slp_anno.jpg}
-		\caption{Separated annotation of slanted half-verses}
-		\label{fig:anno_slp}
-	\end{subfigure}
-
-	\caption{Examples of annotation guideline application (baseline indicated with opaque blue polyline)}
-\end{figure}
 
 \section{Dataset}
-
-\begin{figure*}[ht]
-	\centering
-	\includegraphics[width=\textwidth]{diag}
-	\caption{Architecture of the baseline labelling network. Dropout and
-	batch/group normalization layers are omitted. (beige: convolutional layers +
-	ReLU, red: max pooling, grey: ResNet blocks, blue: transposed
-	convolutions, purple: convolution + sigmoid)}
-	\label{fig:resunet}
-\end{figure*}
 
 The publicly available and freely licensed BADAM dataset contains 400 annotated
 scanned page images samples from four digital collections of Arabic and Persian
 language manuscripts.
+
+\begin{wrapfigure}{l}{0.55\textwidth}
+	\centering
+	\begin{subfigure}{.48\textwidth}
+		\includegraphics[width=\textwidth]{img792_expulsion_anno.jpg}
+		\caption{Annotation of dislocated fragments in margin}
+		\label{fig:anno_margin}
+	\end{subfigure}
+
+	\begin{subfigure}{.48\textwidth}
+		\includegraphics[width=\textwidth]{ljs293_holes_anno.jpg}
+		\caption{Holes in writing surface}
+		\label{fig:anno_holes}
+	\end{subfigure}
+
+	\begin{subfigure}{.48\textwidth}
+		\includegraphics[width=\textwidth]{w579_pwb_anno.jpg}
+		\caption{Per-word baseline annotation through imaginary baseline}
+		\label{fig:anno_pwb}
+	\end{subfigure}
+
+	\begin{subfigure}{.48\textwidth}
+		\includegraphics[width=\textwidth]{w591_stacking_anno.jpg}
+		\caption{Separate annotation of heaped elements with complete overlap vs single baseline for partial overlap}
+		\label{fig:anno_stacking}
+	\end{subfigure}
+
+	\begin{subfigure}{.48\textwidth}
+		\includegraphics[width=\textwidth]{w619_poetry_anno.jpg}
+		\caption{Joint annotation of half-verses as a single baseline}
+		\label{fig:anno_poetry}
+	\end{subfigure}
+
+	\begin{subfigure}{.48\textwidth}
+		\includegraphics[width=\textwidth]{ljs44_slp_anno.jpg}
+		\caption{Separated annotation of slanted half-verses}
+		\label{fig:anno_slp}
+	\end{subfigure}
+	\caption{Examples of annotation guideline application (baseline indicated with opaque blue polyline)}
+\end{wrapfigure}
 
 \subsection{Baselines and Arabic Typography}
 
@@ -180,31 +167,30 @@ virtual line upon which most characters rest with descenders extending below.
 
 While many Arabic handwritten texts present only a single baseline per logical
 text line a large number of documents, especially calligraphic works in Thuluth
-and Nastaliq style, display per word slanted baselines (Fig.
-\ref{fig:slanted}), multiple baseline levels, and dislocation of fragments into
-the margins or above other text in the line (heaping) (Fig. \ref{fig:heaping}
+and Nastaliq style, display per word slanted baselines (figure~\ref{fig:slanted}), multiple baseline levels, and dislocation of fragments into
+the margins or above other text in the line (heaping) (figures~\ref{fig:heaping}
 and \ref{fig:margin}). Most of these cases fulfill the purpose of text
 justification as hyphenation has been considered unacceptable in Arabic writing
 for the vast majority of the script's use.
 
 As an additional complication, verses in Arabic poetry almost exclusively
 consist of two hemistichs, with the half-verse break forming pseudo-columns as
-shown in Fig. \ref{fig:poetry}. In some cases there is a combination of
+shown in figure~\ref{fig:poetry}. In some cases there is a combination of
 pseudo-columns and true multi-column text.
 
 We therefore adopt a modified baseline definition that is oriented towards the
 current capabilities of text line recognition and reading order determination
 systems. Text lines are annotated with a single baseline extended through the
 majority of the line text, except in the cases of majority-overlap heaping
-(Fig. \ref{fig:anno_stacking}) and dislocation into the margin (Fig. \ref{fig:anno_margin}).
+(figure~\ref{fig:anno_stacking}) and dislocation into the margin (figure~\ref{fig:anno_margin}).
 In the case of slanted per-word baselines without horizontal overlap a baseline
-is drawn through an imaginary rotation point at each word (Fig. \ref{fig:anno_pwb}). A
+is drawn through an imaginary rotation point at each word (figure~\ref{fig:anno_pwb}). A
 baseline is split in multi-column text and at marginalia/main body boundaires.
 The hemistichs of poems are annotated as a single baseline per verse
-(Fig. \ref{fig:anno_poetry}), except in the case of 45 degree slanted half-verses
-(Fig. \ref{fig:anno_slp}) that cannot easily be connected. In fragmentary material the
+(figure~\ref{fig:anno_poetry}), except in the case of 45 degree slanted half-verses
+(figure~\ref{fig:anno_slp}) that cannot easily be connected. In fragmentary material the
 baseline is continued through faded ink and split at holes in the writing
-surface (Fig. \ref{fig:anno_holes}).
+surface (figure~\ref{fig:anno_holes}).
 
 These annotation guidelines amount to a conservative estimation of the
 capabilities of layout analysis systems, specifically their capacity to
@@ -256,26 +242,77 @@ Zenodo\footnote{\url{https://doi.org/10.5281/zenodo.3274428}} research data arch
 \begin{figure}[]
 	\begin{subfigure}[b]{.475\columnwidth}
 		\centering
-		\includegraphics[width=\textwidth]{curved.jpg}
+		\includegraphics[height=0.4\textheight]{curved.jpg}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{.475\columnwidth}
 		\centering
-		\includegraphics[width=\textwidth]{poetry.jpg}
+		\includegraphics[height=0.4\textheight]{poetry.jpg}
 	\end{subfigure}
 	\vskip\baselineskip
 	\begin{subfigure}[b]{.475\columnwidth}
 		\centering
-		\includegraphics[width=\textwidth]{diagrams.jpg}
+		\includegraphics[height=0.45\textheight]{diagrams.jpg}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{.475\columnwidth}
 		\centering
-		\includegraphics[width=\textwidth]{kufic.jpg}
+		\includegraphics[height=0.45\textheight]{kufic.jpg}
 	\end{subfigure}
 	\caption{4 sample pages from the corpus}
 	\label{fig:samples}
 \end{figure}
+
+\section{Baseline Method}
+
+Our method consists of two main stages: a pixel level classification of
+baselines followed by a lightweight baseline extraction step. We call this
+approach convolutional baseline layout analysis (C-BLLA).
+
+In the first stage a fully convolutional encoder-decoder neural network is used
+to assign each pixel to a either background or baseline. The second stage is a
+script- and layout-agnostic postprocessing step operating on the heatmap
+produced by the neural network. Baselines are vectorized into polylines which
+are then used to extract rectified rectangular line image suitable for
+processing by an HTR line recognition system.
+
+\subsection{Pixel Labeling}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=\textwidth]{diag}
+	\caption{Architecture of the baseline labelling network. Dropout and
+	batch/group normalization layers are omitted. (beige: convolutional layers +
+	ReLU, red: max pooling, grey: ResNet blocks, blue: transposed
+	convolutions, purple: convolution + sigmoid)}
+	\label{fig:resunet}
+\end{figure*}
+
+The dense pixel-labelling of baselines is performed with a modified U-Net
+architecture \cite{ronneberger2015u}. U-Nets and similar fully convolutional
+networks \cite{long2015fully} are state-of-the-art for general semantic
+segmentation tasks and have achieved excellent results on the cBAD dataset
+\cite{diem2017cbad}.
+
+The backbone model consists of the first 3 blocks of a 34-layer ResNet in the
+contracting path followed by 4 3$\times$3 convolution-transposed convolution
+blocks in the expanding paths with group normalization
+\cite{DBLP:journals/corr/abs-1803-08494} ($G = 32$) and dropout ($p = 0.1$)
+employed after each layer and block respectively. A final 1$\times$1
+convolutional layer reduces the dimensionality of the input-sized 64-channel
+feature map to 1, followed by a sigmoid activation. An overall diagram of the
+network is shown in figure~\ref{fig:resunet}.
+
+In order to improve generalization, the contracting path is pretrained on
+ImageNet classification and kept fixed during training of the upsampling
+blocks. Trainable layers are initialized using the He scheme
+\cite{he2015delving}. We use the Adam optimizer with moderate weight decay
+($\alpha = 10^{-4}, \beta_1 = 0.9, \beta_2 = 0.999, w = 10^{-6}$) and early
+stopping on the binarized F1 score of the validation set.  The network is
+trained on whole color images with the inputs being scaled to a size of 1200
+pixels on the shortest edge to limit memory usage.
+
+\subsection{Baseline Estimation}
 
 \begin{figure}[ht!]
 	\centering
@@ -302,48 +339,6 @@ Zenodo\footnote{\url{https://doi.org/10.5281/zenodo.3274428}} research data arch
 	\end{subfigure}
 	\caption{Common error modes of the LA system}
 \end{figure}
-
-\section{Baseline Method}
-
-Our method consists of two main stages: a pixel level classification of
-baselines followed by a lightweight baseline extraction step. We call this
-approach convolutional baseline layout analysis (C-BLLA).
-
-In the first stage a fully convolutional encoder-decoder neural network is used
-to assign each pixel to a either background or baseline. The second stage is a
-script- and layout-agnostic postprocessing step operating on the heatmap
-produced by the neural network. Baselines are vectorized into polylines which
-are then used to extract rectified rectangular line image suitable for
-processing by an HTR line recognition system.
-
-\subsection{Pixel Labeling}
-
-The dense pixel-labelling of baselines is performed with a modified U-Net
-architecture \cite{ronneberger2015u}. U-Nets and similar fully convolutional
-networks \cite{long2015fully} are state-of-the-art for general semantic
-segmentation tasks and have achieved excellent results on the cBAD dataset
-\cite{diem2017cbad}.
-
-The backbone model consists of the first 3 blocks of a 34-layer ResNet in the
-contracting path followed by 4 3$\times$3 convolution-transposed convolution
-blocks in the expanding paths with group normalization
-\cite{DBLP:journals/corr/abs-1803-08494} ($G = 32$) and dropout ($p = 0.1$)
-employed after each layer and block respectively. A final 1$\times$1
-convolutional layer reduces the dimensionality of the input-sized 64-channel
-feature map to 1, followed by a sigmoid activation. An overall diagram of the
-network is shown in Fig. \ref{fig:resunet}.
-
-In order to improve generalization, the contracting path is pretrained on
-ImageNet classification and kept fixed during training of the upsampling
-blocks. Trainable layers are initialized using the He scheme
-\cite{he2015delving}. We use the Adam optimizer with moderate weight decay
-($\alpha = 10^{-4}, \beta_1 = 0.9, \beta_2 = 0.999, w = 10^{-6}$) and early
-stopping on the binarized F1 score of the validation set.  The network is
-trained on whole color images with the inputs being scaled to a size of 1200
-pixels on the shortest edge to limit memory usage.
-
-
-\subsection{Baseline Estimation}
 
 The final sigmoid activation map has to be binarized prior to baseline
 vectorization. To suppress noise resulting in a higher number of skeleton
@@ -385,15 +380,15 @@ baseline, and finding the maximum orthogonal distances of their edges above and
 below the baseline.
 
 
+
 \section{Evaluation}
 
 We evaluated the proposed method on the 80 page test set using the method
 described in \cite{gruning2018read}. The results are shown in table
 \ref{tab:foo}. The metrics are slightly lower for our dataset than on the Latin
 cBAD dataset with a large gap in recall caused by a failure to extract heaped
-fragments (Fig. \ref{fig:misheap}) and vertical writing (Fig. 
-\ref{fig:vert}). On the other hand many missegmented lines are ornate or
-slanted (Fig. \ref{fig:calli}), poetry (Fig. \ref{fig:4col}) indicating
+fragments (figure~\ref{fig:misheap}) and vertical writing (figure~\ref{fig:vert}). On the other hand many missegmented lines are ornate or
+slanted (figure~\ref{fig:calli}), poetry (figure~\ref{fig:4col}) indicating
 that the network has not been able to learn a coherent model for these features
 on the dataset.
 
@@ -420,13 +415,11 @@ on the dataset.
 Apart from the higher flexibility of the baseline paradigm in comparison to
 older text line modelling approaches, C-BLLA has a number of other strengths.
 The method is largely robust against changes in text coloration such as red
-keywords (Fig. \ref{fig:cor_color_gold}) or lines illuminated in gold (Fig.
-\ref{fig:cor_color_gold}) without the need for binarization of input images.
+keywords (figure~\ref{fig:cor_color_gold}) or lines illuminated in gold (figure~\ref{fig:cor_color_gold}) without the need for binarization of input images.
 Further it is able to ignore both border elements (support platforms, scales,
 and holding clips) and illustrations without an explicit text content
 extraction step. As illustration are processed jointly, textual labels can be
-detected albeit as a unstructured collection of lines (Fig.
-\ref{fig:cor_labels}).
+detected albeit as a unstructured collection of lines (figure~\ref{fig:cor_labels}).
 
 There are some limitations to semantic segmentation in the context of layout
 analysis. These methods are inherently incapable of extracting overlapping and

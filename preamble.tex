@@ -25,6 +25,12 @@
 \usepackage[toc,page]{appendix}
 \usepackage{siunitx}
 \usepackage{minted}
+\setminted{fontsize=\footnotesize}
+\setminted{breaklines}
+\usepackage{etoolbox}
+\AtBeginEnvironment{minted}{%
+  \renewcommand{\fcolorbox}[4][]{#4}}
+\usemintedstyle{bw}
 
 \setmonofont{Inconsolata}
 \usepackage{polyglossia}

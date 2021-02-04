@@ -1,114 +1,172 @@
-\documentclass[a4paper, 12pt]{book}
+\documentclass[a4paper, 11pt]{book}
 
 \input{preamble}
 \usepackage{import}
 
-\title{Improvements in Optical Character Recognition for Historical Arabic Manuscripts}
+\title{Avancées en Reconnaissance Optique des Caractères pour les Documents Arabes Historiques}
 
 \author{Benjamin KIESSLING}
 
-\institute{l'École Pratique des Hautes Études}
+\institute{École Pratique des Hautes Études}
 \doctoralschool{École doctorale de l'École Pratique des Hautes Études}{472}
 \specialty{Voir spécialités ED}
-\date{01 fevrier 2021}
+\date{05 avril 2021}
 
-%% cotutelle
-%\entitle{Improvements in Optical Character Recognition for Historical Arabic Manuscripts}
-%\otherinstitute{University of Leipzig}
-%\logootherinstitute{logo-institute}
+\entitle{Advances in Optical Character Recognition for Historical Arabic Documents}
 
-\jurymember{1}{Prénom NOM}{Titre, établissement}{Président}
-\jurymember{2}{Prénom NOM}{Titre, établissement}{Rapporteur}
-\jurymember{3}{Prénom NOM}{Titre, établissement}{Rapporteur}
-\jurymember{4}{Prénom NOM}{Titre, établissement}{Examinateur}
-\jurymember{5}{Prénom NOM}{Titre, établissement}{Examinateur}
-\jurymember{6}{Prénom NOM}{Titre, établissement}{Examinateur}
-\jurymember{7}{Prénom NOM}{Titre, établissement}{Examinateur}
-\jurymember{8}{Marc BUI}{Directeur d'études, École Pratique des Hautes Études}{Directeur de thèse}
-% \jurymember{9}{Prénom NOM}{Titre, établissement}{Invité}
-% \jurymember{10}{Prénom NOM}{Titre, établissement}{Invité}
+\jurymember{1}{Marc BUI}{Directeur d'études, École Pratique des Hautes Études}{Directeur de thèse}
+\jurymember{2}{Nuria de CASTILLA}{Directeur d'études, École Pratique des Hautes Études}{Invité}
+\jurymember{3}{Gregory CRANE}{Professor, Tufts University}{Rapporteur}
+\jurymember{4}{Nachum DERSHOWITZ}{Professor, Tel Aviv University}{Rapporteur}
+\jurymember{5}{Alicia FORNÉS}{Senior Research Fellow, Universitat Autònoma de Barcelona}{Examinateur}
+\jurymember{6}{Daniel STÖKL BEN EZRA}{Directeur d'études, École Pratique des Hautes Études}{Examinateur}
+\jurymember{7}{Peter STOKES}{Directeur d'études, École Pratique des Hautes Études}{Examinateur}
 
 \frabstract{
-	french abstract here
+La transcription automatique de textes dans les documents historiques
+manuscrits et imprimés est devenue un processus établi dans les humanités
+numériques, son utilisation allant des archives ou des bibliothèques à grande
+échelle aux groupes de recherche et aux chercheurs individuels. Bien que des
+progrès considérables aient été réalisés ces dernières années pour comprendre
+les limites et faire progresser l'état de l'art, ces recherches restent
+largement limitées aux documents écrits dans les systèmes d'écriture européens,
+et plus particulièrement à l'écriture latine. L'une des cultures littéraires
+les plus vastes et les plus diverses, largement ignorée par les recherches
+actuelles sur l'analyse d'images de documents, est l'écriture arabe.
+
+Cette thèse contient une étude complète sur les caractéristiques des documents
+en écriture arabe et les défis qu'ils posent aux systèmes de reconnaissance
+optique de caractères de pointe, à travers une analyse théorique de l'écriture
+arabe et deux études de cas de rétro-numérisation sur des documents imprimés
+classiques et modernes. Les principales limites des méthodes courantes
+identifiées dans ces études ont ensuite été traitées. Deux méthodes
+entraînables de segmentation des pages suivant le paradigme de la ligne de
+base, permettant d'obtenir des résultats comparables à l'état de l'art et
+comprenant des caractéristiques supplémentaires nécessaires à la segmentation
+de pages de documents complexes, une méthode simple de traitement des lignes de
+texte multigraphiques et le logiciel ROC flexible Kraken intégrant ces méthodes
+sont présentés. On montre l'utilité de ce logiciel de ROC non seulement pour la
+reconnaissance de texte traditionnelle mais aussi pour une nouvelle tâche
+d'alignement des caractères. En outre, on présente l'environnement de recherche
+virtuel (ERV) eScriptorium pour l'annotation et la transcription. Cet ERV est
+spécifiquement conçu pour pouvoir traiter des textes non-latins, dont l'arabe,
+plus efficacement que les systèmes alternatifs existants. Au cours de ce
+travail, on a également préparé plusieurs ensembles de données d'entraînement
+et d'évaluation sous licence ouverte pour la transcription de textes arabes et
+la segmentation de pages.
 }
 
 \enabstract{
-	english abstract here
+The automatic transcription of text in handwritten and machine-printed
+historical documents has become an established process in the Digital
+Humanities, its use ranging from large scale archival or library settings to
+research groups and individual scholars. While considerable progress on
+understanding limitations and advancing the state of the art has been made in
+recent years, this research remains largely limited to documents written in
+European writing systems, most importantly the Latin script. One of the largest
+and most diverse literary cultures largely ignored by current document image
+analysis research is the Arabic one.
+
+This thesis contains a comprehensive study on the features of Arabic-script
+documents and their challenges posed to state of the art optical character
+systems through both a theoretical analysis of the Arabic script and two case
+studies of retrodigitization on printed classical and modern material. The
+principal limitations of common methods identified in these studies were
+subsequently addressed. Two trainable layout analysis methods following the
+baseline paradigm achieving comparable results to the state of the art while
+incorporating additional features necessary for the segmentation of complex
+document pages, a basic method for processing of multigraphic text lines, and
+the flexible Kraken OCR engine integrating these methods are presented. We show
+the usefulness of this OCR software not only for traditional text recognition
+but also a novel character alignment task. Further, we present the eScriptorium
+virtual research environment (VRE) for annotation and transcription. This VRE
+is specifically designed to be able to treat non-Latin, among them Arabic,
+script material more effectively than existing alternative systems. In the
+course of this work we also prepared multiple openly licensed training and
+evaluation datasets for Arabic text transcription and layout analysis.
 }
 
-\frkeywords{ Caesar licentia post honoratis haec adhibens urbium
-  honoratis nullum Caesar.}
-\enkeywords{ Delatus delatus nominatus
-  onere aut trahebatur quod tenus et bonorum.}
+\frkeywords{segmentation des pages, reconnaissance de texte, environnement de recherche virtuel, écriture arabe, analyse d'images de documents}
+\enkeywords{layout analysis, text recognition, virtual research environments, arabic, document image analyis}
 
 \begin{document}
 
 \pslcover
 
 \frontmatter
-\input{layout/dedication.tex}
-\cleardoublepage
 \input{layout/acknowledgements.tex}
 \cleardoublepage
-\input{layout/resume.tex}
-
 \tableofcontents
 \listoffigures
 \listoftables
 
 \mainmatter
-\include{chapters/intro}
+\import{./chapters}{intro.tex}
 \cleardoublepage
 \part{The Arabic Writing System}
-\include{chapters/arabic.tex}
+\import{./chapters}{arabic.tex}
+\cleardoublepage
 \begin{refsection}
 \import{./chapters/alwusta}{soa.tex}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,title={Editions of Printed Texts},type=book]
+\printbibliography[heading=subbibliography,nottype=book,notkeyword=soa]
 \end{refsection}
+\cleardoublepage
 \begin{refsection}
 \import{./chapters/champs}{advances.tex}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,notkeyword=champs]
 \end{refsection}
+\cleardoublepage
 \part{Layout Analysis and Segmentation}
+
 \label{part:la}
 \begin{refsection}
 \import{./chapters/hip}{icdar}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,notkeyword=hip]
 \end{refsection}
+\cleardoublepage
 \begin{refsection}
 \import{./chapters/icfhr2020}{seg}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,notkeyword=icfhr]
 \end{refsection}
 \cleardoublepage
 \begin{refsection}
 \import{./chapters/read}{read}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,notkeyword=read]
 \end{refsection}
+\cleardoublepage
 
 \part{Transcription and Character Alignment}
-\cleardoublepage
+
 \begin{refsection}
 \import{./chapters/dh2019}{dh}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,notkeyword=dh]
 \end{refsection}
-\begin{refsection}
-\import{./chapters/icfhr2020algn}{Transcribe}
-\printbibliography[heading=subbibliography]
-\end{refsection}
-
-\part{The Escriptorium VRE}
 \cleardoublepage
 \begin{refsection}
-\import{./chapters/ost}{ost}
-\printbibliography[heading=subbibliography]
+\import{./chapters/icfhr2020algn}{Transcribe}
+\printbibliography[heading=subbibliography,notkeyword=algn]
 \end{refsection}
+\cleardoublepage
+
+\part{The Escriptorium VRE}
+
+\begin{refsection}
+\import{./chapters/ost}{ost}
+\printbibliography[heading=subbibliography,notkeyword=ost]
+\end{refsection}
+\cleardoublepage
 \begin{refsection}
 \import{./chapters/manuvre}{vre}
-\printbibliography[heading=subbibliography]
+\printbibliography[heading=subbibliography,notkeyword=vre]
 \end{refsection}
-
+\cleardoublepage
+\import{./chapters/}{conclusion}
+\cleardoublepage
 \begin{appendices}
 \include{appendices/resume.tex}
+\cleardoublepage
+\include{appendices/kraken.tex}
 \end{appendices}
 
 \end{document}

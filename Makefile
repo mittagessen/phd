@@ -5,5 +5,5 @@ all:
 
 clean:
 	rm -f main.aux main.bcf main.run.xml main.log main.bbl main.lof main.blg main.lot *.log main.toc
-	rm -f chapters/*.aux chapters/*.bcf chapters/*.run.xml
-
+	rm -f chapters/*.aux chapters/*.bcf chapters/*.run.xml appendices/*.aux
+	rm -rf _minted-main

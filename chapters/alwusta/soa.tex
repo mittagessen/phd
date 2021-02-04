@@ -52,7 +52,35 @@ can be used by others for Arabic-script OCR training and testing
 purposes.\footnote{This gold standard data is available at:
 \url{https://github.com/OpenArabic/OCR_GS_Data}.}
 
-\begin{table}[h!]
+
+\subsection{OCR and its Importance for Islamicate Studies Fields}
+
+Although there is a wealth of digital Persian and Arabic texts currently
+available in various open-access online repositories,\footnote{Collecting and
+rendering these texts useful for computational textual analysis (through, for
+example, adding scholarly metadata and making them machine-actionable) is a
+somewhat separate but deeply interrelated project that OpenITI is currently
+working on as well.} these collections still need to be expanded and
+supplemented in some important ways. OCR software is critical for this broader
+task of expanding the range of digital texts available to scholars for
+computational analysis. OCR programs, in the simplest terms, take an image of a
+text, such as a scan of a print book, and extract the text, converting the
+image of the text into a digital text that then can be edited, searched,
+computationally analyzed, etc.   
+
+The specific type of OCR software that we employed in our tests is an
+open-source OCR program called Kraken, which was developed by Benjamin
+Kiessling at Leipzig University’s Alexander von Humboldt Chair for Digital
+Humanities. Unlike more traditional OCR approaches, Kraken relies on a neural
+network—which mimics the way we learn—to recognize letters in the images of
+entire lines of text without trying first to segment lines into words and then
+words into letters. This segmentation step—a mainstream OCR approach that
+persistently performs poorly on connected scripts—is thus completely removed
+from the process, making Kraken uniquely powerful for dealing with the diverse
+variety of ligatures in connected Arabic script (see section 3.1 for more
+technical details).
+
+\begin{table}
 \begin{minipage}{\textwidth}
 \begin{center}
 \caption{Description of data}
@@ -82,36 +110,7 @@ purposes.\footnote{This gold standard data is available at:
 \end{minipage}
 \end{table}
 
-\subsection{OCR and its Importance for Islamicate Studies Fields}
-
-Although there is a wealth of digital Persian and Arabic texts currently
-available in various open-access online repositories,\footnote{Collecting and
-rendering these texts useful for computational textual analysis (through, for
-example, adding scholarly metadata and making them machine-actionable) is a
-somewhat separate but deeply interrelated project that OpenITI is currently
-working on as well.} these collections still need to be expanded and
-supplemented in some important ways. OCR software is critical for this broader
-task of expanding the range of digital texts available to scholars for
-computational analysis. OCR programs, in the simplest terms, take an image of a
-text, such as a scan of a print book, and extract the text, converting the
-image of the text into a digital text that then can be edited, searched,
-computationally analyzed, etc.   
-
-The specific type of OCR software that we employed in our tests is an
-open-source OCR program called Kraken, which was developed by Benjamin
-Kiessling at Leipzig University’s Alexander von Humboldt Chair for Digital
-Humanities. Unlike more traditional OCR approaches, Kraken relies on a neural
-network—which mimics the way we learn—to recognize letters in the images of
-entire lines of text without trying first to segment lines into words and then
-words into letters. This segmentation step—a mainstream OCR approach that
-persistently performs poorly on connected scripts—is thus completely removed
-from the process, making Kraken uniquely powerful for dealing with the diverse
-variety of ligatures in connected Arabic script (see section 3.1 for more
-technical details).
-
-
 \section{Initial OCR Tests}
-
 
 We began our experiments by using Kraken to train a model\footnote{“Training a
 model” is a general term used in machine learning for training a program to
@@ -119,7 +118,7 @@ recognize certain patterns in data. In the context of OCR work, it refers to
 teaching the OCR software to recognize a particular script or typeface—a
 process that only requires time and computing power. In our case, this process
 required 1 computer core and approximately 24 hours.} on
-high-qualit\footnote{“High quality” here means 300 dpi, color or grayscale
+high-quality\footnote{“High quality” here means 300 dpi, color or grayscale
 images. Before the actual process of OCR, these images must be
 binarized—converted into black-and-white images; if binarization is not
 performed properly, a lot of information is lost from an image, negatively
@@ -284,7 +283,7 @@ examples similar to those of the main text are “greyed out”)
 The decreased accuracy results for works \#2-5 are explainable by a few factors:
 
 \begin{enumerate}
-	\item The typeface of works \#4-5 is different than work \#1 and it utilizes a number of ligatures that are not present in the typeface of work \#1 (for examples, see table~\ref{tab:soa_tab3} below). 
+	\item The typeface of works \#4-5 is different than work \#1 and it utilizes a number of ligatures that are not present in the typeface of work \#1 (for examples, see table~\ref{tab:soa_tab3} above). 
 	\item The typefaces of work \#2-3 are very similar to that of \#1, but they both have features that interfere with the \#1-based model. \#2 actually uses two different fonts, and the length of connections—kashīdas—between letters vary dramatically (0.3 kashīda to 2 kashīdas and everything in between), which is not the case with \#1, where letter spacing is very consistent. 
 	\item The text of work \#3 is highly vocalized—it has more ḥarakāt than any other texts in the sample (and especially in comparison with the model work \#1).
 	\item The text of work \#3 also has very complex and overabundant punctuation with highly inconsistent spacing. 
@@ -569,5 +568,4 @@ support of our work.
 \end{minipage}
 \end{table}
 \end{subappendices}
-
 %[1] Our logo, Kraken ibn Ocropus, is based on a depiction of an octopus from a manuscript of Kitāb al-ḥashāʾish fī hāyūlā al-ʿilāj al-ṭibbī (Leiden, UB : Or. 289); special thanks to Emily Selove for help with finding an octopus in the depths of the Islamic manuscript tradition.

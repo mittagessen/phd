@@ -11,137 +11,124 @@ que ces méthodes visent principalement à remédier les problèmes résultant d
 caractéristiques de l'écriture arabe, elles sont conçues pour être applicables
 à l'écriture et aux inscriptions dans une variété d'autres systèmes d'écriture.
 
-\section{L'analyse d'images de documents et reconnaissance optique de caractères}
-
+\section{L'Analyse d'Images de Documents et Reconnaissance Optique de Caractères}
+\sectionmark{AID et ROC}
 L'analyse d'images de documents (AID) est un sous-domaine de la vision par
 ordinateur (VO) qui cherche à comprendre le contenu des documents par
-le traitement de leurs images numériques.  Les documents sont définis
-de façon libérale par le domaine, comprenant pas seulement les
+le traitement de leurs images numériques. Par document, nous entendons les
 documents manuscrits et le texte imprimé sur papier, mais aussi
-l'écriture sur d'autres supports souples tels que le papyrus ou les
-feuilles de palmier et même les inscriptions.
+l'écriture sur d'autres supports souples -tels que le papyrus ou les
+feuilles de palmier- ou même les inscriptions.
 
-La différence vis-à-vis de la vision par ordinateur en général ne se trouve pas
+La différence par rapport à la vision par ordinateur en général ne se trouve pas
 dans les méthodes employées, mais dans la nature des images traitées.
 Ces images sont généralement obtenues par des caméras ou des scanners,
 souvent dans un contexte professionnel, ce qui permet d'obtenir un
 matériel source avec un minimum de bruit provenant d'éléments non
-pertinents que l'on rencontre souvent dans les images de scènes
-naturelles traitées par d'autres branches du VO. Malgré des données d'entrée
+pertinents (que l'on rencontre souvent dans les images de scènes
+naturelles traitées par d'autres branches du VO). Malgré des données d'entrée
 plus propres, les représentations structurées souhaitées en sortie ont
-tendance à être plus complexes et plus nombreuses dans la AID que dans
-d'autres applications, nécessitant la détection, la classification et
+tendance à être plus complexes et plus nombreuses avec l'AID qu'avec 
+d'autres applications, car elle nécessite la détection, la classification et
 la mise en relation de dizaines d'éléments de documents tels que des
 lignes, des caractères, des illustrations et des tableaux.
 
-Comme dans d'autres domaines de l'informatique, la recherche en DIA peut être
+Comme dans d'autres domaines de l'informatique, la recherche en AID peut être
 divisée en tâches spécifiques, dont une ou plusieurs sont résolues par
-une méthode particulière proposée. La tâche la plus importante de la
-DIA est la reconnaissance optique de caractères (ROC), mais d'autres,
-basées sur la ROC ou entièrement nouvelles, telles que la
-reconnaissance de documents de classification, de datation ou de
-repérage par mot clé, existent. La ROC, la conversion de textes imprimés,
-écrits ou inscrits en texte codé par machine, est un processus établi depuis
-longtemps, à la fois en tant que tâche dans la recherche sur la vision
-par ordinateur et son utilisation pratique dans des applications comme
-l'analyse des adresses ou les aides aux aveugles. Il est sans doute à
-l'origine de toute AID avec un certain nombre de brevets remontant
+une méthode particulière proposée. La tâche la plus importante de l'AID est la reconnaissance optique de caractères (ROC), mais il en existe d'autres (basées ou non sur la ROC) telles que la classification de documents, la datation ou le
+repérage par mot clé. La ROC est une conversion de textes imprimés,
+écrits ou inscrits, en texte codé par machine. C'est un processus établi depuis
+longtemps, aussi bien dans la recherche sur la vision
+par ordinateur que dans des applications comme
+l'analyse des adresses sur les courriers ou l'assistance aux personnes aveugles. Cette dernière est sans doute à
+l'origine de toute AID, avec un certain nombre de brevets remontant
 au début du XIXe siècle.
 
-Ces premières approches, des décennies avant les premiers ordinateurs, ont
-maintenant évolué en l'application quotidienne des techniques de DIA
-pour des tâches telles que l'analyse des adresses pour la distribution
-du courrier, la vérification des chèques et la rétro-numérisation des
-livres. En effet, on revendique aujourd'hui dans la profession que la
-ROC est fondamentalement résolue, au moins pour les documents imprimés
-modernes en anglais avec un niveau de bruit raisonnablement faible, où
+Ces premières approches, mises au point des décennies avant les premiers ordinateurs, ont
+maintenant évolué. Aujourd'hui, les technique d'AID sont utilisées quotidiennement pour la distribution
+du courrier, la vérification des chèques ou la rétro-numérisation des
+livres. En effet, on affirme aujourd'hui dans la profession que la
+ROC est fondamentalement résolue, au moins pour les documents modernes imprimés 
+en anglais avec un niveau de bruit raisonnablement faible, où
 les logiciels commerciaux modernes de rétrodigitalisation atteignent
 régulièrement des taux de précision des caractères supérieurs à 99\%.
-Néanmoins, il existe près de 4000 langues écrites et plusieurs centaines de
-systèmes d'écriture, pour la grande majorité desquels des systèmes de
-ROC pratiques ne sont pas disponibles. Même en considérant seulement
-l'utilisation d'écritures purement alphabétiques telles que le latin et
-le cyrillique, qui posent moins de problèmes à la ROC de pointe
-lorsqu'elles sont employées conformément aux pratiques typographiques
-occidentales modernes, il est clair qu'une part importante de la
-production littéraire humaine n'est pas encore accessible par la
+Toutefois, la ROC ne peut transcrire des écritures dont la typographie n'est pas conforme aux pratiques occidentales modernes, et ce même pour les écritures purement alphabétiques telles que le latin et le cyrillique. 
+De plus, il existe près de 4000 langues écrites et plusieurs centaines de
+systèmes d'écriture, pour la grande majorité desquels il n'existe aucun système de ROC. 
+Ainsi, il est clair qu'une part importante de la
+production littéraire humaine moderne n'est pas encore accessible à la
 rétro-numérisation.
 
-C'est encore plus clair pour le matériel historique. Les projets de
+C'est encore plus clair en ce qui concerne le matériel historique. Force est de constater que si les projets de
 numérisation à grande échelle dans les pays riches ont permis de créer de
-vastes collections numériques de les bibliothèques qui sont de facto
-inaccessibles au public et aux chercheurs, même pour des documents aussi
-récents que ceux de la fin du XIXe siècle car les variations orthographiques et
-typographiques dégradent considérablement la qualité du texte numérisé par les
-logiciels adaptés aux documents modernes. Il s'agit très probablement d'un état
-de fait temporaire pour les documents les plus nombreux dans les archives des
+vastes bibliothèques numériques, ces dernières sont de facto
+inutilisables. En effet, la reconnaissance par les logiciels adaptés aux documents modernes dégrade considérablement la qualité du texte en raison des variation orthographiques et typographiques, même pour des documents aussi
+récents que ceux de la fin du XIXe siècle.
+ 
+Il s'agit très probablement d'un état temporaire pour les documents les plus nombreux dans les archives des
 pays développés où des projets tels que OCR-D\footnote{\url{http://ocr-d.de}}
 ouvrent la voie pour transférer les progrès de la recherche pure en AID à la
 pratique des bibliothèques. Dans le cadre de ces projets et d'efforts plus
-spécifiques tels que \cite{smith2018research}, on a vu la cristallisation d'un
-programme de recherche collective pour la numérisation du matériel historique
-et des systèmes d'écriture minoritaires, partagé par les chercheurs en 
+spécifiques tels que \cite{smith2018research}, un programme de recherche collective pour la numérisation du matériel historique
+et des systèmes d'écriture minoritaires a vu le jour, partagé par les chercheurs en 
 humanités engagés dans les méthodes numériques et les experts de la vision par
-ordinateur. Néanmoins, ces communautés restent fracturées sur le plan
-géographique, les frontières linguistiques et professionnelles.
+ordinateur. Néanmoins, ces communautés restent géographiquement isolées les une des autres, ainsi que par les barrières linguistiques et professionnelles.
 
 D'autre part, le manque de financement combiné à la détérioration des
-collections dans les autres pays en raison de conflits et d'influences
-environnementales augmente le risque de perte permanente du patrimoine culturel
-qui n'intéresse qu'un petit nombre de chercheurs et de populations
-minoritaires. Même des collections célèbres telles que les manuscrits de
-Tombouctou ont à peine échappé à la destruction par les conflits de ces
-dernières années et sont en grand danger d'être détruites par l'humidité. 
+collections dans les pays du Sud en raison de conflits et d'influences
+environnementales augmente le risque de perte permanente du patrimoine culturel,
+qui n'intéresse que des populations minoritaires et un petit nombre de chercheurs. 
+Même des collections célèbres telles que les manuscrits de
+Tombouctou ont à peine échappé à la destruction au cours des conflits armés de ces
+dernières années et sont aujourd'hui menacés par l'humidité. 
 
 \subsection{Tâches}
 
 En tant qu'application centrale de l'analyse d'images de documents, la ROC
-s'est divisée en un grand nombre de sous-problèmes. Ils ne sont pas tous
-strictement nécessaires à un système ROC fonctionnel et, en fait, beaucoup
-d'entre eux ne peuvent être mis en œuvre que de manière spécifique aux
-matériaux et sont donc relégués à des applications spécialisées.
+s'est divisée en un grand nombre de sous-tâches. Elles ne sont pas toutes
+strictement nécessaires à un système de ROC fonctionnel et, en fait, beaucoup
+d'entre elles ne peuvent être mises en œuvre que de manière spécifique en fonction des
+matériaux. Elles sont donc reléguées à des applications spécialisées.
 
-Le pipeline typique de la reconnaissance optique de caractères est construit
-autour de quatre étapes de traitement de base :
+Le pipeline typique de reconnaissance optique de caractères est construit
+autour de quatre grandes étapes:
 
 \begin{description}
-\item [Prétraitement] Le débruitage, le redressement, et la binarisation
+\item [Prétraitement] Débruitage, redressement, binarisation.
 \item [Segmentation des pages] Extraction des informations structurelles des
-images de pages de documents et les enrichir avec des informations sémantiques
+images de pages de documents et enrichissement avec des informations sémantiques
 supplémentaires.
-\item [Transcription] Extraction d'informations textuelles de la totalité ou
-d'un sous-ensemble des objets identifiés à l'étape précédente.
+\item [Transcription] Extraction des informations textuelles de la totalité ou
+d'un sous-ensemble d'objets identifiés à l'étape précédente.
 \end{description}
 
 Si cette caractérisation est valable pour tous les pipelines de données, sauf
 les plus ésotériques, les blocs fonctionnels exacts dépendent fortement du type
-et de la structure des documents à traiter. Chacune de ces étapes de traitement
+et de la structure du document à traiter. Chacune de ces étapes de traitement
 contient une ou plusieurs méthodes qui servent à résoudre une tâche
 particulière, comme par exemple:
 
 \begin{description}
-\item [Binarisation] La classification des pixels d'une image en deux classes :
+\item [Binarisation] Classification des pixels d'une image en deux classes :
 le front, c'est-à-dire le texte, et le fond, c'est-à-dire tout le
 reste.
-\item [Débruitage] Augmenter la qualité de l'image de la page pour les tâches
+\item [Débruitage] Augmentation de la qualité de l'image de la page pour les tâches
 	suivantes. Le débruitage comprend des processus tels que la
-		normalisation de fond ou l'élimination des taches.
-\item [Deskewing and Dewarping] Corriger à la fois la distorsion de perspective
-	inhérente à la capture par caméra et d'autres dégradations introduites
-couramment pendant de scanning telles que la
-rotation, le déformation le long de la reliure, \dots
-\item [Segmentation en regions]  Subdiviser une image de page en éléments tels que du texte, de la décoration, des notes, des points, etc.
+		normalisation de fond ou l'élimination des imperfections.
+\item [Redressement] Correction à la fois de la distorsion de perspective
+	inhérente à la capture par caméra, et des autres dégradations introduites pendant le scan telles que la
+rotation, la déformation le long de la reliure, etc.
+\item [Segmentation en regions]  Subdivision d'une image de page en éléments tels que du texte, de la décoration, des notes, des points, etc.
 \item [Segmentation en lignes] Extraction des lignes de texte d'une image de page.
 \item [Segmentation en caractères] Segmentation du texte sur une image de page
 	jusqu'au niveau du glyphe ou même à un niveau inférieur. Bien qu'il
-		s'agisse d'une opération courante dans les systèmes ROC
+		s'agisse d'une opération courante dans les systèmes de ROC
 		traditionnels, elle est le plus souvent superflue avec les
 		méthodes de pointe.
-\item [Classification du système d'écriture et de la police de caractères] Classifier la langue, le système d'écriture, le style ou la police de
+\item [Classification du système d'écriture et de la police de caractères] Classifi\-ca\-tion de la langue, du système d'écriture, du style ou de la police de
 caractères du texte. Cette classification peut être effectuée à
-différents niveaux, par exemple à l'échelle du document ou
-individuellement pour tout ou partie d'une ligne.
-\item [Reconnaissance des tableaux] Inférer la structure logique des images des tableaux.
+différents niveaux, par exemple à l'échelle du document, ou pour tout ou partie d'une ligne.
+\item [Reconnaissance des tableaux] Inférence de la structure logique des images d'un tableau.
 \end{description}
 
 \section{Motivation et contributions scientifiques}
@@ -152,31 +139,29 @@ géographique. Les exemples vont des textes religieux, en particulier le Coran,
 le livre saint de l'Islam, à la poésie, en passant par les textes scientifiques
 et juridiques, sans oublier un vaste corpus de documents administratifs. Le
 nombre considérable de ces textes dans une multitude de domaines en fait une
-cible privilégiée pour les nouveaux paradigmes des humanités qui utilisent des
+cible privilégiée pour les nouveaux paradigmes des humanités, qui utilisent des
 méthodes computationnelles telles que la lecture à distance et la paléographie
 quantitative. Ces méthodes nécessitent soit de grands corpus de textes, soit
-des méthodes précises de AID basées sur une ou plusieurs des tâches
-susmentionnées d'un système ROC. Comme la grande majorité des textes arabes
-n'ont jamais existé sous forme numérique, la rétro-numérisation de haute
-qualité par ROC constitue la base d'un nombre important de projets de recherche
+des méthodes précises d'AID basées sur une ou plusieurs des tâches
+susmentionnées d'un système de ROC. Comme la grande majorité des textes arabes
+n'a jamais existé sous forme numérique, la rétro-numérisation de haute
+qualité par la ROC constitue la base d'un nombre important de projets de recherche
 en humanités numériques arabes.
 
 Lorsque j'ai commencé à travailler sur cette thèse, la ROC du texte arabe
-imprimé a été largement rejetée par les chercheurs en humanités 
+imprimé était largement rejetée par les chercheurs en humanités 
 travaillant sur ces documents, même ceux qui étaient déjà très impliqués dans
-les humanités numériques, et par les organismes de financement comme
-peu pratique, encore plus pour le matériel historique ou multigraphique. La
+les humanités numériques, ainsi que par les organismes de financement, encore plus pour le matériel historique ou multigraphique. En effet, la
 reconnaissance précise de l'écriture à la main arabe semblait totalement
 inatteignable. Bien qu'il existe une longue tradition de publications sur la
 ROC d'ensembles de données arabes simples tels que KHATT\cite{mahmoud2014khatt}
-et qu'un certain nombre de logiciels de ROC ouverts et propriétaires tels que
+et qu'un certain nombre de logiciels de ROC libres et propriétaires tels que
 Tesseract, Abbyy FineReader et Sakhr offrent un soutien nominal pour la
 reconnaissance de textes en caractères arabes, ces solutions ne se sont jamais
-concrétisées dans la pratique réelle des bibliothèques universitaires ou à
+concrétisées dans la pratique réelle des bibliothèques ou à
 grande échelle. Les raisons en sont multiples : taux d'erreur élevé des
 classificateurs et des segmenteurs mal adaptés à la nature cursive du système
-d'écriture, manque de logiciels et de compétences techniques facilement
-disponibles, et coûts et efforts substantiels nécessaires pour adapter les
+d'écriture, manque de logiciels et de compétences techniques, et coûts et efforts substantiels nécessaires pour adapter les
 solutions existantes au matériel d'intérêt.
 
 Il est rapidement apparu que les obstacles qui empêchent les chercheurs
@@ -188,26 +173,24 @@ historiques et non-latins. Imitant l'opinion dominante sur la ROC arabe,
 caractères latins) étaient pratiquement imperméables à la ROC contemporaine. On
 peut probablement trouver des évaluations similaires pour d'autres domaines.
 
-En tant que telle, cette thèse doit être considérée à l'intersection plus
-générale entre les humanités et l'informatique. La recherche qui y est
-présentée n'est pas un ensemble de méthodes non connectées permettant de
-résoudre des tâches uniques dans l'AID arabe, mais fait partie d'un écosystème
-cohérent pour l'AID des humanités composé de deux éléments principaux :
-le système ROC Kraken et l'environnement de recherche virtuel (ERV)
+En tant que telle, cette thèse doit être considérée à l'intersection entre les 
+humanités et l'informatique. La recherche qui y est
+présentée n'est pas un ensemble de méthodes séparées permettant de
+résoudre des tâches dans l'AID arabe, mais fait partie d'un écosystème
+cohérent pour l'AID des humanités au sens large. Celui-ci est composé de deux éléments principaux :
+le système de ROC Kraken et l'environnement de recherche virtuel (ERV)
 eScriptorium.
 
-Le Kraken est un système ROC complet et modulaire. Il se distingue des autres
-solutions de plusieurs façons importantes : les chercheurs en humanités à
-tendance numérique comme utilisateurs et la conception du logiciel qui cherche
-une flexibilité maximale. Il a également été largement adapté en vue d'un
+Le Kraken est un système de ROC complet et modulaire. Il se distingue des autres
+logiciels pour plusieurs raisons : ses utilisateurs cibles sont des chercheurs en humanités (et non des informaticiens), et il permet une flexibilité maximale dans le type de documents qu'il est possible de traiter. Il a également été largement adapté en vue d'un
 meilleur traitement des documents historiques en caractères non latins,
 notamment en arabe.
 
 Dans le cadre des travaux d'adaptation visant à faire de Kraken un outil plus
 performant pour le travail sur les textes arabes, deux études de faisabilité de
-la rétro-numérisation de livres imprimés en caractères arabes classiques et
-d'une importante revue de langue arabe publiée par l'Université Américaine de
-Beyrouth ont été réalisées, qui ont produit la première analyse détaillée sur
+rétro-numérisation ont été réalisées (la première à partir de livres imprimés en caractères arabes classiques, et
+la seconde sur une importante revue sur la langue arabe publiée par l'Université Américaine de
+Beyrouth). Ces études ont produit la première analyse détaillée sur
 les faiblesses et les capacités des méthodes de ROC de pointe sur les textes
 arabes imprimés.
 
@@ -224,21 +207,19 @@ totale, ayant des performances similaires.
 Un nouveau backend de réseau neuronal a été ajouté au Kraken. Basé sur la
 bibliothèque de réseaux de neurones pytorch, il permet la reconfiguration
 flexible des réseaux de neurones artificiels (ARN) utilisés à la fois pour la
-segmentation des pages et la transcription du texte grâce à un langage de
-définition d'ARN léger qui est capable d'exprimer de nombreuses
-caractéristiques des architectures courantes utilisées dans les tâches de
-vision par ordinateur. Cette couche permet l'ajout relativement simple de
-nouveaux types d'ARN et donc un prototypage rapide et une optimisation efficace
-des hyperparamètres, même pour les utilisateurs finaux sans connaissances
-approfondies en matière d'apprentissage machine, comme l'a démontré
-\cite{strobel2020much}.
+segmentation des pages et la transcription du texte, grâce à un langage de
+définition d'ARN léger capable d'exprimer de nombreuses
+caractéristiques d'architectures ARN courantes utilisées dans les tâches de
+vision par ordinateur. Cette couche d'abstraction permet l'ajout relativement simple de
+nouveaux types d'ARN, et donc un prototypage rapide et une optimisation efficace
+des hyperparamètres, comme l'a démontré \cite{strobel2020much}.
 
 Au cours des premières études de cas, plusieurs milliers de lignes de données
-de formation pour la transcription de textes ont été annotées et mises à la
-disposition du public. J'ai participé à la conceptualisation technique et aux
-directives de transcription pour ces ensembles de données. Un autre ensemble de
+d'entraînement pour la transcription de textes ont été annotées et mises à la
+disposition du public. J'ai participé à la conceptualisation technique et à la definition des
+standards de transcription pour ces ensembles de données. Un autre ensemble de
 données sous licence libre de quatre cents pages de manuscrits en écriture
-arabe dans une variété de langues, de styles et de domaines a été annoté avec
+arabe, dans une variété de langues, de styles et de domaines, a été annoté avec
 des lignes de base et l'orientation des lignes pour permettre l'évaluation des
 méthodes d'analyse de la mise en page sur des documents historiques en écriture
 arabe.  Cet ensemble de données très complexe reste le seul ensemble de données
@@ -247,11 +228,11 @@ page.
 
 La deuxième composante de cet écosystème de rétro-numérisation est l'ERV
 eScriptorium.  Alors que le Kraken est conçu pour une flexibilité maximale,
-l'eScriptorium adopte une autre approche. Conçu comme un environnement de
+l'eScriptorium adopte une autre approche : il est conçu comme un environnement de
 recherche paléographique et de publication à part entière pour un usage
-scientifique, la fonctionnalité ROC n'est qu'une petite partie des
+scientifique. La fonctionnalité ROC n'est qu'une petite partie des
 caractéristiques prévues. Comme il n'est pas pratique d'exposer toutes les
-fonctionnalités du Kraken sur une telle plate-forme, la conception
+fonctionnalités du Kraken sur une telle plateforme, la conception
 d'eScriptorium permet une intervention manuelle et semi-automatique à chaque
 étape du processus, soit par une manipulation manuelle dans l'interface, soit
 par des interfaces d'échange de données graphiques et programmatiques.
@@ -262,16 +243,16 @@ de test idéal pour la recherche en humanités assistée par la vision
 artificielle. Dans certains cas, ces fonctions avancées sont liées à la
 transcription de textes. Une méthode permettant de dériver les emplacements des
 graphèmes à partir de l'alignement implicite produit par une reconnaissance de
-texte par ligne ANN et une évaluation sur des fragments de matériel hébraïque
+texte par ligne ANN et son évaluation sur des fragments de matériel hébraïque
 est présentée.
 
-\section{L'écriture arabe}
+\section{L'Ecriture Arabe}
 
-Le système d'écriture arabe est l'un des systèmes d'écriture les plus répandus
+Le système d'écriture arabe est l'un des systèmes d'écriture les plus répandu
 de l'histoire de l'humanité, géographiquement et chronologiquement. Il s'agit
 de l'écriture principale de la langue arabe, du farsi, de l'ourdou et de
-plusieurs autres langues du sous-continent indien. Historiquement, elle a été
-utilisée pour produire des textes de l'espagnol au chinois.
+plusieurs autres langues du sous-continent indien. Historiquement, il a été
+utilisé pour produire des textes de l'espagnol au chinois.
 
 Bien que ses origines exactes soient encore controversées, les historiens
 s'accordent à dire que l'écriture arabe a évolué à partir de l'écriture
@@ -279,20 +260,20 @@ nabatéenne ou syriaque au Moyen-Orient au cours de plusieurs siècles, la
 maturation ayant eu lieu au cours du septième siècle de notre ère.  Étroitement
 liés à la propagation de l'Islam, un certain nombre de variantes alphabétiques
 et de styles calligraphiques régionaux se sont développés au cours des siècles
-suivants. Néanmoins, on est loin d'une écriture purement liturgique avec une
+suivants. Néanmoins, elle est loin d'une écriture purement liturgique avec une
 abondance de documents administratifs, de traités philosophiques et
 scientifiques, de poésie, etc.
 
-Il est donc erroné de parler d'une seule écriture arabe du point de vue des
-recherches de l'AID. Chaque style, en combinaison avec les préférences
-régionales et le contexte de leur utilisation, présente des défis particuliers.
+Il est donc erroné de parler d'une seule écriture arabe du point de vue de
+recherche de l'AID. Chaque style, avec ses particularités
+régionales et son contexte culturel, présente des défis particuliers.
 
-\subsection{Les principes de l'écriture arabe}
+\subsection{Les Principes de l'Ecriture Arabe}
 
 L'écriture arabe est un \emph{abjad}, un système d'écriture consonantique, ce qui
 signifie qu'elle ne nécessite que l'écriture des consonnes et des voyelles
 longues, le lecteur étant censé fournir lui-même les voyelles courtes
-appropriées selon le contexte.  Les voyelles courtes et autres marques pour des
+appropriées selon le contexte. Les voyelles courtes et autres marques pour des
 caractéristiques telles que le doublage (gémination) et la nunation (ajout d'un
 n final), peuvent être ajoutées en option (\emph{tashkil}) mais ne sont
 systématiquement utilisées que lors de la transcription du Coran ou de textes
@@ -302,40 +283,40 @@ s'écrit de droite à gauche, à l'exception des nombres qui s'écrivent de gauc
 
 Contrairement à d'autres écritures très courantes comme le latin, l'arabe est
 écrit uniquement dans une forme cursive. Comme les variantes cursives d'autres
-écritures, les lettres individuelles changent de forme en fonction de leur
+écritures, les lettres individuelles changent ses formes en fonction de leur
 position dans un mot : des formes initiales, médianes, finales et indépendantes
 existent, en plus des règles calligraphiques spécifiques au style pour le
 placement des lettres. Une différence avec l'écriture cursive des autres
 écritures est que toutes les lettres ne peuvent pas être reliées entre elles.
 Comme les espaces n'indiquent pas nécessairement le début d'un nouveau mot, les
 calligraphes sont largement libres de faire varier l'espacement entre les mots,
-les syllabes et les coups comme ils le souhaitent.  Cette variation de
+les syllabes et les traits comme ils le souhaitent.  Cette variation de
 l'espacement peut perturber les systèmes de reconnaissance optique des
 caractères.
 
 Une autre distinction est l'absence de majuscule et la ponctuation de type
 occidental, cette dernière n'ayant été introduite qu'au XXe siècle de notre
-ère. Au lieu de cela, des mots et des phrases particuliers sont utilisés pour
-introduire une nouvelle phrase ou question et les accents sont placés au-dessus
+ère. Au lieu de cela, des phrases et des mots particuliers sont utilisés pour
+introduire une nouvelle phrase ou une question, et les accents sont placés au-dessus
 des titres et des rubriques.
 
 Il existe d'autres formes de lettres dans des variantes de l'écriture arabe
-adaptées à d'autres langues qui comportent des phonèmes qui ne se trouvent pas
+adaptées à d'autres langues qui comportent des phonèmes qui n'existent pas
 en arabe. Elles sont généralement adaptées en ajoutant des points aux graphèmes
 représentant des sons similaires en arabe, comme le persan \emph{pe} dérivé de
-\emph{bāʾ} en ajoutant deux points supplémentaires ci-dessous. Comme il y a
-beaucoup de langues qui sont ou ont été écrites dans l'écriture, il existe un
+\emph{bāʾ} en ajoutant deux points supplémentaires en-dessous. Comme il y a
+beaucoup de langues qui sont ou ont été écrites en arabe, il existe un
 grand nombre de ces variantes.
 
-Une difficulté particulière pour les systèmes ROC est la façon particulière
+Une difficulté particulière pour les systèmes de ROC est la façon particulière
 dont le texte arabe est justifié. La césure, c'est-à-dire la division des mots
 pour faciliter le retour à la ligne, est absente de tous les textes, sauf les
 plus anciens. Au lieu de la justification par espace blanc, courante dans les
 écritures alphabétiques, des alternatives plus agréables visuellement ont été
-conçues.  L'allongement des liens entre les lettres, la courbure de la ligne de
+conçues. L'allongement des liens entre les lettres, la courbure de la ligne de
 base et la superposition ou le déplacement de fragments du dernier mot
-au-dessus ou à côté de la ligne sont des phénomènes courants, ces deux
-dernières méthodes posant un défi particulier, même aux systèmes modernes de
+au-dessus ou à côté de la ligne sont des phénomènes courants. Ces deux
+dernières méthodes posent un défi particulier, même aux systèmes modernes de
 segmentation des pages.
 
 \subsection{Styles}
@@ -343,15 +324,15 @@ segmentation des pages.
 Un grand nombre de styles calligraphiques ont été conçus au cours des siècles.
 Si certains sont reconnus dans l'ensemble du monde islamique, comme le
 \emph{naskh}, d'autres sont spécifiques à certaines zones géographiques, par
-exemple le \emph{maghribi} nord-africain ou le \emph{nastaʼlīq} persan. Les
+exemple le \emph{maghribī} nord-africain ou le \emph{nastaʼlīq} persan. Les
 premiers styles tels que le \emph{ḥijāzī} et le coufique sont des familles de
-styles différents, car la standardisation était faible. Au treizième siècle de
-notre ère, six styles canoniques étaient apparus. Ils sont généralement
+styles différents, car la standardisation était faible. Apres XIIIe siècle de
+notre ère, on compte six styles canoniques. Ils sont généralement
 appariés, une écriture d'affichage (majuscule) et une écriture de texte
 (minuscule) :
 
 \begin{itemize}
-        \item \emph{ṯuluṯ} et \emph{naskh}
+        \item \emph{thuluth} et \emph{naskh}
         \item \emph{muḥaqqaq} et \emph{rayḥān}
         \item \emph{tawqīʿ} et \emph{riqāʿ}
 \end{itemize}
@@ -361,21 +342,21 @@ aussi à l'utilisation de la langue.  Dans les parties du monde islamique
 influencées par le persan (Empire Ottoman, Iran, Inde), des styles suspendus
 tels que \emph{nastaʼlīq} avec des mots individuels descendant sur une ligne de
 base commune étaient populaires car ils étaient plus adaptés aux différentes
-combinaisons de lettres du turc et du persan. D'autres styles étaient à la fois
+combinaisons de lettres en turc et en persan. D'autres styles étaient à la fois
 géographiquement limités et restreints à certains usages comme le
-\emph{divanî} style chancellerie ottomane.
+\emph{divanî} style de la chancellerie ottomane.
 
 \subsection{Critères pour les systèmes de ROC arabes}
 
 En résumé, la reconnaissance des textes arabes imprimés et manuscrits nécessite
 un certain nombre de caractéristiques que l'on ne trouve pas couramment dans
-les systèmes ROC actuels. Les principales exigences sont, dans l'ordre de
+les systèmes de ROC actuels. Les principales exigences sont, dans l'ordre de
 traitement à l'intérieur d'un pipeline typique :
 
 \begin{description}
-	\item[Èlimination de la binarisation] La variété des supports, des encres et des décorations utilisés
+	\item[Élimination de la binarisation] La variété des supports, des encres et des décorations utilisés
 		dans les textes arabes rend peu probable le développement d'une
-		méthode générale de binarisation. Une système ROC arabe devrait
+		méthode générale de binarisation. Un système de ROC arabe devrait
 		donc être sans binarisation.
 	\item[Segmentation des lignes courbes et inclinées] L'utilisation
 		fréquente de lignes inclinées et courbes à des fins tant
@@ -402,12 +383,10 @@ traitement à l'intérieur d'un pipeline typique :
 		créer des ensembles de données pour les recherches futures.
 \end{description}
 
-\section{Études sur le ROC en écriture arabe}
+\section{Études sur la ROC en écriture arabe}
 
-Deux études de précision sur un certain nombre de textes classiques en écriture
-arabe et sur la principale revue savante de langue arabe, al-Abhath, ont été
-réalisées avec une version antérieure du système ROC Kraken afin de déterminer
-les points forts et les limites des logiciels ROC actuels sur ces documents. En
+Deux études de précision ont été réalisées en 2017 et 2018 sur un certain nombre de textes classiques en écriture
+arabe et sur la principale revue scientifique de langue arabe, al-Abhath. Ces études ont utilisé le système de ROC Kraken (qui a depuis évolué) afin de déterminer les points forts et les limites des logiciels de ROC de pointe sur ces documents. En
 conséquence, nous avons déterminé deux recommandations clés pour améliorer
 substantiellement la ROC en écriture arabe : (1) une approche plus systématique
 de la production de données de l'entrainement, et (2) le développement de
@@ -429,8 +408,8 @@ données d'entraînement pour le domaine cible souhaité.
 La seconde étude a été construite dès le début autour d'une analyse beaucoup
 plus rigoureuse des polices de caractères présentes dans le matériel et d'une
 évaluation manuelle approfondie des résultats de la ROC par rapport à une
-évaluation purement computationnelle. Son sujet, la revue al-Abhath, a été
-déterminée à comporter deux groupes de polices de caractères, bien qu'il y ait
+évaluation purement computationnelle. Son sujet, la revue al-Abhath, comportait deux groupes 
+de polices de caractères. Néanmoins, il y avait
 de légères variations intra-groupe, en particulier pour la première police de
 caractères qui a été utilisée pour la majorité du cycle de la revue. Pour se
 conformer à cette analyse, il a été décidé de produire 5000 lignes de données
@@ -439,26 +418,26 @@ Les lignes d'entraînement ont été tirées au hasard des deux groupes de
 caractères et transcrites manuellement avec le logiciel CorpusBuilder. Des
 modèles de transcription spécifiques aux polices de caractères ont été
 entraînés sur les deux ensembles de données, puis évalués par un prestataire
-extérieur et OpenITI sur un ensemble de validation distinct (voir tableaux
+extérieur et par OpenITI sur un ensemble de validation distinct (voir tableaux
 ~\ref{tab_champs:table_1} et ~\ref{tab_champs:table_2}). À l'issue de l'examen,
 il est apparu clairement que Kraken surpasse significativement le logiciel ROC
 d'Abbyy pour la reconnaissance de textes arabes. Une évaluation manuelle
 détaillée de la transcription automatique a permis d'identifier plusieurs types
 d'erreurs courantes : mauvaise reconnaissance de ligatures peu courantes, de
-formes de lettres rares et de caractères d'allongement, de texte multigraphique
-et le sortie de lettres doublées. Bien que certains de ces problèmes aient pu
-être résolus grâce à des données d'entraînement de meilleure qualité, le
-traitement de texte multigraphique dans le système ROC a été ajouté
+formes de lettres rares, de caractères d'allongement et de texte multigraphique, ainsi que 
+la sortie de lettres doublées. Certains de ces problèmes ont pu être résolus
+grâce à des données d'entraînement de meilleure qualité. Une methode pour le
+traitement de texte multigraphique dans le système de ROC a été ajouté
 subséquemment (chapitre~\ref{ch:multi}). L'évaluation a également identifié le
 besoin d'une meilleure segmentation des lignes des textes arabes, car le module
 optimisé pour le latin dans le Kraken avait tendance à tronquer et à diviser
-les lignes de texte avec une certaine fréquence.
+les lignes de texte.
 
 \section{Segmentation des pages}
 
 Pour le traitement des documents imprimés et manuscrits en caractères arabes,
 il est évident qu'une méthode d'analyse de la mise en page flexible, et de
-préférence entraînable, est nécessaire, vu que l'impossibilité d'extraire des
+préférence entraînable, est nécessaire. En effet, l'impossibilité d'extraire des
 lignes de texte rend automatiquement impossible leur transcription correcte
 avec n'importe quelle méthode de reconnaissance de texte.
 
@@ -470,9 +449,9 @@ de données de 400 pages de manuscrits arabes et persans annotés avec leurs
 lignes de texte.
 
 Il est important de comprendre la nature exacte de la segmentation des lignes
-de texte dans un pipeline ROC et son lien avec la méthode de transcription. Si
+de texte dans un pipeline de ROC et son lien avec la méthode de transcription. Si
 l'objectif premier est d'identifier les lignes de texte, la tâche d'un
-segmenteur de lignes de texte est également d'aider à l'extraction des lignes
+segmenteur de lignes de texte est également d'aider à l'extraction de ces lignes
 de manière à optimiser les performances de la transcription. Ainsi, différentes
 représentations de lignes de texte peuvent être produites par un système de
 segmentation, par exemple des boîtes englobantes, des polygones englobants, des
@@ -493,27 +472,27 @@ relativement facile à apprendre par les méthodes de vision par ordinateur, et
 suffisamment polyvalente pour permettre la normalisation de lignes de forme
 arbitraire.
 
-Une ligne de base n'est qu'une ligne virtuelle sur laquelle la plupart des
-caractères reposent. Alors qu'ils soient généralement droits dans les documents
-imprimés, ils peuvent être définis comme des polylignes, ce qui leur permet de
-suivre la courbure de la ligne. En projetant les éléments courbes sur une ligne
+Une ligne de base est une ligne virtuelle sur laquelle la plupart des
+caractères reposent. Alors qu'elles sont généralement droites dans les documents
+imprimés, elles peuvent être définies comme des polylignes, ce qui leur permet de
+suivre la courbure de la ligne de texte. En projetant les éléments courbes sur une ligne
 de base droite, nous pouvons transformer une ligne courbe en une ligne droite
 pouvant être traitée par le modèle de transcription. Si la ligne de base est
 associée à un polygone englobant, il est également possible de supprimer des
-éléments en dehors de la ligne de texte qui nous intéresse dans le processus.
+éléments situés en dehors de la ligne de texte qui nous intéresse dans le processus.
 
 Nous avons proposé une méthode de segmentation, basée sur un réseau neuronal de
 segmentation sémantique convolutive profonde (U-Net), suivant cette
-représentation de la ligne de base et l'avons évaluée sur notre ensemble de
-données et un ensemble de données latins cBAD. La méthode a atteint une
+représentation de la ligne de base et l'avons évaluée à la fois sur notre ensemble de
+données et sur un ensemble de données latins cBAD. La méthode a atteint une
 précision similaire à celle d'autres méthodes de pointe (voir
-tableau~\ref{tab:foo}).   Bien que les résultats obtenus sur l'ensemble de
-données arabes aient été inférieurs à ceux obtenus sur l'écriture latine, notre
+tableau~\ref{tab:foo}). Les résultats obtenus sur l'ensemble de
+données arabes étaient légèrement inférieurs à ceux obtenus sur l'écriture latine. Neanmoins, notre
 ensemble de données est beaucoup plus diversifié, ce qui indique la pertinence
 générale de cette approche pour la segmentation des lignes de texte des
 manuscrits arabes.
 
-Bien qu'efficace, cette méthode manquait de plusieurs caractéristiques
+Bien qu'efficace, il manque à cette méthode plusieurs caractéristiques
 nécessaires à un segmenteur pratique. Premièrement, elle ne comporte pas de
 moyen de calculer l'orientation des lignes, deuxièmement, elle ne dispose pas
 d'un algorithme pour calculer un polygone englobant pour la suppression du
@@ -521,13 +500,13 @@ contenu non-ligne, et elle est incapable de reconnaître conjointement les
 lignes et les régions. En changeant la couche de sortie du réseau neuronal pour
 effectuer une classification de pixels multi-étiquettes, la nouvelle méthode
 est capable de détecter à la fois les lignes et les régions simultanément. Les
-nouvelles classes de marqueurs dans la carte de sortie indiquent quelle
-extrémite d'un ligne est le début et quelle fin permet de déterminer
+nouvelles classes de marqueurs dans la carte de sortie indiquent où se situent le 
+début et la fin d'une ligne de texte, ce qui permet de déterminer
 l'orientation de la ligne. En outre, une nouvelle méthode de post-traitement a
 été proposée pour extraire les lignes de base de la sortie de la carte de
-pixels brute du réseau de segmentation sémantique et pour calculer un polygone
+pixels bruts du réseau de segmentation sémantique, et pour calculer un polygone
 englobant. Enfin, le réseau de segmentation sémantique a été changé en un
-réseau de type ReNet plus efficace en mémoire qui utilise des couches LSTM
+réseau de type ReNet, plus efficace en mémoire, qui utilise des couches LSTM
 balayées verticalement et horizontalement au lieu de piles profondes de couches
 convolutionnelles pour obtenir de grands champs récepteurs.
 
@@ -539,7 +518,7 @@ texte, avec une certaine amélioration par rapport à la méthode précédente d
 les résultats sur l'ensemble de données arabes.
 
 Enfin, nous avons proposé une méthode simple pour la détection du système
-d'écriture et de I'emphase dans le texte lignes. Ce système est utile pour le
+d'écriture et de l'emphase dans les lignes de texte. Ce système est utile pour le
 traitement des textes et documents multilingues où l'emphase, c'est-à-dire le
 texte en italique, en gras, etc. est utilisée pour le balisage sémantique, tel
 qu'il se produit fréquemment dans les dictionnaires.
@@ -558,9 +537,9 @@ peut être entraîné et que les données de son apprentissage peuvent être
 dérivées automatiquement des données d'apprentissage existantes pour les
 modèles de transcription.
 
-\section{La transcription et l'alignement}
+\section{La Transcription et l'Alignement}
 
-\subsection{Le logiciel ROC Kraken}
+\subsection{Le Logiciel ROC Kraken}
 
 Le Kraken est un logiciel de ROC modulaire et open source conçu pour être
 particulièrement utile pour la rétro-numérisation dans les humanités.
@@ -577,7 +556,7 @@ reconnaissance multigraphique. Une interface JSON simple permettant la
 configuration d'un mappage entre les sorties de modèles numériques et les
 séquences de points de code Unicode et vice versa. Ce mécanisme est
 particulièrement utile pour les écritures logographiques de grande dimension
-telles que le système d'écriture chinois car il permet la décomposition d'un
+telles que le système d'écriture chinois, car il permet la décomposition d'un
 point de code Unicode représentant un seul groupe de graphèmes en ses
 composants logiques dans la sortie du réseau neuronal.
 
@@ -589,19 +568,18 @@ sont accessibles à la fois par l'API et par la ligne de commande qui permet la
 substitution flexible de blocs fonctionnels ou l'utilisation de sous-systèmes
 pour compléter ses propres méthodes.
 
-Dans le cas où des défauts raisonnables sont souhaitables mais peuvent être
-désavantageux dans les cas marginaux, ils peuvent généralement être désactivés
-ou adaptés. Les exemples vont du traitement textuel tel que la prise en charge
+Malgré notre efforts, les parametres choisi par défaut peuvent être désavantageux dans certains cas marginaux.
+Ils peuvent alors être désactivés ou adaptés. Les exemples vont du traitement textuel tel que la prise en charge
 de texte bidirectionnel\footnote{L'algorithme Unicode BiDi a des cas où un
 balisage explicite de la directionalité peut être requis.} et de la
 normalisation du texte au changement des architectures et des paramètres
-d'entraînement des réseaux neuronaux artificiels employés dans la segmentation
+d'entraînement des réseaux neuronaux artificiels, employés dans la segmentation
 et la transcription des pages.
 
 Le module de transcription fonctionne comme un classificateur de séquences sans
 segmentation, utilisant un réseau neuronal artificiel pour mapper une image
 d'une seule ligne de texte en une séquence d'étiquettes qui sont ensuite
-mappées en points de code Unicode.  L'ARN utilisé par défaut est un CNN-RNN
+mappées en points de code Unicode.  L'ARN utilisé par défaut est un CNN-LSTM
 hybride entraîné avec la fonction de coût CTC. Un langage simple de
 spécification de réseau permet d'adapter le réseau à des tâches spécifiques.
 Les précisions des caractères pour un certain nombre de scripts différents
@@ -614,7 +592,7 @@ texte arbitraires avec suffisamment de données d'entraînement. Les données
 d'entraînement peuvent être fournies dans un certain nombre de formats de
 fichiers standard tels que ALTO et PageXML ou via une simple API.
 
-\subsection{L'alignement des Caractères}
+\subsection{L'Alignement des Caractères}
 
 Une tâche d'un certain intérêt paléographique est l'alignement automatique de
 la transcription du texte avec les glyphes respectifs dans une image. Bien que
@@ -631,21 +609,21 @@ l'aide d'un modèle de segmentation des pages spécifiquement entraîné pour ce
 matériel. Les transcriptions diplomatiques par ligne de la base de données QWB
 sont ensuite mises en correspondance avec la sortie du segmenteur afin de créer
 des données d'entraînement pour un modèle de transcription de manière
-semi-automatique.  Environ 2500 lignes provenant de 440 fragments ont ensuite
+semi-automatique. Environ 2500 lignes provenant de 440 fragments ont ensuite
 été utilisées pour faire une apprentissage par transfer d'un nouveau modèle de
 transcription à partir d'un modèle de transcription de manuscrit hébraïque
 médiéval existant.  Comme les données d'apprentissage varient énormément en
 termes de style, les caractères individuels sont souvent gravement dégradés, et
-le modèle est entraîné à surajuster sévèrement, le CER est assez élevé avec
+le modèle est entraîné à surajuster sévèrement, le REC est assez élevé avec
 environ 30\% sur l'ensemble de validation.
 
 Les activations de ce modèle surajusté sont utilisées pour déterminer les
 positions des caractères sur le matériel dans l'ensemble d'entraînage créé
-semi-automatiquement. Lorsqu'il est évalué vis-à-vis des positions de glyphes
+semi-automati\-que\-ment. Lorsqu'il est évalué vis-à-vis des positions de glyphes
 annotées par l'homme, le système place le caractère le plus proche de la
 position réelle 90,3\% du temps avec une IoU moyenne de 0,81, surpassant
 significativement la méthode SIFT-flow même lorsqu'il l'ancre avec les
-positions brutes des caractères ROC.
+positions brutes des caractères identifiés par la ROC.
 
 \section{eScriptorium}
 
@@ -667,7 +645,7 @@ pour le Kraken, un effort concerté a été fait pour réduire les hypothèses s
 le fonctionnement du texte.
 
 eScriptorium utilise le Kraken pour ses besoins en vision par ordinateur.
-Ainsi, la construction du pipeline ROC est reflétée dans l'interface
+Ainsi, la construction du pipeline de ROC est reflétée dans l'interface
 d'eScriptorium, avec une approche par étapes de l'importation des données, de
 la segmentation des pages (automatique ou manuelle), de la transcription
 (automatique ou manuelle), de l'annotation et de l'exportation.
@@ -686,17 +664,17 @@ ensembles de données qui ne peuvent pas encore être traités avec les méthode
 automatiques mises en œuvre et pour aider au démarrage efficace du traitement
 automatique.
 
-Elle empêche également l'utilisation de techniques courantes pour augmenter la
+La variété des systèmes d'écriture empêche également l'utilisation de techniques courantes pour augmenter la
 généralisation et la charge de formation des méthodes automatiques telles que
 les modèles de langage statistique et les modèles généralisés pour des tâches
 comme la segmentation des pages. Les modèles linguistiques puissants pour les
 langues à faibles ressources telles que le vietnamien ancien sont tout aussi
 irréalistes qu'un segmenteur de pages capable d'extraire avec précision des
 lignes d'inscriptions chinoises, de manuscrits arabes, d'incunables et de
-journaux avec un seul modèle RNA. Par conséquent, la plate-forme est conçue
+journaux avec un seul modèle ARN. Par conséquent, la plate-forme est conçue
 pour permettre un apprentissage et un réapprentissage fréquents grâce à des
 inventaires de modèles, des interfaces intermédiaires pour l'importation et
-l'exportation de données, et des rapports d'évaluation prospectifs à grain fin
+l'exportation de données, et des rapports d'évaluation prospectifs détaillés
 comme ceux qui existent déjà dans le Kraken.
 
 Un dernier aspect renforçant ces contraintes de conception dans la plate-forme
@@ -713,7 +691,7 @@ d'inférence statistique. Les systèmes ouverts peuvent aider à communiquer les
 normes et les hypothèses de ces procédures, mais il n'en reste pas moins que
 pour un simple utilisateur de humanités peu familier avec la
 terminologie de l'informatique, celles-ci sont cachées dans une boîte noire
-magique (et vice versa).  Les ontologies peuvent principalement combler ce
+magique (et vice versa). Les ontologies peuvent principalement combler ce
 fossé, mais elles sont complexes à mettre en place et à entretenir et se
 heurtent souvent à la nature ad hoc de la recherche. Notre meilleure option
 reste de suivre les standards lorsqu'ils existent, d'offrir des interfaces pour
@@ -721,7 +699,7 @@ prendre et apporter des données et des artefacts depuis et vers l'eScriptorium,
 et d'accepter qu'il est très peu probable qu'un seul outil soit à la fois
 pratique et universel.
 
-\section{Conclusions et Perspectives}
+\section{Conclusions et perspectives}
 
 En conclusion, nous avons présenté dans cette thèse un travail qui représente
 un pas en avant vers la rétro-numérisation pratique des documents en écriture
@@ -730,28 +708,28 @@ des pages et la transcription sont maintenant en principe capables de numériser
 n'importe quel document en caractères arabes, mais surtout l'inclusion de ces
 méthodes dans un système de ROC de bas niveau et un ERV de haut niveau, qui
 sont tous deux totalement ouverts à l'adaptation, la réutilisation et le
-partage, rendent l'utilisation de ces outils dans les projets de humanités numériques, petits et grands, beaucoup plus attrayante.
+partage, rendant l'utilisation de ces outils dans les projets de humanités numériques, petits et grands, beaucoup plus attrayante.
 
 Il est clair qu'un travail substantiel reste à faire. Nous avons étudié les
 exigences générales d'un système de ROC à usage général en écriture arabe et
 validé l'état de l'art au début de la thèse dans deux études. Bien que les
-questions les plus urgentes, l'analyse de la mise en page, des méthodes de
+questions les plus urgentes (à savoir l'analyse de la mise en page, des méthodes de
 transcription plus puissantes et de meilleurs outils pour la création, la
-conservation et la diffusion des données, aient été résolues dans une large
+conservation et la diffusion des données) aient été résolues dans une large
 mesure, toutes les tâches ne sont pas actuellement résolues de manière
 satisfaisante.
 
 La tâche la plus urgente pour la ROC des manuscrits arabes est la détermination
 de l'ordre de lecture. Comme décrit ci-dessus, la recherche sur ce sujet est
 rare et les méthodes existantes sont des heuristiques artisanales incapables de
-traiter la structure souvent complexe des manuscrits historiques. Alors que les
-ensembles de données sont inexistants ou implicitement cachés dans des
+traiter la structure souvent complexe des manuscrits historiques. Néanmoins, alors que les
+ensembles de données sont inexistants ou cachés dans des
 ensembles de données pour d'autres tâches, les capacités de l'intelligence
 artificielle pour le raisonnement spatial avec un grand nombre d'objets ont
 augmenté ces dernières années avec le développement des réseaux neuronaux de
 graphes.
 
-Bien que les systèmes de ROC de pointe sont capables de réaliser des exploits
+Bien que les systèmes de ROC de pointe soient capables de réaliser des exploits
 impressionnants même sur des documents très dégradés et atypiques, avec des
 exigences en matière de données d'entraînement plus ergonomiques que jamais, le
 repérage des données d'entraînement est toujours la tâche la plus longue des
@@ -762,7 +740,7 @@ méthodes d'adaptation de domaine plus avancées offrent de grandes promesses
 pour rendre plus de documents accessibles sans intervention humaine.
 
 Le développement d'eScriptorium va sûrement se poursuivre et intégrer les
-progrès des méthodes automatiques dans la mesure où il aide la recherche en
+progrès des méthodes automatiques, dans la mesure où il aide la recherche en
 humanités. Les pistes non explorées dans cette thèse comprennent les
 opérations non textuelles, telles que diverses tâches de classification
 d'images, la datation, le regroupement de documents similaires ou la détection

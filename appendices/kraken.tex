@@ -1,12 +1,16 @@
 \chapter{Technical Overview of the Kraken Software}
+\chaptermark{Technical Overview of Kraken}
 \label{app:kraken}
 
 This appendix is a technical summary of the Kraken software in its current
-state. It is located in between the low-level descriptions of the methods and
-algorithms employed in chapters~\ref{ch:hip}, \ref{ch:icfhr}, and
-\ref{ch:multi} and the high-level conceptual overview of the software in
-chapter~\ref{ch:kraken}. The majority of the text is derived from the technical
-end-user documentation available on the Kraken web site.
+state. It is valid for the version deposited for this thesis in the Zenodo
+research data repository and assigned the DOI \emph{10.5281/zenodo.4498925}.
+
+This document is located in between the low-level descriptions of the methods
+and algorithms employed in chapters~\ref{ch:hip}, \ref{ch:icfhr}, and
+\ref{ch:multi} and the high-level conceptual overview of the software intended
+for humanists in chapter~\ref{ch:kraken}. The majority of the text is derived
+from the technical end-user documentation available on the Kraken web site.
 
 \section{Command Line Interface}
 
@@ -31,9 +35,9 @@ $ kraken -i inp_1 outp_1 -i inp_2 outp_2 ... subcmd_1 subcmd_2 ... subcmd_n
 \end{minted}
 
 Input files can be in different formats and defined in different ways. The
-above syntax is the simplest, each input file is directly mapped to an output
-file. As this syntax is too verbose for more than a few files and does not
-allow the definition of multiple outputs for a single input file, as is
+above syntax is the most direct: each input file is directly mapped to an
+output file. As this syntax is too verbose for more than a few files and does
+not allow the definition of multiple outputs for a single input file, as is
 desirable for multi-page TIFF or PDF files, batch input are handled in two
 different ways. The first allows the use of shell or glob patterns to match
 multiple input files and append a specific suffix to each output files:
@@ -65,8 +69,9 @@ splitting each input file into output files starting with the original file
 name followed by a page index.
 
 A variety of input file formats are supported, both for reasons of convience
-and because each processing steps expect different input data. The expected
-default are plain image files:
+and because each processing steps expect different input data. As OCR is the
+conversion of image data into machine-encoded text, the expected default is
+unsurprisingly plain image files:
 
 \begin{minted}{shell}
 $ kraken -i image_1.png output_1 -i image_2.png output_2 ...
@@ -74,10 +79,10 @@ $ kraken -i image_1.png output_1 -i image_2.png output_2 ...
 
 More complex data can be fed into kraken with files in the ALTO and PageXML
 formats. These are, for example, useful to only perform transcription on
-already pre-segmented images but each subcommand will automatically retrieve
-the necessary information, i.e. executing only layout analysis  on an ALTO file
-will cause Kraken to only load the image file defined therein. Input formats
-can be switched with the \emph{-f} switch, e.g.:
+already pre-segmented images. Each subcommand will automatically retrieve the
+necessary information, i.e. executing the layout analysis subcommand on an ALTO
+file will cause Kraken to only load the image file defined therein. Input
+formats can be switched with the \emph{-f} switch, e.g.:
 
 \begin{minted}{shell}
 $ kraken -i alto.xml output.xml -f alto subcommand_1 subcommand_2 ...
@@ -87,7 +92,9 @@ A special case are multi-page inputs. These can also be selected with the
 appropriate \emph{-f} option, currently \emph{-f pdf} for both PDF and
 multi-page TIFF files, but as they do not contain parseable structural and
 content information only image data is extracted. Valid values for the format
-option are listed in the help text of the \emph{kraken} command.
+option are currently \emph{alto}, \emph{page}, \emph{pdf}, \emph{image}, and
+\emph{xml} (to automatically select the appropriate parser for each XML input
+file).
 
 \subsubsection{Binarization}
 
@@ -133,23 +140,28 @@ $ kraken -i ... segment -bl -i line_seg.mlmodel -i region_seg.mlmodel
 
 This functionality can for example be used to combine the output of a
 segmentation model that only produces regions with one that only detects text
-line. It is important to note that no filtering is performed on the output,
+lines. It is important to note that no filtering is performed on the output,
 i.e. when combining multiple line-detecting segmentation models the output will
-contain duplicate lines. Apart from convenience this joint segmentation also
-allows the segmenter to use additional region information for bounding polygon
-calculation which generally improves polygon accuracy, especially on lines
-close to the boundary of the writing surface.
+contain "duplicate", largely overlapping lines. Apart from the convenience of
+merging multiple region and line segmentation automatically, performing joint
+segmentation in Kraken also allows the segmenter to use additional region
+information for bounding polygon calculation which generally improves polygon
+accuracy, especially on lines close to the boundary of the writing surface.
 
 The segmenter not only finds lines and regions but also imparts a reading order
 on them using a basic heuristic. As Kraken does not know the principal text
 direction of the document it can be supplied through an option
-\emph{----text-direction}: 
+\emph{-{}-text-direction}: 
 
 \begin{minted}{shell}
-$ kraken -i ... segment --text-direction horizontal-lr # horizontal lines, left before right lines
-$ kraken -i ... segment --text-direction horizontal-rl # horizontal lines, right before left lines
-$ kraken -i ... segment --text-direction vertical-lr # vertical lines, left before right lines
-$ kraken -i ... segment --text-direction vertical-rl # vertical lines, right before left lines
+$ kraken -i ... segment --text-direction horizontal-lr # horizontal lines
+                                                       # left before right lines
+$ kraken -i ... segment --text-direction horizontal-rl # horizontal lines
+                                                       # right before left lines
+$ kraken -i ... segment --text-direction vertical-lr # vertical lines
+                                                     # left before right lines
+$ kraken -i ... segment --text-direction vertical-rl # vertical lines
+                                                     # right before left lines
 \end{minted}
 
 This text direction is unrelated to the direction of the writing system in a
@@ -167,20 +179,22 @@ shape as the input image. Black pixels in the mask image will be ignored be the
 segmenter:
 
 \begin{minted}{shell}
-$ kraken -i ... segment -m mask.png
+$ kraken -i ... segment -m mask.png ...
 \end{minted}
 
 The output of the segmenter is a JSON file containing the verbatim data
 structure returned by the internal segmentation method of Kraken:
 
-\begin{minted}{json}
+\begin{minted}[escapeinside=||]{json}
 {"text_direction": "horizontal-lr",
  "type": "baselines",
- "lines": [{"script": "default", "baseline": [[877, 281], [1893, 318]], "boundary": [[877, 281], ... [881, 325]]},
-           {"script": "default", "baseline": [[1224, 552], [1351, 500]], "boundary": [[1224, 552], ... , [1231, 555]]},
-           ...],
- "region": {"text": [[[500, 128], ... [200, 325], [...],
-            "illustrations": ...},
+ "lines": [{"script": "default", "baseline": [[877, 281], [1893, 318]],
+                                 "boundary": [[877, 281], |\dots| [881, 325]]},
+           {"script": "default", "baseline": [[1224, 552], [1351, 500]],
+                                 "boundary": [[1224, 552], |\dots| , [1231, 555]]},
+           |\dots|],
+ "region": {"text": [[[500, 128], |\dots| [200, 325], [|\dots|],
+            "illustrations": |\dots|},
  "script_detection": true
 }
 \end{minted}
@@ -189,7 +203,7 @@ structure returned by the internal segmentation method of Kraken:
 
 Transcription requires a color, grey-scale, or binarized image, a page
 segmentation for said image, and a model file containing a transcription model.
-The first two can either originate from previous subcommands or directly from
+The first two can either originate from earlier subcommands or directly from
 an XML file. Model files are defined through the \emph{-m} option on the
 \emph{ocr} subcommand:
 
@@ -205,22 +219,24 @@ such as different hands, languages, or typefaces. The assignment of
 transcription models to text lines works through line types which are part of
 the segmentation parsed either from an XML file (see the examples in the Kraken
 git repository for exact attributes used) or the output of an appropriately
-trained layout analysis model. It is therefore a simple mapping based on
+trained layout analysis model (the value of the \emph{script} field in the
+example segmentation above). It is therefore a simple mapping based on
 classifications performed beforehand. The general syntax for this mapping is:
 
 \begin{minted}[breaklines]{shell}
 $ kraken -i ... ocr -m type_1:m_1 -m type_2:m_2 -m type_3:m_3
 \end{minted}
 
-Two special keywords exist for types and models. The \emph{default}
-identifier is a catch-all and applies the specified model on every identifier
-that does not have a model assigned explicitly. The \emph{ignore} model value
-causes Kraken to ignore text lines with this identifier and silently drop them
-from the output. If no \emph{default} model is defined, unassigned types will
-cause Kraken to abort processing with an error message.
+Two special keywords exist for types and models. The \emph{default} identifier
+is a catch-all and applies the specified model on every identifier that does
+not have a model assigned explicitly. The \emph{ignore} model value causes
+Kraken to ignore text lines with this identifier and silently drop them from
+the output. If no \emph{default} model is defined, unassigned types will cause
+Kraken to abort processing with an error message. An example for transcribing
+all lines except those assigned the \emph{notes} type:
 
 \begin{minted}{shell}
-$ kraken -i ... ocr -m default:defmodel.mlmodel -m class_4:ignore
+$ kraken -i ... ocr -m default:defmodel.mlmodel -m notes:ignore
 \end{minted}
 
 The default output of the \emph{ocr} subcommand is a plain text file with the
@@ -243,22 +259,23 @@ segmentation and transcription are used to produce an entirely new file which
 can lack information contained in the input file.
 
 It is also possible to use the transcription functionality without a
-segmentation through the \emph{----no-segmentation} switch. In this case, each
+segmentation through the \emph{-{}-no-segmentation} switch. In this case, each
 input image is treated as one whole line instead of a document page containing
-multiple text lines.
+multiple text lines. 
 
 \subsection{Training}
 
 Training functionality is provided through subcommands of the \emph{ketos}
-command line tool. There are three principal commands \emph{train} and
+command line tool. There are three principal commands: \emph{train} and
 \emph{test} for training and evaluating transcription models and
 \emph{segtrain} for training layout analysis models.
 
 While basic tooling for training data creation for transcription models was
 included in the past, these are only compatible with the legacy bounding box
 segmenter. For the annotation and transcription of baselines, regions, and
-text external tools like eScriptorium or Aletheia that can export data in ALTO
-or PageXML format or have tight Kraken integration are the preferred option.
+text external tools like eScriptorium or Aletheia that can either export data
+in ALTO 4.2 and  PageXML format or have tight Kraken integration are the
+preferred option.
 
 Therefore, both transcription and layout analysis are trained primarily through
 datasets contained in ALTO or PageXML files. Legacy formats, line images and
@@ -280,16 +297,16 @@ We will start with the simple case of training a model from scratch:
 $ ketos train -f xml *.xml
 [1.8139] alphabet mismatch: chars in training set only: ... (not included in accuracy test during training)
 Initializing model ✓
-stage 1/∞  [####################################]  1163/1163          Accuracy report (1) 0.1844 10092 8231
-stage 1/∞  [####################################]  1163/1163          Accuracy report (1) 0.1844 10092 8231
-stage 2/∞  [####################################]  1163/1163          Accuracy report (2) 0.2335 10092 7736
-stage 3/∞  [####################################]  1163/1163          Accuracy report (3) 0.3242 10092 6820
-stage 4/∞  [####################################]  1163/1163          Accuracy report (6) 0.4006 10092 6049
+stage 1/∞  [###################] 1163/1163 Accuracy report (1) 0.1844 10092 8231
+stage 1/∞  [###################] 1163/1163 Accuracy report (1) 0.1844 10092 8231
+stage 2/∞  [###################] 1163/1163 Accuracy report (2) 0.2335 10092 7736
+stage 3/∞  [###################] 1163/1163 Accuracy report (3) 0.3242 10092 6820
+stage 4/∞  [###################] 1163/1163 Accuracy report (6) 0.4006 10092 6049
 ...
 \end{minted}
 
-This automatically parses the XML files in either of the supported formats,
-loads the images, splits off ten per cent of the training data off as a
+This command automatically parses the XML files in either of the supported
+formats, loads the images, splits off ten per cent of the training data as a
 validation set, and commences training. Training is divided into epochs, with
 an evaluation automatically performed on the validation set after each line in
 the training set has been seen at least once by the network. 
@@ -298,19 +315,19 @@ The warning about an alphabet mismatch is the result of the training dataset
 containing characters that are not in the validation set. The network is not
 evaluated against these characters but still learns how to recognize them. This
 is usually the case with small datasets and rare characters. A corresponding
-warning if a character is in the validation set but not the training set
-exists.
+warning if a character is in the validation set but not in the training set
+can also be printed.
 
 Depending on the speed of the computer and the size of the data, training can
 take a substantial amount of time. Per default training stops automatically as
 soon as the character accuracy (the first number in the accuracy report in the
 output above) on the validation set does not improve above a certain threshold
 for a number of epochs. This approach, called early stopping, uses default
-parameters that might not be appropriate for datasets.  For very small datasets
-of only a few dozen lines the default number of epochs before aborting (five)
-might be too low while very large datasets without much variation can cause the
-model to overfit between evaluation runs. To adjust these parameters a couple
-of options are available:
+parameters that might not be appropriate for all datasets. For very small
+datasets of only a few dozen lines the default number of epochs before aborting
+(five) might be too low while very large datasets without much variation can
+cause the model to overfit between evaluation runs. To adjust these parameters
+a couple of options are available:
 
 \begin{minted}{shell}
 $ ketos train ... -F 0.5 # evaluates after half the training set
@@ -320,8 +337,8 @@ $ ketos train ... --min-delta 0.001 # lowers improvement threshold to 0.1%
 
 Instead of a random split into training and validation set that changes with
 each training run, it is also possible to force a fixed split to ensure
-comparability between runs. The most explicit way  is through manifest files
-that each contain a list of XML files:
+reproducibility acros runs. The most explicit way is through manifest files
+that each contain the path to one XML file per line:
 
 \begin{minted}{shell}
 $ ketos train -f xml -t train.lst -e val.lst
@@ -341,7 +358,7 @@ If the characters in the training set differ from the existing possible outputs
 of the network, an error will be raised. As the transfer learning process
 initially changes the internal structure of the model in a way that makes it
 "forget" some of the already learned information, this is a basic safety
-precaution. Two modes for adapting the model to the new alphabet, \emph{add}
+precaution. Two modes for adapting the model to the new alphabet: \emph{add}
 and \emph{both}. \emph{add} resizes the model to be able to output all the
 characters in the training set without removing any existing characters.
 \emph{both} will make the resulting model an exact match with the training set
@@ -352,49 +369,57 @@ $ ketos train -f xml --resize add -i model.mlmodel *.xml
 ...
 [0.8737] Resizing codec to include 1 new code points
 [0.8874] Resizing last layer in network to 52 outputs
+...
 $ ketos train -f xml --resize both -i model.mlmodel *.xml
 ...
 [0.7857] Resizing network or given codec to 49 code sequences
 [0.8344] Deleting 2 output classes from network (46 retained)
+...
 \end{minted}
 
-In this example 3 characters were added for a network that is able to
+In this example 1 character was added for a network that is able to
 recognize 52 different characters after sufficient additional training. It is
 important to remember that in \emph{add} mode the model will first lose some
 accuracy for characters it has already learned through the resizing process,
 a deterioration that is worse for large changes, but also unlearn already
-learnt characters that are not in the training set during training. The first
-statement is also true in \emph{both} mode.
+learnt characters that are not in the training set during training. This
+initial deterioration is also true in \emph{both} mode but not the gradual
+unlearning as all possible output characters are contained in the targeted
+training data.
 
 The command line interface for training also exposes various hyperparameters
 such as model architecture, learning rate, optimizers, weight decay, etc. The
 model architecture can be changed through VGSL (see section~\ref{vgsl}), while
-various other parameters are set with options, such as \emph{----optimizer},
-\emph{----lrate}, and \emph{----weight-decay} (see the help message for valid
+various other parameters are set with options, such as \emph{-{}-optimizer},
+\emph{-{}-lrate}, and \emph{-{}-weight-decay} (see the help message for valid
 values). 
 
 More command line options for various text normalizations, custom codecs,
 recalculation of bounding polygons, caching of training data, etc. exist. These
-are documented in the subcommand's help message. 
+are documented in the subcommand's help message and the full Kraken
+documentation.
 
 Lastly, it is possible to substantially accelerate training with CUDA
-acceleration. This requires are properly configured graphics card (GPUs) with
+acceleration. This requires a properly configured graphics card (GPU) with
 sufficient memory to place the model to be trained. As transcription models are
-fairly small, all but the smallest GPUs are sufficient for this purpose.
+fairly small, all but the smallest GPUs are sufficient for this purpose. CUDA
+acceleration is activated by selecting a GPU with the \emph{-{}-device} option:
 
 \begin{minted}{shell}
-$ ketos segtrain -d cuda ...
+$ ketos segtrain --device cuda ...
 \end{minted}
 
 After a model has been trained an in-depth analysis against a separate test
 dataset is often performed. More detailled than the simple character accuracy
-output during training, these reports contain per-script accuracy rates and
-confusion matrices that can pin-point weaknesses of the transcription model:
+output during training and a better estimation of real world accuracy when
+multiple models have been trained on the same training data, these reports
+contain per-script accuracy rates and confusion matrices that can also
+pin-point weaknesses of the transcription model:
 
 \begin{minted}{shell}
 $ ketos test -m best.mlmodel -f xml *.xml
 Evaluating $model
-Evaluating  [####################################]  100%
+Evaluating  [###################] 100%
 === report best.mlmodel ===
 
 7012 Characters
@@ -407,22 +432,24 @@ Evaluating  [####################################]  100%
 
 Count Missed   %Right
 1567  575    63.31%  Common
-5230  5230   0.00%   Arabic
+5230  5230   0.00%   Latin
 215   215    0.00%   Inherited
 
 Errors       Correct-Generated
-773  { ﺍ } - {  }
-536  { ﻝ } - {  }
-328  { ﻭ } - {  }
-274  { ﻱ } - {  }
+773  { A } - {  }
+536  { c } - {  }
+328  { e } - {  }
+274  { d } - {  }
 ...
 \end{minted}
 
 The report start off with an overall accuracy, followed by the absolute number
 of errors and per-script\footnote{Scripts are determined according to Unicode
 script property linked to ISO 15924 script codes which vary widely in
-granularity.} accuracy rates. The remainder of the report contains the
-confusion table sorted by frequency.
+granularity. Script identifiers are defined for variant forms of the Latin
+script such as Fraktur but only one identifier exist for Arabic and its derived
+scripts.} accuracy rates. The remainder of the report contains the confusion
+table sorted by frequency.
 
 \subsubsection{Layout Analysis Training}
 
@@ -433,14 +460,14 @@ models, just with a different subcommand:
 $ ketos segtrain -f xml *.xml
 Creating model ...
 Training line types:
-  $pac	3	6539
-  $not	7	202
-  $par	8	14803
+  $pac  3  6539
+  $not  4  202
+  $par  5  14803
 Training region types:
-  $tip	10	829
-  text	11	8
-stage 1/50  [####################################]  46/46          Accuracy report (1) mean_iu: 0.0309 freq_iu: 0.0975 mean_acc: 0.0309 accuracy: 0.0309
-stage 2/50  [############------------------------]  16/46  00:05:11
+  $tip	6  829
+  text	7  8
+stage 1/50  [###################] 46/46 Accuracy report (1) mean_iu: 0.0309 freq_iu: 0.0975 mean_acc: 0.0309 accuracy: 0.0309
+stage 2/50  [############-------] 16/46 00:05:11
 \end{minted}
 
 Instead of stopping automatically after a period of accuracy stagnation,
@@ -449,9 +476,10 @@ the pixel accuracy rates are not directly linked to the actual baseline and
 region detection quality.
 
 As can be seen in the above example, the model is trained per default on all
-the baseline types and regions in the training dataset. There are multiple
-options that control this behavior. It is possible to suppress either baselines
-or regions completely:
+the baseline types and regions in the training dataset (the object counts for
+each type are listed after the type).  There are multiple options that control
+this behavior. It is possible to suppress either baselines or regions
+completely:
 
 \begin{minted}{shell}
 $ ketos segtrain --supress-baselines ...
@@ -470,13 +498,13 @@ $ ketos segtrain --merge-regions $text:$tip
 
 Both can be combined. The region/baseline whitelists are processed before
 merging, so it is necessary to whitelist even regions/baselines that are merged
-into others with the \emph{----merge-*} options.
+into others with the \emph{-{}-merge-*} options.
 
 Like transcription models, layout analysis models can be transfer learned to a
 new dataset. The same two modes \emph{both} and \emph{add} exist. In contrast
 to transcription models, adaptation does not directly affect the accuracy of
 other types, although transfer learning in \emph{add} mode will still slowly
-unlearn types not in the training.
+unlearn types not in the new training data:
 
 \begin{minted}{shell}
 $ ketos segtrain --resize add -f xml *.xml
@@ -489,43 +517,58 @@ Likewise explicit splits between training and evaluation set can be provided:
 $ ketos segtrain -f xml -t train.lst -e val.lst
 \end{minted}
 
-In the same vein hyperparameters and GPU acceleration can be set through
+In the same vein, hyperparameters and GPU acceleration can be set through
 identical options.
 
 \subsubsection{VGSL}
 \label{vgsl}
-kraken implements a dialect of the Variable-size Graph Specification Language
+Kraken implements a dialect of the Variable-size Graph Specification Language
 (VGSL), enabling the specification of different network architectures for image
 processing purposes using a short definition string.
 
 A VGSL specification consists of an input block, one or more layers, and an
-output block. For example:
+output block. For example a grayscale line transcription network consisting of
+two convolutional layers (ReLU activation) with 32/64 3$\times$3 filters,
+followed2 $\times$2 maxpooling after each layer, and a final bidirectional LSTM
+layer and 1D dropout regularization:
 
 \begin{minted}{shell}
 [1,48,0,1 Cr3,3,32 Mp2,2 Cr3,3,64 Mp2,2 S1(1x0)1,3 Lbx100 Do O1c103]
 \end{minted}
 
+or a simple layout analysis model pixel labelling (4 classes) a 1200 pixel high
+RGB color image with two convolutional layers and one ReNet-like block:
+
+\begin{minted}{shell}
+[1,1200,0,3 Cr3,3,64 Gn32 Cr3,3,128 Lby32 Lbx32 O2l4]
+\end{minted}
+
 The first block defines the input in order of (batch, heigh, width, channels)
 with zero-valued dimensions being variable. Integer valued height or width
 input specifications will result in the input images being automatically scaled
-in either dimension.
+in either dimension. Mixed variable and fixed input sizes, e.g. a height set to
+400 and a width set to 0, will result in a proportional scaling of the image.
+The batch size is currently ignored in Kraken and can be set separately with
+command line options. 
 
 When channels are set to 1 grayscale or B/W inputs are expected, 3 expects RGB
 color images. Higher values in combination with a height of 1 result in the
 network being fed 1 pixel wide grayscale strips scaled to the size of the
-channel dimension.
+channel dimension, i.e. an internal transposition of the height and channel
+dimensions.
 
-After the input, a number of layers are defined. Layers operate on the channel
-dimension; this is intuitive for convolutional layers but a recurrent layer
-doing sequence classification along the width axis on an image of a particular
-height requires the height dimension to be moved to the channel dimension,
-e.g.:
+After the input, a number of processing layers are defined. Layers operate on
+the channel dimension; this is intuitive for convolutional layers but a
+recurrent layer performing sequence classification along the width axis on an
+image of a particular height requires the height dimension to be moved to the
+channel dimension, e.g.:
 
 \begin{minted}{shell}
 [1,48,0,1 S1(1x0)1,3 Lbx100 O1c103]
 \end{minted}
 
-or using the alternative slightly faster formulation:
+or using the aforementioned alternative formulation performing the
+transposition implicitly with the input definition:
 
 \begin{minted}{shell}        
 [1,1,0,48 Lbx100 O1c103]
@@ -536,15 +579,16 @@ transcription and segmentation models with the provided command line tools
 these are derived automatically from the training data based on the number of
 different code points or baseline and region types.
 
-The two principal layer types available in VGSL are LSTM:
+The two principal layer types available in VGSL are LSTM and GRU layers:
 
 \begin{minted}{text}
 L(f|r|b)(x|y)[s]<n> LSTM cell with n outputs.
-  f runs the LSTM forward only.
-  r runs the LSTM reversed only.
-  b runs the LSTM bidirectionally.
-  x runs the LSTM in the x-dimension.
-  y runs the LSTM in the y-dimension.
+G(f|r|b)(x|y)[s]<n> GRU cell with n outputs.
+  f runs the LSTM/GRU forward only.
+  r runs the LSTM/GRU reversed only.
+  b runs the LSTM/GRU bidirectionally.
+  x runs the LSTM/GRU in the x-dimension.
+  y runs the LSTM/GRU in the y-dimension.
   s (optional) summarizes the output in the requested dimension,
      outputting only the final step, collapsing the dimension to a
      single element.
@@ -570,22 +614,24 @@ the recurrent layers in a transcription model:
 
 \begin{minted}{text}
 S<d>(<a>x<b>)<e>,<f> Splits one dimension, moves one part to another dimension.
-Takes dimension d, reshapes it into a axb tensor distributing a into
-dimension e and b into dimension f. 
-Setting a or b to 0 auto-fills to the correct value.
+Takes dimension d, reshapes it into a (a,b)-shaped tensor, distributing a into
+dimension e and b into dimension f. Setting a or b to 0 auto-fills to the
+correct value.
 \end{minted}
 
 Various regularization layers are implemented:
 
 \begin{minted}{text}
-Do<p>[,(1|2)] Inserts a 1D or 2D dropout layer with probability <p>.
+Do<p>[,(1|2)] Inserts a 1D or 2D dropout layer with probability <p>. Defaults
+to 1D dropout.
 Gn<g> Inserts a group normalization layer with <g> groups.
 \end{minted}
 
 Maxpooling:
 
 \begin{minted}{text}
-Mp<y>,<x>[,<y_stride>,<x_stride>] Adds a maxpooling layer.
+Mp<y>,<x>[,<y_stride>,<x_stride>] Adds a maxpooling layer with kernel size
+	(y,x) and optional stride (y_stride,x_stride)
 \end{minted}
 
 and finally output layers:
@@ -595,12 +641,14 @@ O(0|1|2)(l|s|c)<d> Adds an output layer for scalar, 1D, or 2D heatmap output
 with d classes.
 (l|s|c) select both non-linearity and loss function:
 l = sigmoid (binary crossentropy)
-s = softmax (binary crossentropy)
+s = softmax (crossentropy)
 c = softmax (CTC loss)
 \end{minted}
 
-Output layers are added automatically by command line tools, so it is only
-necessary to create them when using the API.
+As mentioned above output layers are added automatically by command line tools,
+so it is only necessary to create them when using the API.
+
+
 
 \subsection{Model repository}
 
@@ -608,15 +656,16 @@ Kraken incorporates a simple model repository that stores layout analysis and
 transcription models with basic metadata in the
 Zenodo\footnote{\url{http://zenodo.org}} research data repository. Models made
 available through the repository are public and can either be retrieved with
-Kraken's command line tools, through the Zenodo website or its web API. Because
-of limitations of the Zenodo platform, publishing of models is currently not
-completely automated and requires manual approval of each submitted model by an
-administrator. Therefore publishing models is not instantaneous until the
-necessary changes to Zenodo's API are made to enable automatic approval.
+Kraken's command line tools, through the Zenodo website, or its web API.
+Because of limitations of the Zenodo platform, publishing of models is
+currently not completely automated and requires manual approval of each
+submitted model by an administrator. Therefore publishing models is not
+instantaneous until the necessary changes to Zenodo's API are made to enable
+automatic approval.
 
 Models in the repository are interacted with through DOI permanent identifiers.
 As these are globally unique, unalterable, and resolvable to the object in the
-repository, they can be used to reference a particular model precisely, e.g. in
+repository; they can be used to reference a particular model precisely, e.g. in
 publications. To retrieve the list of models in the repository:
 
 \begin{minted}{shell}
@@ -638,7 +687,8 @@ A generalized model for English printed text
 This model has been trained on a large corpus of modern printed English text
 augmented with ~10000 lines of historical printed documents.
 scripts: Latn
-alphabet: !"#$%&'()+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]`abcdefghijklmnopqrstuvwxyz{} SPACE
+alphabet: !"#$%&'()+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]`abcdefghijklmno
+          pqrstuvwxyz{} SPACE
 accuracy: 99.95%
 license: Apache-2.0
 author(s): Kiessling, Benjamin
@@ -648,7 +698,7 @@ date: 2019-02-26
 The record contains a natural language description of the models, describing
 usually the amount and type of training data used, and additional information
 like ISO 15924 script identifiers, code points in the model codec, character
-accuracy on the validation set, and the authors's names.
+accuracy on the test set, and the authors's names.
 
 To actually download a model, one simply executes:
 
@@ -690,7 +740,8 @@ model PID: 10.5281/zenodo.2577814
 \end{minted}
 
 The record is created immediately and the PID is valid but an administrator has
-to approve it to be discoverable with Kraken's command line tools.
+to approve the record's accession to the OCR model group in Zenodo in order for
+it to be discoverable with Kraken's command line tools.
 
 \subsection{API}
 
@@ -713,11 +764,22 @@ for line in rpred.rpred(tr_model, im, seg):
     print(line.prediction)
 \end{minted}
 
-These lines load first the respective layout analysis and transcription models,
-an input image with the PIL library, performs segmentation with the baseline
-segmenter, and transcribe each found line with the transcription model. The
-transcription function \emph{rpred} does not only return text but an object
-containing also character bounding polygons and confidences.
+These lines load first import the PIL library for image handling, the
+\emph{blla} Kraken module for (baseline) segmentation, the \emph{rpred} module
+for text transcription, and the \emph{models} and \emph{vgsl} modules for model
+loading. Afterwards, the respective layout analysis and transcription models,
+and an input image are loaded. The difference between the two model loading
+function is that transcription models are wrapped in a slim abstraction layer
+while segmentation models use the raw VGSL interface directly.
+
+Next, we perform segmentation on the previously loaded image file and
+transcribe each found line with the transcription model. The transcription
+function \emph{rpred} does not only return text but an object containing also
+character bounding polygons and confidences. \emph{rpred} is a simplified
+transcription method for single model transcription; multi-model functionality
+capable of transcribing typed lines with multiple models is available through
+the more advanced \emph{mm\_rpred} function (see the full API documentation for
+further details).
 
 Training is more complicated but a basic training run with the default
 parameters is just a few lines of code as well:
@@ -727,7 +789,7 @@ from kraken.lib import xml
 from kraken.lib.train import KrakenTrainer
 
 training_files = ['a.xml', 'b.xml', 'c.xml']
-evaluation_files = ['d.xml', 'e.xml']
+eval_files = ['d.xml', 'e.xml']
 
 # callback called after each iteration 
 def step_callback(*args):
@@ -739,10 +801,10 @@ def print_transcription_eval(epoch, accuracy, chars, error, **kwargs):
 
 # create a transcription model trainer
 t_trainer = KrakenTrainer.recognition_train_gen(progress_callback=step_callback,
-                                               output='model.mlmodel',
- 					       training_data=training_files,
- 					       evaluation_data=evaluation_files,
-					       format_type='xml')
+                                                output='model.mlmodel',
+                                                training_data=training_files,
+                                                evaluation_data=eval_files,
+                                                format_type='xml')
 
 # executing the transcription trainer.
 t_trainer.run(print_transcription_eval)
@@ -754,9 +816,9 @@ def print_seg_eval(epoch, accuracy, mean_acc, mean_iu, freq_iu, **kwargs):
 # create a layout analysis model trainer
 la_trainer = KrakenTrainer.segmentation_train_gen(progress_callback=step_callback,
                                                   output='seg.mlmodel',
-						  training_data=training_files,
-						  evaluation_data=evaluation_files,
-						  format_type='xml')
+                                                  training_data=training_files,
+                                                  evaluation_data=eval_files,
+                                                  format_type='xml')
 
 # executing the transcription trainer.
 la_trainer.run(print_seg_eval)
@@ -770,14 +832,14 @@ The basic principle is simple. A \emph{KrakenTrainer} object is created through
 the constructors for transcription or layout analysis training. These
 constructors accept the arguments and options already known from the command
 line (see the API documentation for further details) and a callback that is
-executed after each batch ran through the neural network.  Training runs are
-initiated by calling the \emph{run} method on the object with another
-callback that is executed after the evaluation at the end of each epoch.
-\emph{run} blocks and automatically returns once training is finished
+executed each time after a sample has been ran through the neural network.
+Training runs are initiated by calling the \emph{run} method on the object with
+another callback that is executed after the evaluation at the end of each
+epoch.  \emph{run} blocks and automatically returns once training is finished
 according to the stop parameters chosen, per default early stopping for
 transcription and a fixed number of epochs for layout analysis models.
 
 Most options available on the command line are available on the respective API
-functions. A complete overview can be found on the Kraken website with example
-scripts showing low-level use contained in the contrib directory of the git
-repository.
+functions. A complete overview can be found on the Kraken website and in the
+Zenodo deposit mentioned in the introduction with example scripts showing
+low-level use contained in the contrib directory of the source code.

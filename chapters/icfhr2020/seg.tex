@@ -4,7 +4,8 @@
 \vfill
 This chapter has been published as \fullcite{KiesslingICFHR2020}. The layout
 analysis method presented herein corresponds to the current implementation in
-the Kraken engine.
+the Kraken engine apart from slight changes in line end marker shapes and
+postprocessing.
 \label{ch:icfhr}
 \newpage
 
@@ -90,6 +91,17 @@ comprehensive surveys of document layout analysis exist
 
 \subsection{Text line extraction}
 
+\begin{figure*}[ht]
+        \centering
+        \includegraphics[width=\textwidth]{rblla}
+	\caption{Architecture of the pixel labelling network. Group
+	normalization layers are omitted. (salmon: 3x3 convolutional layers,
+	dotting indicates dilation by 2x2; purple: 1x1 convolution, blue:
+	bidirectional LSTM blocks, striping indicates row/column time axis;
+	grey: 1x1 convolution with $\norm{\tau}$ filters + sigmoid)}
+	\label{fig:rblla}
+\end{figure*}
+
 The capabilities of text line extraction methods in the literature is to some
 extent driven by existing datasets. A variety of formulations for line
 extraction can be found in published datasets. These range from polygons
@@ -122,6 +134,7 @@ respectively. A number of deep learning based schemes have been proposed as
 well: \cite{mechi2019text, quiros2018multi, oliveira2018dhsegment}
 apply variants of the U-Net architecture for semantic segmentation.
 
+
 \subsection{Region detection}
 
 Region detection is almost always performed across both the geometric and
@@ -142,7 +155,35 @@ conjugate graph networks.  Definite clause grammars on a feature vocabulary as
 part of a user-driven interactive segmentation system are shown in
 \cite{lemaitre2008multiresolution}.
 
+\begin{wrapfigure}{o}{0.5\textwidth}
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{overlay_crop.png}
+		\caption{Ground truth overlay for a page with different line
+		orientations (blue: baseline class, red: start\_sep auxiliary
+		class, green: end\_sep auxiliary class)}
+		\label{fig:overlay}
+	\end{subfigure}
+	\vskip\baselineskip
+
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{roi_crop.png}
+		\caption{Region of Interests of the distance biased energy map for a sample line of the same image. (red: border of RoIs, blue: baselines)}
+		\label{fig:roi}
+	\end{subfigure}
+	\vskip\baselineskip
+
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{seam_crop.png}
+		\caption{Computed seam/bounding polygon on the masked input image crop. (red: combined upper and lower half-seams, blue: baselines)}
+		\label{fig:seam}
+	\end{subfigure}
+	\caption{Examples of the data model and intermediate representations
+		 for a page from the
+		 BADAM~\protect\cite{kiessling2019badam} dataset}
+\end{wrapfigure}
 \section{Method}
+
 
 This section describes the proposed method for joint text line and region
 layout analysis. Our method can be divided into three main stages: multi-label
@@ -162,19 +203,7 @@ and cross region boundaries.
 
 \subsection{R-BLLA - Architecture}
 
-\begin{figure*}[ht]
-        \centering
-        \includegraphics[width=\textwidth]{rblla}
-	\caption{Architecture of the pixel labelling network. Group
-	normalization layers are omitted. (salmon: 3x3 convolutional layers,
-	dotting indicates dilation by 2x2; purple: 1x1 convolution, blue:
-	bidirectional LSTM blocks, striping indicates row/column time axis;
-	grey: 1x1 convolution with $\norm{\tau}$ filters + sigmoid)}
-	\label{fig:rblla}
-\end{figure*}
-
-The overall pixel labeling network neural network is described in Fig
-\ref{fig:rblla}. Instead of conventional semantic segmentation encoder-decoder
+The overall pixel labeling network neural network is described in figure~\ref{fig:rblla}. Instead of conventional semantic segmentation encoder-decoder
 networks whose output is at the same scale as the input, our architecture
 decodes the learned representations at the downsampled scale of the last layer
 as the spatial information of regions and baselines can be recovered with
@@ -214,43 +243,16 @@ with most scripts, including multi-script documents, the beginning and end of
 each line is not determined by the reading direction of the script. Instead we
 treat all scripts as canonically left-to-right, i.e when following the baseline
 from the start marker the upper part of the text line is always on the
-left-hand side (Fig. \ref{fig:overlay}. This scheme makes processing of
+left-hand side (figure~\ref{fig:overlay}). This scheme makes processing of
 arbitrarily oriented lines and mixed script pages with different reading
 direction without additional domain knowledge possible. The generated ground
 truth for the baselines classes are simple polylines drawn with a width.
 Regions are encoded
 as filled polygons. Thus the ground truth $y$ is a multi-hot encoded tensor.
 
-\begin{wrapfigure}{O}{0.6\textwidth}
-	\centering
-	\begin{subfigure}{0.58\textwidth}
-		\includegraphics[width=\textwidth]{overlay_crop.png}
-		\caption{Ground truth overlay for a page with different line
-		orientations (blue: baseline class, red: start\_sep auxiliary
-		class, green: end\_sep auxiliary class)}
-		\label{fig:overlay}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{0.58\textwidth}
-		\includegraphics[width=\textwidth]{roi_crop.png}
-		\caption{Region of Interests of the distance biased energy map for a sample line of the same image. (red: border of RoIs, blue: baselines)}
-		\label{fig:roi}
-	\end{subfigure}
-	\vskip\baselineskip
-
-	\begin{subfigure}{0.58\textwidth}
-		\includegraphics[width=\textwidth]{seam_crop.png}
-		\caption{Computed seam/bounding polygon on the masked input image crop. (red: combined upper and lower half-seams, blue: baselines)}
-		\label{fig:seam}
-	\end{subfigure}
-	\caption{Examples of the data model and intermediate representations
-		 for a page from the
-		 BADAM~\protect\cite{kiessling2019badam} dataset}
-\end{wrapfigure}
-
-
 \subsection{Training}
+
+
 
 The network is trained in a supervised manner with binary cross-entropy loss
 $L(y, \hat{y}) = \frac{1}{N}\sum^N_{i=0}(y\cdot \log(\hat{y}_i)+(1-y)\cdot
@@ -397,7 +399,7 @@ arbitrary baseline. To calculate the bounding polygon we first extract two
 regions of interest (RoI) $E(I^\sigma)[r_\text{left}]$ and $E(I^\sigma)[r_\text{right}]$
 around $\gamma$; these RoIs contain the energy map area between the left- and
 righthand side of $\gamma$ and $\{\Gamma_0, \dots, \Gamma_n \setminus \gamma,
-\dots, \Gamma_m\}$ as shown in Fig. \ref{fig:roi}.  The seams through
+\dots, \Gamma_m\}$ as shown in figure~\ref{fig:roi}.  The seams through
 $r_\text{left}$ and $r_\text{right}$ will form the respective halves of the bounding
 polygon. 
 
@@ -414,7 +416,7 @@ RoIs need to be rotated. We rotate each RoI patch by the magnitude-weighted
 average direction. The energy-minimizing seam for each patch is then calculated
 using dynamic programming as described in \cite{avidan2007seam}. Afterwards,
 the seams are rotated back into the original image coordinate system and
-concatenated to form the final bounding polygon for a line. Fig. \ref{fig:seam}
+concatenated to form the final bounding polygon for a line. Figure~\ref{fig:seam}
 shows the result for a single line.
 
 \begin{table}[h!]
